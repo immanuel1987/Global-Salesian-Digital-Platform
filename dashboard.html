@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GSDP – Global Salesian Digital Platform</title>
+<title>Global Salesian Digital Platform</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
@@ -627,7 +627,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);
       <option value="ai">AI System — Automated Classifier</option>
     </select>
     
-    <button class="login-btn" onclick="doLogin()">Sign In to GSDP →</button>
+    <button class="login-btn" onclick="doLogin()">Sign In →</button>
     
     <div class="login-roles-hint">
       <p>Quick access — click to select role:</p>
@@ -652,9 +652,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);
       <div class="sidebar-logo">
         <div class="sb-logo-icon">G</div>
         <div class="sb-logo-text">
-          <strong>GSDP</strong>
-          <span>Salesian Platform</span>
-        </div>
+          <strong>Global Salesian Digital Platform</strong>
+          </div>
       </div>
       
       <div class="sidebar-user">
@@ -1374,7 +1373,7 @@ function doLogin() {
         app.classList.add('fade-in');
       });
     });
-    showToast('Welcome to GSDP — signed in as ' + ROLES[role].label);
+    showToast('Welcome to Global Salesian Digital Platform — signed in as ' + ROLES[role].label);
   }, 400);
 }
 
@@ -1798,7 +1797,7 @@ function renderAI(role) {
   messages.innerHTML = `
     <div class="chat-msg">
       <div class="chat-avatar ai">✦</div>
-      <div class="chat-bubble ai">Hello! I'm the GSDP AI Assistant. I can help you search resources semantically, summarize documents, translate content across EN, IT, ESP, FRA, and POR, and answer questions about Salesian works worldwide.<br><br>How can I help you today?</div>
+      <div class="chat-bubble ai">Hello! I'm the Global Salesian Digital Platform AI Assistant. I can help you search resources semantically, summarize documents, translate content across EN, IT, ESP, FRA, and POR, and answer questions about Salesian works worldwide.<br><br>How can I help you today?</div>
     </div>`;
   
   const suggested = [
@@ -2232,7 +2231,7 @@ function triggerQuery(q) {
 }
 
 const AI_RESPONSES = {
-  default: (q) => `I found <strong>12 resources</strong> matching "<em>${q}</em>" in the GSDP corpus.<br><br>Top results:<br>• Youth Ministry Annual Report — South Asia 2025 (Province INS)<br>• Drug Addiction Prevention — Pastoral Guide (Province ESP)<br>• Social Work Commission Field Report 2024<br><br>Would you like me to summarize any of these, or translate them to another language?`,
+  default: (q) => `I found <strong>12 resources</strong> matching "<em>${q}</em>" in the Global Salesian Digital Platform corpus.<br><br>Top results:<br>• Youth Ministry Annual Report — South Asia 2025 (Province INS)<br>• Drug Addiction Prevention — Pastoral Guide (Province ESP)<br>• Social Work Commission Field Report 2024<br><br>Would you like me to summarize any of these, or translate them to another language?`,
   summarize: () => `<strong>Summary generated:</strong><br><br>This document presents the Youth Ministry framework for South Asia, focusing on three key pillars: <em>evangelization</em>, <em>youth accompaniment</em>, and <em>institutional collaboration</em>. Key findings include a 23% increase in youth center participation across 8 provinces and 14 new oratory projects launched in 2025. The report recommends strengthening digital literacy programs and cross-provincial knowledge sharing.<br><br>📄 Full document: 47 pages · Language: English · Province: INS`,
   translate: () => `<strong>Translation complete (EN → ES):</strong><br><br>"Las directrices del Sistema Preventivo de Don Bosco enfatizan el papel central del educador salesiano como acompañante de los jóvenes, especialmente los más vulnerables..."<br><br>🌐 Translation powered by Azure OpenAI · 5 languages supported`,
   recommend: () => `<strong>Recommended resources</strong> based on semantic similarity:<br><br>1. 🔗 <em>Youth at Risk — Pastoral Approaches 2024</em> (similarity: 94%)<br>2. 🔗 <em>Social Work Best Practices — Africa 2024</em> (similarity: 89%)<br>3. 🔗 <em>Prevention Programs — Latin America 2023</em> (similarity: 87%)<br><br>Recommendations powered by vector embeddings · Databricks ML Layer`,
@@ -2265,8 +2264,8 @@ const OWL_STEPS = [
   { id:'build-hierarchy',     label:'Build Class Hierarchy',   icon:'🌳', desc:'Constructing OWL class hierarchy from taxonomy tree...', duration:2200, detail:'312 properties mapped · hierarchy depth: 6 levels' },
   { id:'map-salesian-groups', label:'Map Salesian Groups',     icon:'✝', desc:'Mapping SDB, FMA, Cooperators, ADMA and sub-groups...', duration:1600, detail:'6 Salesian groups · 42 sub-group relations indexed' },
   { id:'map-provinces',       label:'Map Provinces & Regions', icon:'🌍', desc:'Linking 92 provinces to regional and geographic nodes...', duration:2000, detail:'92 provinces · 8 regions · 3,241 geo-relations' },
-  { id:'generate-owl',        label:'Generate OWL File',       icon:'📄', desc:'Serialising ontology to OWL/RDF format...', duration:2800, detail:'gsdp-ontology-v3.4.2.owl · 2.3 MB · RDF/XML format' },
-  { id:'push-server',         label:'Push to Server',          icon:'🚀', desc:'Deploying OWL file to GSDP ontology endpoint...', duration:1400, detail:'Deployed to https://onto.gsdp.salesian.org · CDN flushed' },
+  { id:'generate-owl',        label:'Generate OWL File',       icon:'📄', desc:'Serialising ontology to OWL/RDF format...', duration:2800, detail:'Global Salesian Digital Platform-ontology-v3.4.2.owl · 2.3 MB · RDF/XML format' },
+  { id:'push-server',         label:'Push to Server',          icon:'🚀', desc:'Deploying OWL file to Global Salesian Digital Platform ontology endpoint...', duration:1400, detail:'Deployed to https://onto.gsdp.salesian.org · CDN flushed' },
 ];
 
 let owlRunning = false;

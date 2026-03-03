@@ -1,0 +1,2447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GSDP – Global Salesian Digital Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --gold:#C8963E;--gold-light:#E8B96A;--gold-pale:rgba(200,150,62,0.12);
+  --deep:#1A1F2E;--navy:#243352;--slate:#3D4F6E;
+  --cream:#F8F4EF;--warm:#EDE8DF;--white:#FFFFFF;
+  --text:#2C2C2C;--muted:#6B7280;--border:#E5E0D8;
+  --success:#2D7A4F;--warn:#B45309;--info:#1D4ED8;--danger:#991B1B;
+  --sidebar:240px;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);overflow-x:hidden;}
+
+/* ══════════════ LOGIN TRANSITIONS ══════════════ */
+#login-screen{
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+#login-screen.fade-out{
+  opacity:0;
+  transform:scale(1.03);
+  pointer-events:none;
+}
+#app{
+  opacity:0;
+  transition: opacity 0.4s ease;
+}
+#app.fade-in{
+  opacity:1;
+}
+
+/* ══════════════ LOGIN SCREEN ══════════════ */
+#login-screen{
+  position:fixed;inset:0;z-index:9999;
+  background:linear-gradient(160deg,var(--deep) 0%,var(--navy) 60%,#1e2d4a 100%);
+  display:flex;align-items:flex-start;justify-content:center;
+  overflow-y:auto;padding:40px 20px;
+}
+#login-screen::before{
+  content:'';position:absolute;top:-150px;right:-150px;
+  width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle,rgba(200,150,62,0.15),transparent 70%);
+}
+.login-box{
+  background:rgba(255,255,255,0.06);border:1px solid rgba(200,150,62,0.25);
+  border-radius:24px;padding:48px;width:100%;max-width:460px;position:relative;z-index:1;
+  backdrop-filter:blur(20px);margin:auto;
+}
+.login-logo{display:flex;align-items:center;gap:14px;margin-bottom:36px;}
+.login-logo-icon{width:48px;height:48px;background:linear-gradient(135deg,var(--gold),#B8852E);border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:22px;font-weight:900;color:var(--deep);}
+.login-logo-text strong{font-family:'Playfair Display',serif;font-size:17px;color:var(--white);display:block;}
+.login-logo-text span{font-size:11px;color:var(--gold-light);letter-spacing:0.1em;text-transform:uppercase;}
+.login-title{font-family:'Playfair Display',serif;font-size:30px;font-weight:800;color:var(--white);margin-bottom:8px;}
+.login-sub{font-size:14px;color:rgba(255,255,255,0.55);margin-bottom:32px;}
+.login-label{font-size:12px;font-weight:600;color:rgba(255,255,255,0.6);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;display:block;}
+.login-input{
+  width:100%;padding:12px 16px;border-radius:10px;
+  background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);
+  color:var(--white);font-size:14px;font-family:'DM Sans',sans-serif;
+  margin-bottom:20px;outline:none;transition:border 0.2s;
+}
+.password-field{position:relative;margin-bottom:20px;}
+.password-field .login-input{margin-bottom:0;padding-right:80px;}
+.password-toggle{
+  position:absolute;right:12px;top:50%;transform:translateY(-50%);
+  background:transparent;border:none;color:rgba(255,255,255,0.8);
+  font-size:12px;font-weight:600;cursor:pointer;letter-spacing:0.05em;text-transform:uppercase;
+}
+.password-toggle:hover{color:var(--gold);}
+.login-input:focus{border-color:var(--gold);}
+.login-input option{background:var(--deep);color:var(--white);}
+.login-btn{
+  width:100%;padding:14px;border-radius:10px;
+  background:linear-gradient(135deg,var(--gold),#B8852E);
+  color:var(--deep);font-weight:700;font-size:15px;
+  border:none;cursor:pointer;font-family:'DM Sans',sans-serif;
+  letter-spacing:0.03em;transition:filter 0.2s;margin-top:4px;
+}
+.login-btn:hover{filter:brightness(1.1);}
+.login-roles-hint{margin-top:28px;border-top:1px solid rgba(255,255,255,0.1);padding-top:20px;}
+.login-roles-hint p{font-size:11px;color:rgba(255,255,255,0.35);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.08em;}
+.role-chips{display:flex;flex-wrap:wrap;gap:6px;}
+.role-chip{
+  padding:4px 10px;border-radius:100px;font-size:11px;
+  background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.55);
+  border:1px solid rgba(255,255,255,0.1);cursor:pointer;transition:all 0.15s;
+}
+.role-chip:hover{background:var(--gold-pale);border-color:var(--gold);color:var(--gold-light);}
+
+/* ══════════════ APP SHELL ══════════════ */
+#app{display:none;height:100vh;overflow:hidden;}
+.app-layout{display:flex;height:100vh;}
+
+/* ── SIDEBAR ── */
+.sidebar{
+  width:var(--sidebar);min-width:var(--sidebar);
+  background:var(--deep);display:flex;flex-direction:column;
+  border-right:1px solid rgba(200,150,62,0.12);overflow-y:auto;
+  position:relative;z-index:50;
+}
+.sidebar-logo{
+  padding:20px 20px 16px;border-bottom:1px solid rgba(255,255,255,0.07);
+  display:flex;align-items:center;gap:10px;
+}
+.sb-logo-icon{width:36px;height:36px;background:linear-gradient(135deg,var(--gold),#B8852E);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:16px;font-weight:900;color:var(--deep);flex-shrink:0;}
+.sb-logo-text strong{font-family:'Playfair Display',serif;font-size:13px;color:var(--white);display:block;line-height:1.2;}
+.sb-logo-text span{font-size:9px;color:rgba(255,255,255,0.35);letter-spacing:0.08em;text-transform:uppercase;}
+
+.sidebar-user{
+  padding:16px 20px;border-bottom:1px solid rgba(255,255,255,0.07);
+  display:flex;align-items:center;gap:10px;
+}
+.user-avatar{
+  width:34px;height:34px;border-radius:50%;
+  background:linear-gradient(135deg,var(--gold),#B8852E);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:13px;color:var(--deep);flex-shrink:0;
+}
+.user-info strong{font-size:12px;color:var(--white);display:block;}
+.user-info span{font-size:10px;color:var(--gold-light);text-transform:uppercase;letter-spacing:0.07em;}
+
+.sidebar-section-label{
+  padding:16px 20px 8px;
+  font-size:10px;font-weight:700;color:rgba(255,255,255,0.25);
+  letter-spacing:0.12em;text-transform:uppercase;
+}
+.sb-nav-item{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 20px;cursor:pointer;transition:all 0.15s;
+  font-size:13px;color:rgba(255,255,255,0.55);font-weight:500;
+  border-left:3px solid transparent;
+}
+.sb-nav-item:hover{color:rgba(255,255,255,0.85);background:rgba(255,255,255,0.04);}
+.sb-nav-item.active{color:var(--white);background:rgba(200,150,62,0.1);border-left-color:var(--gold);}
+.sb-nav-item .nav-icon{font-size:15px;width:18px;text-align:center;}
+.sb-nav-item .nav-badge{margin-left:auto;background:var(--gold);color:var(--deep);font-size:10px;font-weight:700;padding:2px 7px;border-radius:100px;}
+.sb-nav-item .nav-badge.red{background:#EF4444;color:#fff;}
+
+.sidebar-footer{
+  margin-top:auto;padding:16px 20px;
+  border-top:1px solid rgba(255,255,255,0.07);
+}
+.logout-btn{
+  display:flex;align-items:center;gap:8px;
+  font-size:12px;color:rgba(255,255,255,0.35);cursor:pointer;
+  padding:8px 0;transition:color 0.15s;
+}
+.logout-btn:hover{color:rgba(255,255,255,0.7);}
+
+/* ── TOPBAR ── */
+.main-area{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+.topbar{
+  height:60px;background:var(--white);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;padding:0 28px;gap:16px;flex-shrink:0;
+}
+.topbar-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--deep);flex:1;}
+.topbar-search{
+  flex:1;max-width:400px;
+  display:flex;align-items:center;gap:8px;
+  background:var(--cream);border:1px solid var(--border);
+  border-radius:10px;padding:8px 14px;
+}
+.topbar-search input{background:none;border:none;outline:none;font-size:13px;color:var(--text);font-family:'DM Sans',sans-serif;flex:1;}
+.topbar-search span{color:var(--muted);font-size:14px;}
+.topbar-actions{display:flex;align-items:center;gap:8px;}
+.topbar-btn{
+  padding:7px 16px;border-radius:8px;font-size:12px;font-weight:600;
+  cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.15s;
+  display:flex;align-items:center;gap:6px;
+}
+.btn-gold{background:linear-gradient(135deg,var(--gold),#B8852E);color:var(--deep);border:none;}
+.btn-gold:hover{filter:brightness(1.08);}
+.btn-outline-dark{background:transparent;border:1px solid var(--border);color:var(--text);}
+.btn-outline-dark:hover{border-color:var(--gold);color:var(--gold);}
+.notif-btn{
+  width:36px;height:36px;border-radius:9px;border:1px solid var(--border);
+  background:var(--white);display:flex;align-items:center;justify-content:center;
+  cursor:pointer;position:relative;font-size:16px;
+}
+.notif-dot{position:absolute;top:6px;right:7px;width:7px;height:7px;border-radius:50%;background:#EF4444;border:1px solid var(--white);}
+
+/* ── PAGE CONTENT ── */
+.page-content{flex:1;overflow-y:auto;padding:28px;}
+.page{display:none;}
+.page.active{display:block;}
+
+/* ══════════════ DASHBOARD PAGE ══════════════ */
+.welcome-banner{
+  background:linear-gradient(135deg,var(--deep),var(--navy));
+  border-radius:16px;padding:28px 32px;margin-bottom:24px;
+  position:relative;overflow:hidden;
+}
+.welcome-banner::after{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(200,150,62,0.2),transparent 70%);}
+.welcome-banner h2{font-family:'Playfair Display',serif;font-size:24px;color:var(--white);font-weight:800;margin-bottom:6px;}
+.welcome-banner p{font-size:13px;color:rgba(255,255,255,0.6);}
+.welcome-banner .role-badge{display:inline-block;margin-top:12px;padding:4px 14px;background:rgba(200,150,62,0.2);border:1px solid rgba(200,150,62,0.4);border-radius:100px;font-size:11px;color:var(--gold-light);font-weight:600;letter-spacing:0.08em;text-transform:uppercase;}
+
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;}
+.stat-card{
+  background:var(--white);border-radius:14px;padding:20px 22px;
+  border:1px solid var(--border);transition:box-shadow 0.2s;
+}
+.stat-card:hover{box-shadow:0 4px 20px rgba(0,0,0,0.06);}
+.stat-card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;}
+.stat-card-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;}
+.stat-card-trend{font-size:11px;font-weight:600;padding:3px 8px;border-radius:100px;}
+.trend-up{background:#D1FAE5;color:#065F46;}
+.trend-warn{background:#FEF3C7;color:#92400E;}
+.stat-card-value{font-family:'Playfair Display',serif;font-size:30px;font-weight:800;color:var(--deep);line-height:1;}
+.stat-card-label{font-size:12px;color:var(--muted);margin-top:4px;}
+
+.dash-grid{display:grid;grid-template-columns:2fr 1fr;gap:20px;}
+.card{background:var(--white);border-radius:14px;border:1px solid var(--border);}
+.card-header{padding:18px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.card-title{font-weight:700;font-size:14px;color:var(--deep);}
+.card-action{font-size:12px;color:var(--gold);cursor:pointer;font-weight:600;}
+.card-body{padding:20px;}
+
+/* activity feed */
+.activity-item{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);}
+.activity-item:last-child{border-bottom:none;}
+.activity-dot{width:8px;height:8px;border-radius:50%;margin-top:5px;flex-shrink:0;}
+.dot-gold{background:var(--gold);}
+.dot-blue{background:var(--info);}
+.dot-green{background:var(--success);}
+.dot-red{background:var(--danger);}
+.activity-text{font-size:13px;color:var(--text);line-height:1.5;}
+.activity-time{font-size:11px;color:var(--muted);margin-top:2px;}
+
+/* quick actions */
+.quick-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.qa-btn{
+  padding:14px;border-radius:12px;border:1px solid var(--border);
+  background:var(--cream);cursor:pointer;text-align:left;
+  transition:all 0.15s;
+}
+.qa-btn:hover{border-color:var(--gold);background:rgba(200,150,62,0.05);}
+.qa-btn-icon{font-size:20px;margin-bottom:6px;}
+.qa-btn-title{font-size:12px;font-weight:700;color:var(--deep);}
+.qa-btn-sub{font-size:11px;color:var(--muted);}
+
+/* pending items */
+.pending-item{
+  display:flex;align-items:center;gap:12px;padding:10px 0;
+  border-bottom:1px solid var(--border);cursor:pointer;
+}
+.pending-item:last-child{border-bottom:none;}
+.pending-icon{font-size:20px;}
+.pending-info{flex:1;}
+.pending-title{font-size:13px;font-weight:600;color:var(--deep);}
+.pending-meta{font-size:11px;color:var(--muted);margin-top:1px;}
+.pending-status{padding:3px 10px;border-radius:100px;font-size:10px;font-weight:700;flex-shrink:0;}
+.status-pending{background:#FEF3C7;color:#92400E;}
+.status-review{background:#DBEAFE;color:#1E40AF;}
+.status-approved{background:#D1FAE5;color:#065F46;}
+.status-rejected{background:#FEE2E2;color:#991B1B;}
+
+/* ══════════════ RESOURCES PAGE ══════════════ */
+.filter-bar{
+  background:var(--white);border-radius:14px;padding:16px 20px;
+  border:1px solid var(--border);margin-bottom:20px;
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+}
+.filter-select{
+  padding:7px 12px;border-radius:8px;border:1px solid var(--border);
+  font-size:12px;font-family:'DM Sans',sans-serif;color:var(--text);
+  background:var(--cream);outline:none;cursor:pointer;
+}
+.filter-select:focus{border-color:var(--gold);}
+.filter-search{
+  flex:1;min-width:200px;padding:8px 12px;border-radius:8px;
+  border:1px solid var(--border);font-size:13px;
+  font-family:'DM Sans',sans-serif;background:var(--white);outline:none;
+}
+.filter-search:focus{border-color:var(--gold);}
+.filter-clear{font-size:12px;color:var(--gold);cursor:pointer;font-weight:600;}
+
+.resource-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.resource-card{
+  background:var(--white);border-radius:14px;border:1px solid var(--border);
+  overflow:hidden;cursor:pointer;transition:all 0.2s;
+}
+.resource-card:hover{box-shadow:0 6px 24px rgba(0,0,0,0.08);border-color:var(--gold);transform:translateY(-2px);}
+.resource-card-top{padding:20px;border-bottom:1px solid var(--border);}
+.resource-type-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:100px;font-size:10px;font-weight:700;margin-bottom:10px;letter-spacing:0.05em;text-transform:uppercase;}
+.badge-pdf{background:#FEE2E2;color:#991B1B;}
+.badge-video{background:#EDE9FE;color:#5B21B6;}
+.badge-audio{background:#DBEAFE;color:#1E40AF;}
+.badge-doc{background:#D1FAE5;color:#065F46;}
+.badge-study{background:#FEF3C7;color:#92400E;}
+.badge-marc{background:#F3F4F6;color:#374151;}
+.resource-title{font-size:14px;font-weight:700;color:var(--deep);line-height:1.4;margin-bottom:6px;}
+.resource-author{font-size:12px;color:var(--muted);}
+.resource-card-bottom{padding:14px 20px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.res-tag{padding:3px 8px;background:var(--cream);border-radius:6px;font-size:10px;color:var(--slate);font-weight:500;}
+.res-actions{margin-left:auto;display:flex;gap:6px;}
+.res-action-btn{padding:5px 10px;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;transition:all 0.15s;}
+.btn-view{background:var(--cream);color:var(--slate);}
+.btn-ai{background:var(--gold-pale);color:var(--gold);}
+.btn-view:hover,.btn-ai:hover{filter:brightness(0.95);}
+
+/* ══════════════ INSTITUTIONS PAGE ══════════════ */
+
+.inst-table{width:100%;border-collapse:collapse;background:var(--white);border-radius:14px;overflow:hidden;border:1px solid var(--border);}
+.inst-table th{padding:12px 16px;background:var(--cream);font-size:11px;font-weight:700;color:var(--slate);text-transform:uppercase;letter-spacing:0.07em;text-align:left;border-bottom:1px solid var(--border);}
+.inst-table td{padding:14px 16px;font-size:13px;border-bottom:1px solid var(--border);}
+.inst-table tr:last-child td{border-bottom:none;}
+.inst-table tr:hover td{background:rgba(200,150,62,0.04);cursor:pointer;}
+.inst-name{font-weight:600;color:var(--deep);}
+.inst-type{padding:3px 8px;border-radius:6px;font-size:10px;font-weight:600;background:var(--cream);color:var(--slate);}
+
+/* ══════════════ EVENTS PAGE ══════════════ */
+.events-list{display:flex;flex-direction:column;gap:14px;}
+.event-card{
+  background:var(--white);border-radius:14px;border:1px solid var(--border);
+  padding:20px;display:flex;gap:20px;cursor:pointer;transition:all 0.2s;
+}
+.event-card:hover{border-color:var(--gold);box-shadow:0 4px 16px rgba(0,0,0,0.06);}
+.event-date{
+  flex-shrink:0;width:60px;text-align:center;
+  background:var(--cream);border-radius:10px;padding:10px 8px;
+}
+.event-date .day{font-family:'Playfair Display',serif;font-size:26px;font-weight:900;color:var(--deep);line-height:1;}
+.event-date .mon{font-size:11px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:0.05em;}
+.event-info{flex:1;}
+.event-title{font-size:15px;font-weight:700;color:var(--deep);margin-bottom:4px;}
+.event-meta{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.event-meta span{display:flex;align-items:center;gap:4px;}
+.event-type-badge{display:inline-block;padding:3px 10px;border-radius:100px;font-size:10px;font-weight:700;margin-bottom:8px;}
+.ev-congress{background:#DBEAFE;color:#1E40AF;}
+.ev-retreat{background:#EDE9FE;color:#5B21B6;}
+.ev-youth{background:#D1FAE5;color:#065F46;}
+.ev-mission{background:#FEF3C7;color:#92400E;}
+
+/* ══════════════ PERSONS PAGE ══════════════ */
+.persons-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+.person-card{
+  background:var(--white);border-radius:14px;border:1px solid var(--border);
+  padding:20px;text-align:center;cursor:pointer;transition:all 0.2s;
+}
+.person-card:hover{border-color:var(--gold);box-shadow:0 4px 16px rgba(0,0,0,0.07);transform:translateY(-2px);}
+.person-avatar{
+  width:64px;height:64px;border-radius:50%;margin:0 auto 12px;
+  background:linear-gradient(135deg,var(--gold),#B8852E);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--deep);
+}
+.person-name{font-weight:700;color:var(--deep);font-size:14px;margin-bottom:3px;}
+.person-title{font-size:12px;color:var(--muted);margin-bottom:8px;}
+.person-province{display:inline-block;padding:3px 10px;background:var(--cream);border-radius:100px;font-size:10px;font-weight:600;color:var(--slate);}
+.person-stats{display:flex;gap:12px;justify-content:center;margin-top:12px;padding-top:12px;border-top:1px solid var(--border);}
+.person-stat{text-align:center;}
+.person-stat-val{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--deep);}
+.person-stat-lab{font-size:10px;color:var(--muted);}
+
+/* ══════════════ UPLOAD/SUBMISSION PAGE ══════════════ */
+.upload-form{background:var(--white);border-radius:14px;border:1px solid var(--border);padding:28px;}
+.form-section-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--deep);margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border);}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;}
+.form-group{display:flex;flex-direction:column;gap:6px;}
+.form-group.full{grid-column:1/-1;}
+.form-label{font-size:12px;font-weight:600;color:var(--slate);letter-spacing:0.04em;}
+.form-label span{color:var(--danger);}
+.form-input,.form-select,.form-textarea{
+  padding:9px 12px;border-radius:8px;border:1px solid var(--border);
+  font-size:13px;font-family:'DM Sans',sans-serif;color:var(--text);
+  background:var(--white);outline:none;transition:border 0.15s;
+}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--gold);}
+.form-textarea{min-height:80px;resize:vertical;}
+.drop-zone{
+  border:2px dashed var(--border);border-radius:12px;padding:32px;
+  text-align:center;cursor:pointer;transition:all 0.2s;margin-bottom:20px;
+}
+.drop-zone:hover{border-color:var(--gold);background:var(--gold-pale);}
+.drop-zone-icon{font-size:36px;margin-bottom:10px;}
+.drop-zone-text{font-size:13px;color:var(--muted);}
+.drop-zone-text strong{color:var(--gold);}
+.taxonomy-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:20px;}
+.tax-field{display:flex;flex-direction:column;gap:6px;}
+.tax-label{font-size:11px;font-weight:700;color:var(--slate);text-transform:uppercase;letter-spacing:0.07em;}
+.tax-required{color:var(--danger);}
+.workflow-steps{display:flex;align-items:center;gap:0;margin-bottom:24px;}
+.wf-step{flex:1;text-align:center;position:relative;}
+.wf-step::after{content:'→';position:absolute;right:-8px;top:50%;transform:translateY(-50%);color:var(--border);font-size:18px;}
+.wf-step:last-child::after{display:none;}
+.wf-dot{
+  width:36px;height:36px;border-radius:50%;margin:0 auto 6px;
+  display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;
+}
+.wf-active .wf-dot{background:var(--gold);color:var(--deep);}
+.wf-done .wf-dot{background:var(--success);color:#fff;}
+.wf-pending .wf-dot{background:var(--border);color:var(--muted);}
+.wf-label{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;}
+.wf-active .wf-label{color:var(--gold);}
+.wf-done .wf-label{color:var(--success);}
+
+/* ══════════════ AI ASSISTANT PAGE ══════════════ */
+.ai-chat-layout{display:flex;gap:20px;height:calc(100vh - 140px);}
+.ai-chat-main{flex:1;display:flex;flex-direction:column;background:var(--white);border-radius:14px;border:1px solid var(--border);overflow:hidden;}
+.ai-chat-messages{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:16px;}
+.chat-msg{display:flex;gap:12px;max-width:80%;}
+.chat-msg.user{align-self:flex-end;flex-direction:row-reverse;}
+.chat-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0;}
+.chat-avatar.ai{background:linear-gradient(135deg,var(--gold),#B8852E);color:var(--deep);}
+.chat-avatar.user{background:var(--navy);color:var(--white);}
+.chat-bubble{padding:12px 16px;border-radius:14px;font-size:13px;line-height:1.6;}
+.chat-bubble.ai{background:var(--cream);color:var(--text);border:1px solid var(--border);}
+.chat-bubble.user{background:linear-gradient(135deg,var(--deep),var(--navy));color:var(--white);}
+.chat-input-bar{padding:16px;border-top:1px solid var(--border);display:flex;gap:10px;align-items:center;}
+.chat-input{flex:1;padding:10px 14px;border-radius:10px;border:1px solid var(--border);font-size:13px;font-family:'DM Sans',sans-serif;outline:none;}
+.chat-input:focus{border-color:var(--gold);}
+.chat-send-btn{padding:10px 20px;background:linear-gradient(135deg,var(--gold),#B8852E);color:var(--deep);border:none;border-radius:10px;font-weight:700;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.ai-sidebar{width:240px;display:flex;flex-direction:column;gap:12px;}
+.ai-tools-card{background:var(--white);border-radius:14px;border:1px solid var(--border);padding:16px;}
+.ai-tool-item{display:flex;align-items:center;gap:10px;padding:8px;border-radius:8px;cursor:pointer;transition:all 0.15s;}
+.ai-tool-item:hover{background:var(--gold-pale);}
+.ai-tool-icon{font-size:18px;}
+.ai-tool-name{font-size:12px;font-weight:600;color:var(--deep);}
+.ai-tool-desc{font-size:11px;color:var(--muted);}
+
+/* ══════════════ ADMIN ANALYTICS PAGE ══════════════ */
+.analytics-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.bar-chart{margin-top:12px;}
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.bar-label{font-size:12px;color:var(--text);width:100px;flex-shrink:0;font-weight:500;}
+.bar-track{flex:1;height:8px;background:var(--cream);border-radius:100px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:100px;background:linear-gradient(90deg,var(--gold),#B8852E);}
+.bar-value{font-size:11px;font-weight:600;color:var(--muted);width:40px;text-align:right;}
+
+/* ══════════════ VALIDATION PAGE (Provincial Liaison) ══════════════ */
+.validation-queue{display:flex;flex-direction:column;gap:12px;}
+.val-item{
+  background:var(--white);border-radius:14px;border:1px solid var(--border);
+  padding:20px;display:flex;gap:16px;align-items:flex-start;
+}
+.val-icon{font-size:28px;flex-shrink:0;}
+.val-info{flex:1;}
+.val-title{font-size:14px;font-weight:700;color:var(--deep);margin-bottom:4px;}
+.val-meta{font-size:12px;color:var(--muted);margin-bottom:10px;}
+.val-tags{display:flex;gap:6px;flex-wrap:wrap;}
+.val-tag{padding:3px 8px;border-radius:6px;font-size:10px;font-weight:600;}
+.val-actions{display:flex;gap:8px;margin-top:12px;}
+.val-btn{padding:7px 16px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;}
+.val-approve{background:#D1FAE5;color:#065F46;}
+.val-reject{background:#FEE2E2;color:#991B1B;}
+.val-review{background:#DBEAFE;color:#1E40AF;}
+.ai-tag-review{background:var(--cream);border:1px solid var(--border);border-radius:8px;padding:10px;margin-top:8px;}
+.ai-tag-review-title{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;margin-bottom:6px;}
+
+/* ══════════════ MODAL ══════════════ */
+.modal-overlay{
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);
+  z-index:1000;align-items:center;justify-content:center;
+}
+.modal-overlay.open{display:flex;}
+.modal-box{
+  background:var(--white);border-radius:20px;width:600px;max-height:80vh;
+  overflow-y:auto;padding:32px;position:relative;
+}
+.modal-close{
+  position:absolute;top:16px;right:16px;
+  width:32px;height:32px;border-radius:50%;border:1px solid var(--border);
+  background:var(--cream);cursor:pointer;font-size:16px;
+  display:flex;align-items:center;justify-content:center;
+}
+.modal-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:800;color:var(--deep);margin-bottom:4px;}
+.modal-sub{font-size:13px;color:var(--muted);margin-bottom:20px;}
+
+/* ══════════════ ROLE ACCESS RESTRICTIONS ══════════════ */
+.access-denied{
+  background:var(--white);border-radius:14px;border:1px solid var(--border);
+  padding:60px;text-align:center;
+}
+.access-denied-icon{font-size:48px;margin-bottom:16px;}
+.access-denied-title{font-family:'Playfair Display',serif;font-size:22px;color:var(--deep);margin-bottom:8px;}
+.access-denied-sub{font-size:14px;color:var(--muted);}
+
+/* Section header */
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+.section-header h3{font-family:'Playfair Display',serif;font-size:20px;font-weight:800;color:var(--deep);}
+.section-header p{font-size:13px;color:var(--muted);margin-top:2px;}
+
+/* Role colors */
+.role-public{--role-color:#6B7280;}
+.role-registered{--role-color:#1D4ED8;}
+.role-liaison{--role-color:#D97706;}
+.role-editor{--role-color:#7C3AED;}
+.role-admin{--role-color:#DC2626;}
+.role-ai{--role-color:#059669;}
+
+/* ══════════════ GLOBAL SEARCH ══════════════ */
+.gs-section-label{
+  padding:10px 14px 4px;font-size:10px;font-weight:700;
+  color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;
+  border-top:1px solid var(--border);
+}
+.gs-section-label:first-child{border-top:none;}
+.gs-item{
+  display:flex;align-items:center;gap:10px;
+  padding:9px 14px;cursor:pointer;transition:background 0.12s;
+}
+.gs-item:hover,.gs-item.active{background:var(--cream);}
+.gs-item-icon{font-size:16px;flex-shrink:0;width:24px;text-align:center;}
+.gs-item-body{flex:1;min-width:0;}
+.gs-item-title{font-size:13px;font-weight:600;color:var(--deep);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.gs-item-meta{font-size:11px;color:var(--muted);margin-top:1px;}
+.gs-item-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:100px;flex-shrink:0;background:var(--cream);color:var(--slate);}
+.gs-empty{padding:20px 14px;text-align:center;font-size:13px;color:var(--muted);}
+.gs-item-mark{background:rgba(200,150,62,0.25);border-radius:2px;padding:0 1px;}
+
+/* ══════════════ CALENDAR VIEW ══════════════ */
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;}
+.cal-day-name{text-align:center;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;padding:6px 0;letter-spacing:0.06em;}
+.cal-cell{min-height:72px;border-radius:8px;border:1px solid var(--border);padding:6px;background:var(--white);transition:background 0.15s;}
+.cal-cell:hover{background:var(--cream);}
+.cal-cell.empty{background:transparent;border-color:transparent;}
+.cal-cell.today{border-color:var(--gold);background:rgba(200,150,62,0.06);}
+.cal-date{font-size:11px;font-weight:700;color:var(--muted);margin-bottom:4px;}
+.cal-cell.today .cal-date{color:var(--gold);}
+.cal-event-dot{
+  font-size:10px;font-weight:600;padding:2px 5px;border-radius:4px;
+  margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  cursor:pointer;
+}
+.cal-ev-youth{background:#D1FAE5;color:#065F46;}
+.cal-ev-congress{background:#DBEAFE;color:#1E40AF;}
+.cal-ev-retreat{background:#EDE9FE;color:#5B21B6;}
+.cal-ev-mission{background:#FEF3C7;color:#92400E;}
+
+/* ══════════════ OWL PROCESS STEPS ══════════════ */
+.owl-step{
+  display:flex;align-items:flex-start;gap:14px;
+  padding:14px 16px;border-radius:12px;border:1px solid var(--border);
+  margin-bottom:10px;transition:all 0.3s;background:var(--white);
+}
+.owl-step.step-idle{border-color:var(--border);opacity:0.55;}
+.owl-step.step-running{border-color:var(--gold);background:rgba(200,150,62,0.05);opacity:1;}
+.owl-step.step-done{border-color:#6EE7B7;background:#F0FDF4;opacity:1;}
+.owl-step.step-fail{border-color:#FCA5A5;background:#FEF2F2;opacity:1;}
+.owl-step-icon{
+  width:36px;height:36px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;flex-shrink:0;font-weight:700;
+  border:2px solid var(--border);background:var(--cream);
+  transition:all 0.3s;
+}
+.step-running .owl-step-icon{border-color:var(--gold);background:rgba(200,150,62,0.15);animation:owlPulse 1s ease-in-out infinite;}
+.step-done .owl-step-icon{border-color:#22C55E;background:#DCFCE7;color:#15803D;}
+.step-fail .owl-step-icon{border-color:#EF4444;background:#FEE2E2;color:#B91C1C;}
+@keyframes owlPulse{0%,100%{box-shadow:0 0 0 0 rgba(200,150,62,0.4);}50%{box-shadow:0 0 0 6px rgba(200,150,62,0);}}
+.owl-step-body{flex:1;}
+.owl-step-title{font-size:13px;font-weight:700;color:var(--deep);margin-bottom:3px;}
+.owl-step-meta{font-size:11px;color:var(--muted);}
+.owl-step-bar{height:4px;border-radius:100px;background:var(--border);margin-top:8px;overflow:hidden;display:none;}
+.step-running .owl-step-bar{display:block;}
+.owl-step-bar-fill{height:100%;border-radius:100px;background:linear-gradient(90deg,var(--gold),#B8852E);width:0%;transition:width 0.4s ease;}
+.owl-step-badge{
+  padding:3px 10px;border-radius:100px;font-size:10px;font-weight:700;
+  flex-shrink:0;align-self:center;
+}
+.badge-idle{background:var(--cream);color:var(--muted);}
+.badge-running{background:rgba(200,150,62,0.15);color:var(--gold);}
+.badge-done{background:#DCFCE7;color:#15803D;}
+.badge-fail{background:#FEE2E2;color:#B91C1C;}
+
+/* ══════════════ OWL TRIGGER ══════════════ */
+.owl-trigger-nav{position:relative;}
+.owl-trigger-nav:hover{color:var(--gold-light) !important;}
+#owl-status-badge.success{background:#22C55E;color:#fff;}
+#owl-status-badge.error{background:#EF4444;color:#fff;}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:5px;height:5px;}
+::-webkit-scrollbar-track{background:var(--cream);}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:10px;}
+::-webkit-scrollbar-thumb:hover{background:var(--gold);}
+
+/* toast */
+.toast{
+  position:fixed;bottom:24px;right:24px;z-index:9998;
+  background:var(--deep);color:var(--white);
+  padding:12px 20px;border-radius:10px;font-size:13px;font-weight:500;
+  border-left:3px solid var(--gold);
+  display:none;animation:slideUp 0.3s ease;
+}
+.toast.show{display:block;}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+</style>
+</head>
+<body>
+
+<!-- ══════════════ LOGIN SCREEN ══════════════ -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">
+     
+      <div class="login-logo-text">
+        <strong>Global Salesian Digital Platform</strong>
+        <span>GSDP</span>
+      </div>
+    </div>
+    <h2 class="login-title">Login</h2>
+    <p class="login-sub">Sign in to access the platform based on your role.</p>
+    
+    <label class="login-label">Email Address</label>
+    <input class="login-input" type="email" value="admin@salesian.org" placeholder="your@email.com">
+    
+    <label class="login-label">Password</label>
+    <div class="password-field">
+      <input id="login-password" class="login-input" type="password" value="admin">
+      <button type="button" id="password-toggle-btn" class="password-toggle" onclick="toggleLoginPassword()" aria-label="Toggle password visibility">👁</button>
+    </div>
+    
+    <label class="login-label">Sign in as</label>
+    <select class="login-input" id="role-select">
+      <option value="public">Public User — Anonymous Viewer</option>
+      <option value="registered">Registered User — Researcher / Educator</option>
+      <option value="liaison">Provincial Digital Liaison — Content Contributor</option>
+      <option value="editor">Department Editor — Content Curator</option>
+      <option value="admin" selected>Generalate Administrator — Governance</option>
+      <option value="ai">AI System — Automated Classifier</option>
+    </select>
+    
+    <button class="login-btn" onclick="doLogin()">Sign In to GSDP →</button>
+    
+    <div class="login-roles-hint">
+      <p>Quick access — click to select role:</p>
+      <div class="role-chips">
+        <span class="role-chip" onclick="quickRole('public')">👤 Public</span>
+        <span class="role-chip" onclick="quickRole('registered')">🎓 Registered</span>
+        <span class="role-chip" onclick="quickRole('liaison')">🌐 Provincial Liaison</span>
+        <span class="role-chip" onclick="quickRole('editor')">✏️ Dept. Editor</span>
+        <span class="role-chip" onclick="quickRole('admin')">🛡 Admin</span>
+        <span class="role-chip" onclick="quickRole('ai')">🤖 AI System</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ APP SHELL ══════════════ -->
+<div id="app">
+  <div class="app-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-logo">
+        <div class="sb-logo-icon">G</div>
+        <div class="sb-logo-text">
+          <strong>GSDP</strong>
+          <span>Salesian Platform</span>
+        </div>
+      </div>
+      
+      <div class="sidebar-user">
+        <div class="user-avatar" id="user-avatar">A</div>
+        <div class="user-info">
+          <strong id="user-name">Administrator</strong>
+          <span id="user-role-label">Admin</span>
+        </div>
+      </div>
+
+      <div class="sidebar-section-label">Navigation</div>
+      <div class="sb-nav-item active" onclick="showPage('dashboard',this)" data-page="dashboard">
+        <span class="nav-icon">📊</span> Dashboard
+      </div>
+      <div class="sb-nav-item" onclick="showPage('resources',this)" data-page="resources">
+        <span class="nav-icon">📚</span> Resources
+      </div>
+      <div class="sb-nav-item" onclick="showPage('institutions',this)" data-page="institutions">
+        <span class="nav-icon">🏛</span> Institutions
+      </div>
+      <div class="sb-nav-item" onclick="showPage('events',this)" data-page="events">
+        <span class="nav-icon">📅</span> Events
+        <span class="nav-badge" id="events-badge">3</span>
+      </div>
+      <div class="sb-nav-item" onclick="showPage('persons',this)" data-page="persons">
+        <span class="nav-icon">👥</span> Persons
+      </div>
+      <div class="sb-nav-item" onclick="showPage('ai',this)" data-page="ai">
+        <span class="nav-icon">✨</span> AI Assistant
+      </div>
+
+      <div class="sidebar-section-label" id="contrib-section">Ontology</div>
+      <div class="sb-nav-item owl-trigger-nav" id="owl-trigger-nav" onclick="showPage('upload',this)" data-page="upload">
+        <span class="nav-icon">🦉</span> OWL Update
+        <span class="nav-badge" id="owl-status-badge" style="display:none;">●</span>
+      </div>
+
+      <div class="sidebar-section-label" id="admin-section">Administration</div>
+      <div class="sb-nav-item" id="analytics-nav" onclick="showPage('analytics',this)" data-page="analytics">
+        <span class="nav-icon">📈</span> Analytics
+      </div>
+      <div class="sb-nav-item" id="governance-nav" onclick="showPage('governance',this)" data-page="governance">
+        <span class="nav-icon">⚖️</span> Governance
+      </div>
+      <div class="sb-nav-item" id="access-nav" onclick="showPage('access',this)" data-page="access">
+        <span class="nav-icon">🧩</span> Access Control
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="logout-btn" onclick="doLogout()">
+          <span>←</span> Sign Out
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN AREA -->
+    <div class="main-area">
+      <div class="topbar">
+        <div class="topbar-title" id="page-title">Dashboard</div>
+        <div class="topbar-search" id="global-search-wrap" style="position:relative;flex:1;max-width:400px;">
+          <span>🔍</span>
+          <input id="global-search-input" placeholder="Search across all modules..." autocomplete="off"
+            oninput="globalSearch(this.value)"
+            onkeydown="globalSearchKey(event)"
+            onfocus="if(this.value.trim()) globalSearch(this.value)"
+            onblur="setTimeout(()=>closeGlobalSearch(),200)">
+          <!-- Dropdown results -->
+          <div id="global-search-dropdown" style="
+            display:none;position:absolute;top:calc(100% + 8px);left:0;right:0;
+            background:var(--white);border:1px solid var(--border);border-radius:12px;
+            box-shadow:0 8px 32px rgba(0,0,0,0.12);z-index:999;max-height:420px;overflow-y:auto;
+          "></div>
+        </div>
+        <div class="topbar-actions">
+          <div class="notif-btn" onclick="showToast('3 new notifications')"><span>🔔</span><div class="notif-dot"></div></div>
+          <button class="topbar-btn btn-gold" id="topbar-action-btn" onclick="showPage('governance', document.querySelector('[data-page=governance]'))">⚖️ Governance</button>
+        </div>
+      </div>
+
+      <div class="page-content">
+
+        <!-- ══ DASHBOARD PAGE ══ -->
+        <div class="page active" id="page-dashboard">
+          <div class="welcome-banner">
+            <h2 id="dash-welcome">Good morning, Administrator</h2>
+            
+            <div class="role-badge" id="role-badge-display">🛡 Generalate Administrator</div>
+          </div>
+
+          <div class="stats-row" id="stats-row">
+            <!-- populated by JS -->
+          </div>
+
+          <div class="dash-grid">
+            <div class="card">
+              <div class="card-header">
+                <span class="card-title">Recent Activity</span>
+                <span class="card-action" onclick="showPage('resources',document.querySelector('[data-page=resources]'))">View all →</span>
+              </div>
+              <div class="card-body" id="activity-feed"></div>
+            </div>
+            <div>
+              <div class="card" style="margin-bottom:16px">
+                <div class="card-header"><span class="card-title">Quick Actions</span></div>
+                <div class="card-body"><div class="quick-actions" id="quick-actions"></div></div>
+              </div>
+              <div class="card" id="pending-card">
+                <div class="card-header">
+                  <span class="card-title">Recent Updates</span>
+                  <span class="nav-badge" style="background:var(--gold);color:var(--deep);padding:2px 8px;border-radius:100px;font-size:11px;font-weight:700;" id="pending-count">0</span>
+                </div>
+                <div class="card-body" id="pending-items"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══ RESOURCES PAGE ══ -->
+        <div class="page" id="page-resources">
+          <div class="section-header">
+            <div>
+              <h3>Resource Library</h3>
+              <p>Browse, search, and access the Salesian knowledge corpus</p>
+            </div>
+          </div>
+          <div class="filter-bar">
+            <select class="filter-select"><option>All Areas</option><option>Youth Ministry</option><option>Catechesis</option><option>Pedagogy</option><option>Spirituality</option><option>Missiology</option><option>Formation</option></select>
+            <select class="filter-select"><option>All Doc Types</option><option>Official Publication</option><option>Study</option><option>Good Practice</option><option>Multimedia</option><option>MARC21</option></select>
+            <select class="filter-select"><option>All Regions</option><option>South Asia</option><option>Europe</option><option>Africa</option><option>Latin America</option><option>East Asia</option></select>
+            <select class="filter-select"><option>All Languages</option><option>English</option><option>Italian</option><option>Spanish</option><option>French</option><option>Portuguese</option></select>
+            <select class="filter-select"><option>All Salesian Groups</option><option>SDB</option><option>FMA</option><option>Cooperators</option><option>ADMA</option><option>Past Pupils</option></select>
+            <select class="filter-select"><option>All Provinces</option><option>INK</option><option>INM</option><option>INS</option><option>ITP</option><option>ESP</option><option>BRA</option><option>AFE</option><option>FIL</option><option>FMA</option><option>CHN</option></select>
+            <input class="filter-search" placeholder="🔍 Search title, author, abstract...">
+            <span class="filter-clear">Clear filters</span>
+          </div>
+          <div class="resource-grid" id="resource-grid"></div>
+        </div>
+
+        <!-- ══ INSTITUTIONS PAGE ══ -->
+        <div class="page" id="page-institutions">
+          <div class="section-header">
+            <div>
+              <h3>Institutions Directory</h3>
+              <p>CristO–Religio linked institutional map across 92 provinces</p>
+            </div>
+          </div>
+          <div class="filter-bar" style="margin-bottom:16px;">
+            <select class="filter-select"><option>All Types</option><option>High School</option><option>Vocational School</option><option>Parish</option><option>Oratory</option><option>Social Work</option><option>University</option></select>
+            <select class="filter-select"><option>All Provinces</option><option>INK – Kolkata</option><option>INM – Chennai</option><option>ITP – Italy</option><option>ESP – Spain</option><option>BRA – Brazil</option></select>
+            <select class="filter-select"><option>All Salesian Groups</option><option>SDB</option><option>FMA</option><option>Cooperators</option><option>ADMA</option><option>Past Pupils</option></select>
+            <input class="filter-search" placeholder="🔍 Search institution name...">
+            <span class="filter-clear">Clear filters</span>
+          </div>
+          <table class="inst-table">
+            <thead><tr><th>Institution</th><th>Type</th><th>Province</th><th>Country</th><th>Students</th><th>Director</th><th>Status</th></tr></thead>
+            <tbody id="institutions-tbody"></tbody>
+          </table>
+        </div>
+
+        <!-- ══ EVENTS PAGE ══ -->
+        <div class="page" id="page-events">
+          <div class="section-header">
+            <div><h3>Events</h3><p>ANS-integrated global Salesian events calendar</p></div>
+            <div style="display:flex;gap:8px;">
+              <button class="topbar-btn btn-outline-dark" onclick="toggleCalendarView()">📅 Calendar View</button>
+            </div>
+          </div>
+          <div class="filter-bar" style="margin-bottom:20px;">
+            <select class="filter-select"><option>All Types</option><option>Congress</option><option>Retreat</option><option>Youth Gathering</option><option>Mission Event</option></select>
+            <select class="filter-select"><option>All Regions</option><option>South Asia</option><option>Europe</option><option>Africa</option><option>Latin America</option></select>
+            <select class="filter-select"><option>All Salesian Groups</option><option>SDB</option><option>FMA</option><option>Cooperators</option><option>ADMA</option><option>Past Pupils</option></select>
+            <select class="filter-select"><option>All Provinces</option><option>INK</option><option>INM</option><option>INS</option><option>ITP</option><option>ESP</option><option>BRA</option><option>AFE</option><option>FIL</option><option>FMA</option></select>
+            <input class="filter-search" placeholder="🔍 Search events...">
+            <span class="filter-clear">Clear filters</span>
+          </div>
+          <!-- List view -->
+          <div id="events-list-view">
+            <div class="events-list" id="events-list"></div>
+          </div>
+          <!-- Calendar view -->
+          <div id="events-calendar-view" style="display:none;">
+            <div class="card">
+              <div class="card-header" style="justify-content:space-between;align-items:center;">
+                <button onclick="calNav(-1)" style="background:none;border:1px solid var(--border);border-radius:8px;padding:6px 12px;cursor:pointer;font-size:14px;">‹</button>
+                <span class="card-title" id="cal-month-label" style="font-family:'Playfair Display',serif;font-size:16px;"></span>
+                <button onclick="calNav(1)" style="background:none;border:1px solid var(--border);border-radius:8px;padding:6px 12px;cursor:pointer;font-size:14px;">›</button>
+              </div>
+              <div class="card-body" style="padding:12px;">
+                <div id="cal-grid"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══ PERSONS PAGE ══ -->
+        <div class="page" id="page-persons">
+          <div class="section-header">
+            <div><h3>Persons Directory</h3><p>Salesian scholars, educators, and ministers</p></div>
+          </div>
+          <div class="filter-bar" style="margin-bottom:20px;">
+            <select class="filter-select"><option>All Provinces</option><option>INK</option><option>INM</option><option>INS</option><option>ITP</option><option>ESP</option><option>BRA</option><option>AFE</option><option>FIL</option><option>FMA</option><option>CHN</option></select>
+            <select class="filter-select"><option>All Salesian Groups</option><option>SDB</option><option>FMA</option><option>Cooperators</option><option>ADMA</option><option>Past Pupils</option></select>
+            <input class="filter-search" placeholder="🔍 Search persons...">
+            <span class="filter-clear">Clear filters</span>
+          </div>
+          <div class="persons-grid" id="persons-grid"></div>
+        </div>
+
+        <!-- ══ AI ASSISTANT PAGE ══ -->
+        <div class="page" id="page-ai">
+          <div class="section-header">
+            <div><h3>AI Assistant</h3><p>Semantic search, summarization, translation & chat with documents</p></div>
+          </div>
+          <div class="ai-chat-layout">
+            <div class="ai-chat-main">
+              <div class="ai-chat-messages" id="chat-messages"></div>
+              <div class="chat-input-bar">
+                <input class="chat-input" id="chat-input" placeholder="Ask anything… e.g. 'Summarize resources on Drug Addiction in South Asia'" onkeypress="if(event.key==='Enter')sendChat()">
+                <button class="chat-send-btn" onclick="sendChat()">Send ✦</button>
+              </div>
+            </div>
+            <div class="ai-sidebar">
+              <div class="ai-tools-card">
+                <div class="card-title" style="margin-bottom:12px;">AI Tools</div>
+                <div class="ai-tool-item" onclick="triggerAITool('search')">
+                  <span class="ai-tool-icon">🔍</span>
+                  <div><div class="ai-tool-name">Semantic Search</div><div class="ai-tool-desc">Natural language queries</div></div>
+                </div>
+                <div class="ai-tool-item" onclick="triggerAITool('summarize')">
+                  <span class="ai-tool-icon">📝</span>
+                  <div><div class="ai-tool-name">Summarize</div><div class="ai-tool-desc">Document summaries</div></div>
+                </div>
+                <div class="ai-tool-item" onclick="triggerAITool('translate')">
+                  <span class="ai-tool-icon">🌐</span>
+                  <div><div class="ai-tool-name">Translate</div><div class="ai-tool-desc">EN, IT, ESP, FRA, POR</div></div>
+                </div>
+                <div class="ai-tool-item" onclick="triggerAITool('recommend')">
+                  <span class="ai-tool-icon">✨</span>
+                  <div><div class="ai-tool-name">Recommend</div><div class="ai-tool-desc">Related resources</div></div>
+                </div>
+              </div>
+              <div class="ai-tools-card">
+                <div class="card-title" style="margin-bottom:10px;">Suggested Queries</div>
+                <div style="display:flex;flex-direction:column;gap:6px;" id="suggested-queries"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══ OWL UPDATE PAGE ══ -->
+        <div class="page" id="page-upload">
+          <div class="section-header">
+            <div><h3>OWL Ontology Update</h3><p>Trigger and monitor the GSDP ontology regeneration pipeline</p></div>
+          </div>
+
+          <!-- STATUS CARDS ROW -->
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px;">
+            <div class="stat-card">
+              <div class="stat-card-top"><div class="stat-card-icon" style="background:#EDE9FE;">🦉</div><span class="stat-card-trend trend-up">Live</span></div>
+              <div class="stat-card-value" style="font-size:18px;" id="owl-current-ver">v3.4.1</div>
+              <div class="stat-card-label">Current OWL Version</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card-top"><div class="stat-card-icon" style="background:#D1FAE5;">🏷</div><span class="stat-card-trend trend-up">OK</span></div>
+              <div class="stat-card-value" style="font-size:18px;">847</div>
+              <div class="stat-card-label">Total Classes</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card-top"><div class="stat-card-icon" style="background:#DBEAFE;">🔗</div><span class="stat-card-trend trend-up">OK</span></div>
+              <div class="stat-card-value" style="font-size:18px;">312</div>
+              <div class="stat-card-label">Total Properties</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card-top"><div class="stat-card-icon" style="background:#FEF3C7;">🕐</div><span id="owl-last-upd-trend" class="stat-card-trend trend-up">Recent</span></div>
+              <div class="stat-card-value" style="font-size:13px;margin-top:4px;" id="owl-last-updated">2026-03-01 18:42</div>
+              <div class="stat-card-label">Last Updated</div>
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+
+            <!-- TRIGGER PANEL -->
+            <div class="card">
+              <div class="card-header"><span class="card-title">⚡ Trigger OWL Update</span></div>
+              <div class="card-body">
+                <p style="font-size:13px;color:var(--muted);margin-bottom:18px;line-height:1.7;">Click the button below to start the OWL ontology regeneration pipeline. The process will run all 6 stages sequentially and report the status of each step in real time.</p>
+
+                <div style="margin-bottom:20px;">
+                  <div style="font-size:11px;font-weight:700;color:var(--slate);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px;">API Endpoint</div>
+                  <div style="background:var(--cream);border:1px solid var(--border);border-radius:8px;padding:10px 14px;font-family:monospace;font-size:12px;color:var(--gold);">POST /api/trigger-owl-update</div>
+                </div>
+
+                <div style="margin-bottom:20px;">
+                  <div style="font-size:11px;font-weight:700;color:var(--slate);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px;">Update Scope</div>
+                  <div style="display:flex;flex-direction:column;gap:7px;">
+                    <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;"><input type="checkbox" checked style="accent-color:var(--gold)"> Validate Taxonomy</label>
+                    <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;"><input type="checkbox" checked style="accent-color:var(--gold)"> Build Class Hierarchy</label>
+                    <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;"><input type="checkbox" checked style="accent-color:var(--gold)"> Map Salesian Groups</label>
+                    <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;"><input type="checkbox" checked style="accent-color:var(--gold)"> Map Provinces &amp; Regions</label>
+                    <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;"><input type="checkbox" checked style="accent-color:var(--gold)"> Generate OWL File</label>
+                    <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;"><input type="checkbox" checked style="accent-color:var(--gold)"> Push to Server</label>
+                  </div>
+                </div>
+
+                <button class="topbar-btn btn-gold" id="owl-run-btn" onclick="triggerOWLUpdate()" style="width:100%;justify-content:center;padding:13px;font-size:14px;">
+                  🦉 Run OWL Update
+                </button>
+                <button class="topbar-btn btn-outline-dark" id="owl-reset-btn" onclick="resetOWLProcess()" style="width:100%;justify-content:center;padding:10px;margin-top:8px;display:none;">
+                  ↺ Reset
+                </button>
+              </div>
+            </div>
+
+            <!-- PROCESS PANEL -->
+            <div class="card">
+              <div class="card-header">
+                <span class="card-title">📋 Process Monitor</span>
+                <span id="owl-overall-status" style="font-size:12px;color:var(--muted);font-weight:600;">Idle</span>
+              </div>
+              <div class="card-body" id="owl-process-panel">
+                <!-- Steps rendered by JS -->
+                <div id="owl-steps-container"></div>
+                <!-- Summary shown after complete -->
+                <div id="owl-summary" style="display:none;margin-top:16px;padding:14px;border-radius:10px;"></div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- UPDATE LOG -->
+          <div class="card" style="margin-top:20px;">
+            <div class="card-header"><span class="card-title">🗂 Update History</span></div>
+            <div class="card-body" id="owl-update-log">
+              <div class="activity-item"><div class="activity-dot dot-green"></div><div><div class="activity-text">OWL v3.4.1 — all 6 stages completed · 847 classes · 312 properties</div><div class="activity-time">2026-03-01 18:42 UTC · Triggered by paul.dsouza</div></div></div>
+              <div class="activity-item"><div class="activity-dot dot-blue"></div><div><div class="activity-text">OWL v3.4.0 — Province INK taxonomy mappings updated</div><div class="activity-time">2026-02-28 09:15 UTC · Triggered by james.rodrigues</div></div></div>
+              <div class="activity-item"><div class="activity-dot dot-gold"></div><div><div class="activity-text">OWL v3.3.9 — Salesian Family group hierarchy expanded · 12 new subclasses</div><div class="activity-time">2026-02-26 14:30 UTC · Triggered by lucia.ferraro</div></div></div>
+              <div class="activity-item"><div class="activity-dot dot-red"></div><div><div class="activity-text">OWL update failed at stage 5 (Generate OWL File) — API timeout · Auto-retry succeeded</div><div class="activity-time">2026-02-25 11:02 UTC</div></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══ ANALYTICS PAGE ══ -->
+        <div class="page" id="page-analytics">
+          <div class="section-header">
+            <div><h3>Analytics & Dashboards</h3></div>
+          </div>
+          <!-- Analytics Filters -->
+          <div class="filter-bar" style="margin-bottom:20px;">
+            <select class="filter-select" id="af-province"><option>All Provinces</option><option>INS – South Asia</option><option>ITP – Italy</option><option>INK – Kolkata</option><option>ESP – Spain</option><option>BRA – Brazil</option><option>INM – Chennai</option></select>
+            <select class="filter-select" id="af-group"><option>All Salesian Groups</option><option>SDB</option><option>FMA</option><option>Cooperators</option><option>ADMA</option><option>Past Pupils</option></select>
+            <select class="filter-select" id="af-region"><option>All Regions</option><option>South Asia</option><option>Europe</option><option>Africa</option><option>Latin America</option><option>East Asia</option></select>
+            <select class="filter-select" id="af-year"><option>All Years</option><option>2026</option><option>2025</option><option>2024</option><option>2023</option></select>
+            <span class="filter-clear" onclick="resetAnalyticsFilters()">Clear filters</span>
+          </div>
+          <div class="stats-row">
+            <div class="stat-card"><div class="stat-card-top"><div class="stat-card-icon" style="background:#FEF3C7;">📚</div><span class="stat-card-trend trend-up">+12%</span></div><div class="stat-card-value">12,847</div><div class="stat-card-label">Total Resources</div></div>
+            <div class="stat-card"><div class="stat-card-top"><div class="stat-card-icon" style="background:#D1FAE5;">🏛</div><span class="stat-card-trend trend-up">+3%</span></div><div class="stat-card-value">7,240</div><div class="stat-card-label">Institutions</div></div>
+            <div class="stat-card"><div class="stat-card-top"><div class="stat-card-icon" style="background:#DBEAFE;">📅</div><span class="stat-card-trend trend-up">+28%</span></div><div class="stat-card-value">10,523</div><div class="stat-card-label">Events Indexed</div></div>
+            <div class="stat-card"><div class="stat-card-top"><div class="stat-card-icon" style="background:#EDE9FE;">✨</div><span class="stat-card-trend trend-up">+41%</span></div><div class="stat-card-value">3,891</div><div class="stat-card-label">AI Queries / Month</div></div>
+          </div>
+          <div class="analytics-grid">
+            <div class="card">
+              <div class="card-header"><span class="card-title">Publications by Province</span></div>
+              <div class="card-body" id="analytics-provinces"></div>
+            </div>
+            <div class="card">
+              <div class="card-header"><span class="card-title">Resources by Knowledge Area</span></div>
+              <div class="card-body" id="analytics-areas"></div>
+            </div>
+            <div class="card">
+              <div class="card-header"><span class="card-title">Document Types Distribution</span></div>
+              <div class="card-body" id="analytics-doctypes"></div>
+            </div>
+            <div class="card">
+              <div class="card-header"><span class="card-title">AI Feature Usage</span></div>
+              <div class="card-body" id="analytics-ai"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══ GOVERNANCE PAGE ══ -->
+        <div class="page" id="page-governance">
+          <div class="section-header">
+            <div><h3>Governance & Policy</h3><p>Provincial contribution policy · Audit logs · Data lineage</p></div>
+          </div>
+          <div class="dash-grid">
+            <div>
+              <div class="card" style="margin-bottom:16px;">
+                <div class="card-header"><span class="card-title">Recent Audit Log</span></div>
+                <div class="card-body" id="audit-log"></div>
+              </div>
+              <div class="card">
+                <div class="card-header"><span class="card-title">Province Data Status</span></div>
+                <div class="card-body" id="province-status"></div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header"><span class="card-title">Policy Compliance</span></div>
+              <div class="card-body" id="compliance-panel"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══ ACCESS CONTROL PAGE ══ -->
+        <div class="page" id="page-access">
+          <div class="section-header">
+            <div><h3>Access Control</h3><p>Manage which roles can see each module in the sidebar</p></div>
+          </div>
+          <div class="card">
+            <div class="card-header"><span class="card-title">Role-based Access</span></div>
+            <div class="card-body" id="access-control-panel"></div>
+          </div>
+        </div>
+
+      </div><!-- /page-content -->
+    </div><!-- /main-area -->
+  </div>
+</div>
+
+<!-- RESOURCE DETAIL MODAL -->
+<div class="modal-overlay" id="resource-modal">
+  <div class="modal-box">
+    <div class="modal-close" onclick="closeModal('resource-modal')">✕</div>
+    <div id="modal-content"></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ══════════════════════════════════════════
+// ROLE DEFINITIONS & PERMISSIONS
+// ══════════════════════════════════════════
+
+// Current month name for dashboard stats (e.g., "March")
+const CURRENT_MONTH_NAME = new Date().toLocaleString('default', { month:'long' });
+
+const ROLES = {
+  public: {
+    name:'Public User', label:'👤 Public Viewer', avatar:'P',
+    email:'visitor@salesian.org',
+    pages:['dashboard','resources','institutions','events','ai'],
+    canUpload:false, canValidate:false, canAdmin:false,
+    stats:[
+      {icon:'📚',bg:'#FEF3C7',value:'10,000+',label:'Public Resources',trend:'+5%',tClass:'trend-up'},
+      {icon:'🏛',bg:'#D1FAE5',value:'7,240',label:'Institutions',trend:'Global',tClass:'trend-up'},
+      {icon:'📅',bg:'#DBEAFE',value:'10,523',label:'Indexed Events',trend:'Live',tClass:'trend-up'},
+      {icon:'🌐',bg:'#EDE9FE',value:'5',label:'Languages',trend:'EN+',tClass:'trend-up'},
+    ],
+    quickActions:[
+      {icon:'🔍',title:'Browse Resources',sub:'Explore the knowledge hub',page:'resources'},
+      {icon:'🏛',title:'Find Institutions',sub:'Discover Salesian works',page:'institutions'},
+      {icon:'📅',title:'View Events',sub:'Upcoming & recent events',page:'events'},
+      {icon:'✨',title:'Ask AI',sub:'Natural language search',page:'ai'},
+    ],
+    activities:[
+      {dot:'dot-blue',text:'<strong>New resource</strong> published: "Youth Ministry Annual Report 2025 — South Asia"',time:'2 hours ago'},
+      {dot:'dot-green',text:'<strong>Event added:</strong> World Youth Day 2026 — Rome, Italy',time:'5 hours ago'},
+      {dot:'dot-gold',text:'<strong>Collection updated:</strong> Formation Materials — FMA 2025',time:'Yesterday'},
+    ]
+  },
+  registered: {
+    name:'Fr. Thomas Antony', label:'🎓 Registered User', avatar:'T',
+    email:'thomas.antony@salesian.in',
+    pages:['dashboard','resources','institutions','events','persons','ai'],
+    canUpload:false, canValidate:false, canAdmin:false,
+    stats:[
+      {icon:'📚',bg:'#FEF3C7',value:'12,847',label:'Resources Available',trend:'+12%',tClass:'trend-up'},
+      {icon:'📂',bg:'#D1FAE5',value:'47',label:'Saved Items',trend:'My Library',tClass:'trend-up'},
+      {icon:'✨',bg:'#EDE9FE',value:'23',label:'AI Queries Used',trend:'This month',tClass:'trend-up'},
+      {icon:'🌐',bg:'#DBEAFE',value:'3',label:'Languages Active',trend:'EN, IT, ESP',tClass:'trend-up'},
+    ],
+    quickActions:[
+      {icon:'✨',title:'AI Search',sub:'Semantic query',page:'ai'},
+      {icon:'📚',title:'My Library',sub:'Saved resources',page:'resources'},
+      {icon:'👥',title:'Find Authors',sub:'Person directory',page:'persons'},
+      {icon:'📅',title:'Events',sub:'Upcoming gatherings',page:'events'},
+    ],
+    activities:[
+      {dot:'dot-blue',text:'You viewed: <strong>"Preventive System in Digital Age"</strong> — Summarized via AI',time:'1 hour ago'},
+      {dot:'dot-green',text:'Saved to library: <strong>"Youth at Risk Pastoral Guide — Africa 2024"</strong>',time:'3 hours ago'},
+      {dot:'dot-gold',text:'Translation requested: <strong>"Missione Salesiana 2025"</strong> → English',time:'Yesterday'},
+    ]
+  },
+  liaison: {
+    name:'Bro. James Rodrigues', label:'🌐 Provincial Digital Liaison', avatar:'J',
+    email:'james.rodrigues@ins.salesian.org',
+    pages:['dashboard','resources','institutions','events','persons','ai','upload'],
+    canUpload:true, canValidate:true, canAdmin:false,
+    stats:[
+      {icon:'⬆️',bg:'#FEF3C7',value:'18',label:'In Library This Month',trend:'+6',tClass:'trend-up'},
+      {icon:'📚',bg:'#D1FAE5',value:'12,847',label:'Total Resources',trend:'Indexed',tClass:'trend-up'},
+      {icon:'📊',bg:'#DBEAFE',value:'94%',label:'Metadata Compliance',trend:'+2%',tClass:'trend-up'},
+      {icon:'🏅',bg:'#EDE9FE',value:'INS',label:'Province',trend:'South Asia',tClass:'trend-up'},
+    ],
+    quickActions:[
+      {icon:'🦉',title:'Trigger OWL Update',sub:'Update ontology file',page:'upload'},
+      {icon:'📚',title:'My Submissions',sub:'Track status',page:'resources'},
+      {icon:'📊',title:'Province Report',sub:'Contribution stats',page:'analytics'},
+    ],
+    activities:[
+      {dot:'dot-blue',text:'Resource in library: <strong>"INS Annual Youth Report 2025"</strong>',time:'30 min ago'},
+      {dot:'dot-blue',text:'AI tagged metadata for: <strong>"Oratory Guidelines — INS Province"</strong>',time:'2 hours ago'},
+      {dot:'dot-green',text:'In library: <strong>"Catechesis Workshop Materials 2025"</strong>',time:'Yesterday'},
+      {dot:'dot-gold',text:'Metadata updated: <strong>"Oratory Guidelines — INS Province"</strong>',time:'2 days ago'},
+    ]
+  },
+  editor: {
+    name:'Sr. Lucia Ferraro', label:'✏️ Department Editor', avatar:'L',
+    email:'lucia.ferraro@youthministry.salesian.org',
+    pages:['dashboard','resources','institutions','events','persons','ai','upload','analytics'],
+    canUpload:true, canValidate:true, canAdmin:false,
+    stats:[
+      {icon:'📝',bg:'#FEF3C7',value:'234',label:'Resources Curated',trend:'+28 this month',tClass:'trend-up'},
+      {icon:'📋',bg:'#D1FAE5',value:'12',label:'Collections Managed',trend:'Youth Ministry',tClass:'trend-up'},
+      {icon:'📂',bg:'#EDE9FE',value:'8',label:'New in Collections',trend:'This week',tClass:'trend-up'},
+      {icon:'🌍',bg:'#DBEAFE',value:'14',label:'Provinces Contributed',trend:'This quarter',tClass:'trend-up'},
+    ],
+    quickActions:[
+      {icon:'📚',title:'Browse Resources',sub:'View library content',page:'resources'},
+      {icon:'📝',title:'Edit Collections',sub:'Curated sets',page:'resources'},
+      {icon:'⬆️',title:'Upload Content',sub:'Add department resources',page:'upload'},
+      {icon:'📈',title:'Department Stats',sub:'Usage analytics',page:'analytics'},
+    ],
+    activities:[
+      {dot:'dot-green',text:'In library: <strong>"Youth Ministry Toolkit 2025 — Africa"</strong>',time:'1 hour ago'},
+      {dot:'dot-blue',text:'New collection: <strong>"Preventive System Resources 2025"</strong>',time:'3 hours ago'},
+      {dot:'dot-gold',text:'Resource updated: <strong>"INK Province Report"</strong> — taxonomy refreshed',time:'5 hours ago'},
+      {dot:'dot-green',text:'Permalink: <strong>salesian.online/resources/2891</strong>',time:'Yesterday'},
+    ]
+  },
+  admin: {
+    name:'Rev. Fr. Paul D\'Souza', label:'🛡 Generalate Administrator', avatar:'P',
+    email:'paul.dsouza@sdb-generalate.org',
+    pages:['dashboard','resources','institutions','events','persons','ai','upload','analytics','governance','access'],
+    canUpload:true, canValidate:true, canAdmin:true,
+    stats:[
+      {icon:'🌍',bg:'#FEF3C7',value:'92',label:'Provinces Active',trend:'Full coverage',tClass:'trend-up'},
+      {icon:'📚',bg:'#D1FAE5',value:'12,847',label:'Total Resources',trend:CURRENT_MONTH_NAME,tClass:'trend-up'},
+      {icon:'📅',bg:'#DBEAFE',value:'10,523',label:'Events Indexed',trend:'ANS + Provinces',tClass:'trend-up'},
+      {icon:'🏛',bg:'#EDE9FE',value:'7,240',label:'Institutions Mapped',trend:'CristO–Religio',tClass:'trend-up'},
+    ],
+    quickActions:[
+      {icon:'⚖️',title:'Governance',sub:'Policy & audit',page:'governance'},
+      {icon:'📈',title:'Analytics',sub:'Global dashboards',page:'analytics'},
+      {icon:'📅',title:'Events',sub:'Global calendar',page:'events'},
+      {icon:'🏛',title:'Institutions',sub:'CristO–Religio map',page:'institutions'},
+    ],
+    activities:[
+      {dot:'dot-blue',text:'<strong>CristO–Religio sync</strong> completed — 23 institutions updated',time:'4 hours ago'},
+      {dot:'dot-gold',text:'<strong>Province INS</strong> submitted 18 resources',time:'6 hours ago'},
+      {dot:'dot-red',text:'<strong>Compliance alert:</strong> Province BGS — metadata compliance below 80%',time:'Yesterday'},
+      {dot:'dot-green',text:'<strong>ANS integration:</strong> 142 new events auto-ingested',time:'Yesterday'},
+    ]
+  },
+  ai: {
+    name:'AI Classifier', label:'🤖 AI System', avatar:'🤖',
+    email:'ai.system@gsdp.internal',
+    pages:['dashboard','resources','analytics'],
+    canUpload:false, canValidate:false, canAdmin:false,
+    stats:[
+      {icon:'🤖',bg:'#EDE9FE',value:'1,847',label:'Documents Tagged Today',trend:'+12%',tClass:'trend-up'},
+      {icon:'🏷',bg:'#D1FAE5',value:'99.2%',label:'Tagging Accuracy',trend:'MLflow v3.2',tClass:'trend-up'},
+      {icon:'⏱',bg:'#DBEAFE',value:'1.4s',label:'Avg. Processing Time',trend:'Silver Layer',tClass:'trend-up'},
+      {icon:'🏷',bg:'#FEF3C7',value:'14',label:'Low Confidence Tags',trend:'Can be refined',tClass:'trend-warn'},
+    ],
+    quickActions:[
+      {icon:'📊',title:'Processing Stats',sub:'Current queue',page:'analytics'},
+      {icon:'📚',title:'Resource Index',sub:'Browse corpus',page:'resources'},
+    ],
+    activities:[
+      {dot:'dot-green',text:'Batch processed 847 documents — Bronze → Silver Layer',time:'5 min ago'},
+      {dot:'dot-gold',text:'14 documents: <strong>low confidence taxonomy</strong> — can be refined',time:'22 min ago'},
+      {dot:'dot-blue',text:'Vector embeddings updated for <strong>2,341 resources</strong> — semantic index refreshed',time:'1 hour ago'},
+    ]
+  }
+};
+
+// ══════════════════════════════════════════
+// SAMPLE DATA
+// ══════════════════════════════════════════
+const RESOURCES = [
+  {id:'RES-001',title:'Youth Ministry Annual Report — South Asia 2025',author:'Dept. of Youth Ministry, INS Province',type:'Official Publication',badge:'badge-pdf',icon:'📄',area:'Youth Ministry',lang:'English',province:'INS',year:'2025',tags:['Youth Ministry','South Asia','Annual Report'],salesianGroup:'SDB'},
+  {id:'RES-002',title:'The Preventive System in the Digital Age',author:'Fr. Ivo Coelho, SDB',type:'Study',badge:'badge-study',icon:'📖',area:'Pedagogy',lang:'English',province:'ITP',year:'2024',tags:['Preventive System','Digital','Pedagogy'],salesianGroup:'SDB'},
+  {id:'RES-003',title:'Drug Addiction Prevention — Pastoral Guide',author:'Social Work Commission, SDB',type:'Good Practice',badge:'badge-doc',icon:'📋',area:'Catechesis',lang:'English, Spanish',province:'ESP',year:'2024',tags:['Social Work','Prevention','Youth at Risk'],salesianGroup:'SDB'},
+  {id:'RES-004',title:'Salesian Family Communion — Video Documentary',author:'ANS Communications',type:'Multimedia',badge:'badge-video',icon:'🎬',area:'Spirituality',lang:'Italian',province:'ITP',year:'2025',tags:['FMA','SDB','Multimedia','Spirituality'],salesianGroup:'FMA'},
+  {id:'RES-005',title:'Oratory Guidelines — Best Practices 2024',author:'Youth Ministry Dept.',type:'Good Practice',badge:'badge-doc',icon:'📋',area:'Youth Ministry',lang:'Portuguese',province:'BRA',year:'2024',tags:['Oratory','Best Practice','Youth'],salesianGroup:'SDB'},
+  {id:'RES-006',title:'MARC21 Catalogue — UPS Rome Library Q4 2025',author:'UPS Library, Rome',type:'MARC21',badge:'badge-marc',icon:'📚',area:'Education',lang:'Italian',province:'ITP',year:'2025',tags:['Library','MARC21','UPS'],salesianGroup:'SDB'},
+  {id:'RES-007',title:'Formation Module: Salesian Spirituality',author:'Formation Dept., SDB Generalate',type:'Official Publication',badge:'badge-pdf',icon:'📄',area:'Formation',lang:'English, French',province:'GEN',year:'2025',tags:['Formation','Spirituality','SDB'],salesianGroup:'SDB'},
+  {id:'RES-008',title:'Catechesis Workshop Audio Series',author:'Religious Education Commission',type:'Multimedia',badge:'badge-audio',icon:'🎵',area:'Catechesis',lang:'Spanish',province:'ESP',year:'2024',tags:['Catechesis','Audio','Workshop'],salesianGroup:'Cooperators'},
+  {id:'RES-009',title:'Mission Ad Gentes — Africa Field Report',author:'Mission Dept., SDB',type:'Study',badge:'badge-study',icon:'📖',area:'Missiology',lang:'English',province:'AFR',year:'2025',tags:['Missions','Africa','Field Report'],salesianGroup:'SDB'},
+];
+
+// Simple province → region mapping for filters
+const PROVINCE_REGION = {
+  INS: 'South Asia',
+  INK: 'South Asia',
+  INM: 'South Asia',
+  ESP: 'Europe',
+  ITP: 'Europe',
+  GEN: 'Europe',
+  BRA: 'Latin America',
+  BRS: 'Latin America',
+  AFR: 'Africa',
+  AFE: 'Africa',
+  FIL: 'East Asia',
+  CHN: 'East Asia',
+};
+
+const INSTITUTIONS = [
+  {id:'INS-001',name:'Don Bosco High School, Kolkata',type:'High School',province:'INK',country:'India',students:2400,director:'Fr. Mathew Jose',status:'Active',salesianGroup:'SDB',lat:22.5,lng:88.3},
+  {id:'INS-002',name:'Salesian College of Engineering, Chennai',type:'Higher Education',province:'INM',country:'India',students:3200,director:'Fr. Paul Raj',status:'Active',salesianGroup:'SDB',lat:13.1,lng:80.2},
+  {id:'INS-003',name:'Centro Salesiano, Madrid',type:'Youth Centre',province:'ESP',country:'Spain',students:850,director:'Fr. Carlos Ruiz',status:'Active',salesianGroup:'FMA',lat:40.4,lng:-3.7},
+  {id:'INS-004',name:'Istituto Salesiano, Rome',type:'Vocational School',province:'ITP',country:'Italy',students:1100,director:'Fr. Marco Bianchi',status:'Active',salesianGroup:'SDB',lat:41.9,lng:12.5},
+  {id:'INS-005',name:'Don Bosco Mission, Nairobi',type:'Social Work',province:'AFE',country:'Kenya',students:620,director:'Fr. John Odhiambo',status:'Active',salesianGroup:'SDB',lat:-1.3,lng:36.8},
+  {id:'INS-006',name:'Colégio Salesiano, São Paulo',type:'High School',province:'BRS',country:'Brazil',students:1800,director:'Fr. Paulo Silva',status:'Active',salesianGroup:'Cooperators',lat:-23.5,lng:-46.6},
+  {id:'INS-007',name:'Salesian Parish, Manila',type:'Parish',province:'FIL',country:'Philippines',students:480,director:'Fr. Ramon Santos',status:'Active',salesianGroup:'SDB',lat:14.6,lng:121.0},
+];
+
+const EVENTS = [
+  {id:'EVT-001',title:'World Youth Day 2026 — Salesian Participation',date:'15',mon:'Mar',type:'ev-youth',typeName:'Youth Gathering',location:'Rome, Italy',region:'Europe',org:'SDB Generalate',participants:12000,desc:'Global gathering of Salesian youth in Rome for WYD 2026.',salesianGroup:'SDB',province:'ITP'},
+  {id:'EVT-002',title:'South Asia Youth Ministry Congress',date:'22',mon:'Mar',type:'ev-congress',typeName:'Congress',location:'Chennai, India',region:'South Asia',org:'INM Province',participants:800,desc:'Annual congress for Youth Ministry coordinators across South Asia.',salesianGroup:'SDB',province:'INM'},
+  {id:'EVT-003',title:'Salesian Family Retreat — Europe',date:'05',mon:'Apr',type:'ev-retreat',typeName:'Retreat',location:'Valdocco, Turin',region:'Europe',org:'ITP Province',participants:250,desc:'Spiritual retreat for members of the Salesian Family in Europe.',salesianGroup:'FMA',province:'ITP'},
+  {id:'EVT-004',title:'Mission Africa — Annual Assembly',date:'18',mon:'Apr',type:'ev-mission',typeName:'Mission Event',location:'Nairobi, Kenya',region:'Africa',org:'AFE Province',participants:400,desc:'Annual assembly for mission workers across the African continent.',salesianGroup:'SDB',province:'AFE'},
+  {id:'EVT-005',title:'IUS Global Higher Education Forum',date:'02',mon:'May',type:'ev-congress',typeName:'Congress',location:'Virtual + Rome',region:'Europe',org:'IUS Network',participants:1200,desc:'International forum for Salesian universities worldwide.',salesianGroup:'Cooperators',province:'ITP'},
+];
+
+const PERSONS = [
+  {name:'Fr. Ivo Coelho',initials:'IC',title:'Rector Major Emeritus',province:'ITP',affiliation:'SDB',pubs:47,events:23},
+  {name:'Sr. Maria FMA',initials:'MF',title:'FMA General Councillor',province:'FMA',affiliation:'FMA',pubs:31,events:18},
+  {name:'Fr. Biju Michael',initials:'BM',title:'Youth Ministry Secretary',province:'INM',affiliation:'SDB',pubs:28,events:41},
+  {name:'Dr. Ana Rodrigues',initials:'AR',title:'UPS Research Scholar',province:'ITP',affiliation:'Cooperators',pubs:64,events:12},
+  {name:'Fr. Joseph Msafiri',initials:'JM',title:'Mission Director — Africa',province:'AFE',affiliation:'SDB',pubs:19,events:34},
+  {name:'Sr. Elena Torres',initials:'ET',title:'Formation Coordinator',province:'ESP',affiliation:'FMA',pubs:22,events:27},
+  {name:'Bro. Raj Fernando',initials:'RF',title:'Social Work Coordinator',province:'INK',affiliation:'SDB',pubs:15,events:19},
+  {name:'Fr. Liu Wei',initials:'LW',title:'East Asia YM Director',province:'CHN',affiliation:'SDB',pubs:11,events:28},
+];
+
+// Validation queue removed
+
+// ══════════════════════════════════════════
+// APP STATE
+// ══════════════════════════════════════════
+let currentRole = 'admin';
+let currentPage = 'dashboard';
+
+// Filter state
+const resourceFilters = {
+  area: 'All Areas',
+  docType: 'All Doc Types',
+  region: 'All Regions',
+  language: 'All Languages',
+  salesianGroup: 'All Salesian Groups',
+  province: 'All Provinces',
+  search: ''
+};
+
+const institutionFilters = {
+  type: 'All Types',
+  province: 'All Provinces',
+  salesianGroup: 'All Salesian Groups',
+  search: ''
+};
+
+const eventFilters = {
+  type: 'All Types',
+  region: 'All Regions',
+  salesianGroup: 'All Salesian Groups',
+  province: 'All Provinces',
+  search: ''
+};
+
+const personFilters = {
+  province: 'All Provinces',
+  salesianGroup: 'All Salesian Groups',
+  search: ''
+};
+
+// ══════════════════════════════════════════
+// LOGIN / LOGOUT
+// ══════════════════════════════════════════
+function quickRole(role) {
+  document.getElementById('role-select').value = role;
+}
+
+function toggleLoginPassword() {
+  const input = document.getElementById('login-password');
+  const btn = document.getElementById('password-toggle-btn');
+  if(!input || !btn) return;
+  const isPassword = input.type === 'password';
+  input.type = isPassword ? 'text' : 'password';
+  btn.textContent = isPassword ? '🙈' : '👁';
+}
+
+function doLogin() {
+  const role = document.getElementById('role-select').value;
+  currentRole = role;
+
+  const loginScreen = document.getElementById('login-screen');
+  const app = document.getElementById('app');
+
+  // Prepare app behind the scenes before showing
+  applyRole(role);
+  showPage('dashboard', document.querySelector('[data-page=dashboard]'));
+
+  // Fade out login
+  loginScreen.classList.add('fade-out');
+
+  setTimeout(() => {
+    loginScreen.style.display = 'none';
+    loginScreen.classList.remove('fade-out');
+    app.style.display = 'block';
+    // Tiny delay so display:block registers before opacity transition
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        app.classList.add('fade-in');
+      });
+    });
+    showToast('Welcome to GSDP — signed in as ' + ROLES[role].label);
+  }, 400);
+}
+
+function doLogout() {
+  const loginScreen = document.getElementById('login-screen');
+  const app = document.getElementById('app');
+
+  // Fade out app
+  app.classList.remove('fade-in');
+
+  setTimeout(() => {
+    app.style.display = 'none';
+    loginScreen.style.display = 'flex';
+    // Fade login back in
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        loginScreen.style.opacity = '1';
+        loginScreen.style.transform = '';
+      });
+    });
+  }, 400);
+}
+
+function applyRole(role) {
+  const r = ROLES[role];
+  // User info
+  document.getElementById('user-avatar').textContent = r.avatar;
+  document.getElementById('user-name').textContent = r.name;
+  document.getElementById('user-role-label').textContent = r.label.replace(/^[^\s]+\s/,'');
+  document.getElementById('dash-welcome').textContent = 'Good morning, ' + r.name.split(' ')[r.name.split(' ').length-1];
+  document.getElementById('role-badge-display').textContent = r.label;
+
+  // Sidebar visibility
+  const validateNav = document.getElementById('validate-nav');
+  const analyticsNav = document.getElementById('analytics-nav');
+  const governanceNav = document.getElementById('governance-nav');
+  const contribSection = document.getElementById('contrib-section');
+  const adminSection = document.getElementById('admin-section');
+  const owlNav = document.getElementById('owl-trigger-nav');
+  const accessNav = document.getElementById('access-nav');
+
+  if(validateNav) validateNav.style.display = r.canValidate ? 'flex' : 'none';
+  analyticsNav.style.display = r.canAdmin || role==='editor' ? 'flex' : 'none';
+  governanceNav.style.display = r.canAdmin ? 'flex' : 'none';
+  if(accessNav) accessNav.style.display = r.canAdmin ? 'flex' : 'none';
+  contribSection.style.display = (r.canValidate||r.canAdmin) ? 'block' : 'none';
+  adminSection.style.display = (r.canAdmin||role==='editor') ? 'block' : 'none';
+  owlNav.style.display = (r.canAdmin||r.canValidate) ? 'flex' : 'none';
+
+  // Top action button
+  const topBtn = document.getElementById('topbar-action-btn');
+  if(role==='admin') { topBtn.textContent='⚖️ Governance'; topBtn.onclick=()=>showPage('governance',document.querySelector('[data-page=governance]')); }
+  else if(r.canUpload) { topBtn.textContent='⬆️ Submit Resource'; topBtn.onclick=()=>showPage('upload',document.querySelector('[data-page=upload]')); }
+  else { topBtn.textContent='✨ Ask AI'; topBtn.onclick=()=>showPage('ai',document.querySelector('[data-page=ai]')); }
+
+  // Render dashboard
+  renderStats(r.stats);
+  renderActivities(r.activities);
+  renderQuickActions(r.quickActions);
+  renderPending(role);
+
+  // Render all pages
+  renderResources(role);
+  renderInstitutions(role);
+  renderEvents(role);
+  renderPersons(role);
+  renderAI(role);
+  renderAnalytics(role);
+  renderGovernance(role);
+  renderAccessControl(role);
+}
+
+// ══════════════════════════════════════════
+// PAGE NAVIGATION
+// ══════════════════════════════════════════
+function showPage(pageId, navEl) {
+  const r = ROLES[currentRole];
+  if(!r.pages.includes(pageId)) {
+    // Show access denied inline
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    const target = document.getElementById('page-'+pageId);
+    if(target) { target.classList.add('active'); target.innerHTML = accessDenied(pageId); }
+    updateNavActive(navEl);
+    updateTopbarTitle(pageId);
+    return;
+  }
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  const target = document.getElementById('page-'+pageId);
+  if(target) target.classList.add('active');
+  if(pageId==='upload' && !owlRunning) initOWLSteps();
+  currentPage = pageId;
+  updateNavActive(navEl);
+  updateTopbarTitle(pageId);
+}
+
+function accessDenied(page) {
+  return `<div class="access-denied"><div class="access-denied-icon">🔒</div><div class="access-denied-title">Access Restricted</div><div class="access-denied-sub">Your current role does not have permission to view the <strong>${page}</strong> section.<br>Please contact your Generalate Administrator.</div></div>`;
+}
+
+function updateNavActive(el) {
+  document.querySelectorAll('.sb-nav-item').forEach(n=>n.classList.remove('active'));
+  if(el) el.classList.add('active');
+}
+
+function updateTopbarTitle(pageId) {
+  const titles = {
+    dashboard:'Dashboard',
+    resources:'Resource Library',
+    institutions:'Institutions Directory',
+    events:'Events Calendar',
+    persons:'Persons Directory',
+    ai:'AI Assistant',
+    upload:'Submit Resource',
+    analytics:'Analytics & Dashboards',
+    governance:'Governance & Policy',
+    access:'Access Control'
+  };
+  document.getElementById('page-title').textContent = titles[pageId]||pageId;
+}
+
+// ══════════════════════════════════════════
+// RENDER FUNCTIONS
+// ══════════════════════════════════════════
+function renderStats(stats) {
+  const colors = ['#FEF3C7','#D1FAE5','#DBEAFE','#EDE9FE'];
+  document.getElementById('stats-row').innerHTML = stats.map((s,i)=>`
+    <div class="stat-card">
+      <div class="stat-card-top">
+        <div class="stat-card-icon" style="background:${s.bg}">${s.icon}</div>
+        <span class="stat-card-trend ${s.tClass}">${s.trend}</span>
+      </div>
+      <div class="stat-card-value">${s.value}</div>
+      <div class="stat-card-label">${s.label}</div>
+    </div>`).join('');
+}
+
+function renderActivities(activities) {
+  document.getElementById('activity-feed').innerHTML = activities.map(a=>`
+    <div class="activity-item">
+      <div class="activity-dot ${a.dot}"></div>
+      <div><div class="activity-text">${a.text}</div><div class="activity-time">${a.time}</div></div>
+    </div>`).join('');
+}
+
+function renderQuickActions(actions) {
+  document.getElementById('quick-actions').innerHTML = actions.map(a=>`
+    <div class="qa-btn" onclick="showPage('${a.page}',document.querySelector('[data-page=${a.page}]'))">
+      <div class="qa-btn-icon">${a.icon}</div>
+      <div class="qa-btn-title">${a.title}</div>
+      <div class="qa-btn-sub">${a.sub}</div>
+    </div>`).join('');
+}
+
+function renderPending(role) {
+  const pendingCard = document.getElementById('pending-card');
+  // Show existing data only — recent items in library, no approve/reject flow
+  const items = {
+    liaison:[
+      {icon:'📄',title:'INS Province Q4 Report 2025',meta:'In library · 4.2 MB',status:'approved',statusText:'View',targetPage:'resources'},
+      {icon:'📋',title:'Oratory Guidelines — Karnataka',meta:'In library · 1.8 MB',status:'approved',statusText:'View',targetPage:'resources'},
+    ],
+    editor:[
+      {icon:'📄',title:'Youth Ministry Toolkit — Africa',meta:'In library',status:'approved',statusText:'View',targetPage:'resources'},
+      {icon:'📋',title:'FMA Mission Materials',meta:'In library',status:'approved',statusText:'View',targetPage:'resources'},
+      {icon:'📖',title:'Research Paper — Pedagogy',meta:'In library',status:'approved',statusText:'View',targetPage:'resources'},
+    ],
+    admin:[
+      {icon:'📊',title:'Province metadata overview',meta:'Data status by province',status:'approved',statusText:'View',targetPage:'governance'},
+      {icon:'🔧',title:'CristO–Religio institutions',meta:'23 institutions in index',status:'approved',statusText:'View',targetPage:'institutions'},
+    ]
+  };
+  const roleItems = items[role]||[];
+  if(!roleItems.length) { pendingCard.style.display='none'; return; }
+  pendingCard.style.display='block';
+  document.getElementById('pending-count').textContent = roleItems.length;
+  document.getElementById('pending-items').innerHTML = roleItems.map(i=>`
+    <div class="pending-item" onclick="showPage('${i.targetPage}',document.querySelector('[data-page=${i.targetPage}]'))">
+      <div class="pending-icon">${i.icon}</div>
+      <div class="pending-info"><div class="pending-title">${i.title}</div><div class="pending-meta">${i.meta}</div></div>
+      <div class="pending-status status-${i.status}">${i.statusText}</div>
+    </div>`).join('');
+}
+
+function renderResources(role) {
+  const filtered = RESOURCES.filter(r=>{
+    if(resourceFilters.area !== 'All Areas' && r.area !== resourceFilters.area) return false;
+    if(resourceFilters.docType !== 'All Doc Types' && r.type !== resourceFilters.docType) return false;
+    if(resourceFilters.region !== 'All Regions') {
+      const region = PROVINCE_REGION[r.province] || 'Other';
+      if(region !== resourceFilters.region) return false;
+    }
+    if(resourceFilters.language !== 'All Languages') {
+      if(!r.lang.toLowerCase().includes(resourceFilters.language.toLowerCase())) return false;
+    }
+    if(resourceFilters.salesianGroup !== 'All Salesian Groups' && r.salesianGroup !== resourceFilters.salesianGroup) return false;
+    if(resourceFilters.province !== 'All Provinces' && r.province !== resourceFilters.province) return false;
+    if(resourceFilters.search) {
+      const q = resourceFilters.search.toLowerCase();
+      const hay = (r.title + ' ' + r.author + ' ' + r.tags.join(' ')).toLowerCase();
+      if(!hay.includes(q)) return false;
+    }
+    return true;
+  });
+  document.getElementById('resource-grid').innerHTML = filtered.map(r=>`
+    <div class="resource-card" onclick="openResourceModal('${r.id}')">
+      <div class="resource-card-top">
+        <span class="resource-type-badge ${r.badge}">${r.icon} ${r.type}</span>
+        <div class="resource-title">${r.title}</div>
+        <div class="resource-author">${r.author}</div>
+      </div>
+      <div class="resource-card-bottom">
+        ${r.tags.slice(0,2).map(t=>`<span class="res-tag">${t}</span>`).join('')}
+        <span class="res-tag">🌐 ${r.lang.split(',')[0]}</span>
+        <div class="res-actions">
+          <button class="res-action-btn btn-view" onclick="event.stopPropagation();showToast('Opening: ${r.title.substring(0,30)}...')">View</button>
+          <button class="res-action-btn btn-ai" onclick="event.stopPropagation();openAIOnResource('${r.id}')">✦ AI</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+
+function renderInstitutions(role) {
+  const filtered = INSTITUTIONS.filter(i=>{
+    if(institutionFilters.type !== 'All Types' && i.type !== institutionFilters.type) return false;
+    if(institutionFilters.province !== 'All Provinces' && i.province !== institutionFilters.province.split(' ')[0]) return false;
+    if(institutionFilters.salesianGroup !== 'All Salesian Groups' && i.salesianGroup !== institutionFilters.salesianGroup) return false;
+    if(institutionFilters.search) {
+      const q = institutionFilters.search.toLowerCase();
+      if(!i.name.toLowerCase().includes(q)) return false;
+    }
+    return true;
+  });
+
+  document.getElementById('institutions-tbody').innerHTML = filtered.map(i=>`
+    <tr onclick="showToast('Opening: ${i.name}')">
+      <td><div class="inst-name">${i.name}</div></td>
+      <td><span class="inst-type">${i.type}</span></td>
+      <td>${i.province}</td>
+      <td>${i.country}</td>
+      <td>${i.students.toLocaleString()}</td>
+      <td>${i.director}</td>
+      <td><span class="pending-status status-approved">${i.status}</span></td>
+    </tr>`).join('');
+}
+
+function renderEvents(role) {
+  const filtered = EVENTS.filter(e=>{
+    if(eventFilters.type !== 'All Types' && e.typeName !== eventFilters.type) return false;
+    if(eventFilters.region !== 'All Regions' && e.region !== eventFilters.region) return false;
+    if(eventFilters.salesianGroup !== 'All Salesian Groups' && e.salesianGroup !== eventFilters.salesianGroup) return false;
+    if(eventFilters.province !== 'All Provinces' && e.province !== eventFilters.province) return false;
+    if(eventFilters.search) {
+      const q = eventFilters.search.toLowerCase();
+      const hay = (e.title + ' ' + e.location + ' ' + e.org).toLowerCase();
+      if(!hay.includes(q)) return false;
+    }
+    return true;
+  });
+  document.getElementById('events-list').innerHTML = filtered.map(e=>`
+    <div class="event-card" onclick="showToast('Opening event: ${e.title.substring(0,40)}...')">
+      <div class="event-date"><div class="day">${e.date}</div><div class="mon">${e.mon}</div></div>
+      <div class="event-info">
+        <span class="event-type-badge ${e.type}">${e.typeName}</span>
+        <div class="event-title">${e.title}</div>
+        <div class="event-meta">
+          <span>📍 ${e.location}</span>
+          <span>🏢 ${e.org}</span>
+          <span>👥 ${e.participants.toLocaleString()} participants</span>
+        </div>
+        <div style="font-size:12px;color:var(--muted);margin-top:6px;">${e.desc}</div>
+      </div>
+    </div>`).join('');
+  // Also refresh calendar if it's visible
+  if(calendarVisible) renderCalendar();
+}
+
+// ── CALENDAR VIEW ──
+let calendarVisible = false;
+const now = new Date();
+let calYear = now.getFullYear();
+let calMonth = now.getMonth(); // 0-indexed, current month
+
+function toggleCalendarView() {
+  calendarVisible = !calendarVisible;
+  document.getElementById('events-list-view').style.display  = calendarVisible ? 'none' : 'block';
+  document.getElementById('events-calendar-view').style.display = calendarVisible ? 'block' : 'none';
+  const btn = document.querySelector('[onclick="toggleCalendarView()"]');
+  if(btn) btn.textContent = calendarVisible ? '📋 List View' : '📅 Calendar View';
+  if(calendarVisible) renderCalendar();
+}
+
+function calNav(dir) {
+  calMonth += dir;
+  if(calMonth > 11){ calMonth = 0; calYear++; }
+  if(calMonth < 0) { calMonth = 11; calYear--; }
+  renderCalendar();
+}
+
+function renderCalendar() {
+  const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  document.getElementById('cal-month-label').textContent = monthNames[calMonth] + ' ' + calYear;
+
+  const firstDay = new Date(calYear, calMonth, 1).getDay(); // 0=Sun
+  const daysInMonth = new Date(calYear, calMonth+1, 0).getDate();
+  const today = new Date();
+
+  // Map events to days in this month
+  const monthShort = monthNames[calMonth].substring(0,3).toUpperCase();
+  const eventsThisMonth = EVENTS.filter(e => e.mon.toUpperCase() === monthShort);
+  const eventsByDay = {};
+  eventsThisMonth.forEach(e => {
+    const d = parseInt(e.date);
+    if(!eventsByDay[d]) eventsByDay[d] = [];
+    eventsByDay[d].push(e);
+  });
+
+  const dayNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  let html = '<div class="cal-grid">';
+  // Day name headers
+  dayNames.forEach(d => { html += `<div class="cal-day-name">${d}</div>`; });
+  // Empty cells before first day
+  for(let i=0; i<firstDay; i++) html += `<div class="cal-cell empty"></div>`;
+  // Day cells
+  for(let d=1; d<=daysInMonth; d++) {
+    const isToday = (today.getDate()===d && today.getMonth()===calMonth && today.getFullYear()===calYear);
+    const evs = eventsByDay[d] || [];
+    html += `<div class="cal-cell${isToday?' today':''}">
+      <div class="cal-date">${d}</div>
+      ${evs.map(e=>`<div class="cal-event-dot cal-${e.type}" onclick="showToast('${e.title.substring(0,35)}...')" title="${e.title}">${e.title.substring(0,18)}…</div>`).join('')}
+    </div>`;
+  }
+  html += '</div>';
+  document.getElementById('cal-grid').innerHTML = html;
+}
+
+// ── ANALYTICS FILTERS ──
+const analyticsFilters = { province:'All Provinces', group:'All Salesian Groups', region:'All Regions', year:'All Years' };
+
+const ALL_ANALYTICS_DATA = {
+  provinces: [['INS – South Asia',87],['ITP – Italy',73],['INK – Kolkata',61],['ESP – Spain',54],['BRA – Brazil',48],['INM – Chennai',42]],
+  areas:     [['Youth Ministry',82],['Catechesis',68],['Pedagogy',55],['Spirituality',47],['Missiology',39],['Formation',35]],
+  doctypes:  [['Official Publication',75],['Study',61],['Good Practice',53],['Multimedia',47],['MARC21',38]],
+  ai:        [['Semantic Search',88],['Summarization',72],['Translation',64],['Chat-with-Docs',51],['Recommendations',43]],
+};
+
+function resetAnalyticsFilters() {
+  analyticsFilters.province='All Provinces';
+  analyticsFilters.group='All Salesian Groups';
+  analyticsFilters.region='All Regions';
+  analyticsFilters.year='All Years';
+  ['af-province','af-group','af-region','af-year'].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.selectedIndex=0;
+  });
+  refreshAnalyticsCharts();
+}
+
+function refreshAnalyticsCharts() {
+  // Apply a scale factor based on active filters (demo simulation)
+  const isFiltered = analyticsFilters.province!=='All Provinces' || analyticsFilters.group!=='All Salesian Groups' || analyticsFilters.region!=='All Regions' || analyticsFilters.year!=='All Years';
+  const scale = isFiltered ? 0.55 + Math.random()*0.3 : 1;
+
+  const makeBar = (data, scl=1) => data.map(([label,val])=>{
+    const v = Math.round(val*scl);
+    return `<div class="bar-row">
+      <div class="bar-label">${label}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${v}%;transition:width 0.5s ease;"></div></div>
+      <div class="bar-value">${v}%</div>
+    </div>`;
+  }).join('');
+
+  // Filter province bar if a specific province is selected
+  let provinces = ALL_ANALYTICS_DATA.provinces;
+  if(analyticsFilters.province !== 'All Provinces') {
+    provinces = provinces.filter(([label])=>label.includes(analyticsFilters.province.split(' ')[0]));
+    if(!provinces.length) provinces = [[ analyticsFilters.province, Math.round(50+Math.random()*40) ]];
+  }
+
+  document.getElementById('analytics-provinces').innerHTML = `<div class="bar-chart">${makeBar(provinces, isFiltered&&analyticsFilters.province==='All Provinces'?scale:1)}</div>`;
+  document.getElementById('analytics-areas').innerHTML    = `<div class="bar-chart">${makeBar(ALL_ANALYTICS_DATA.areas, scale)}</div>`;
+  document.getElementById('analytics-doctypes').innerHTML = `<div class="bar-chart">${makeBar(ALL_ANALYTICS_DATA.doctypes, scale)}</div>`;
+  document.getElementById('analytics-ai').innerHTML       = `<div class="bar-chart">${makeBar(ALL_ANALYTICS_DATA.ai, scale)}</div>`;
+}
+
+function initAnalyticsFilters() {
+  ['af-province','af-group','af-region','af-year'].forEach((id,i)=>{
+    const el = document.getElementById(id);
+    if(!el) return;
+    const keys = ['province','group','region','year'];
+    el.addEventListener('change', e=>{ analyticsFilters[keys[i]]=e.target.value; refreshAnalyticsCharts(); });
+  });
+}
+
+function renderPersons(role) {
+  const filtered = PERSONS.filter(p=>{
+    if(personFilters.province !== 'All Provinces' && p.province !== personFilters.province) return false;
+    if(personFilters.salesianGroup !== 'All Salesian Groups' && p.affiliation !== personFilters.salesianGroup) return false;
+    if(personFilters.search) {
+      const q = personFilters.search.toLowerCase();
+      const hay = (p.name + ' ' + p.title).toLowerCase();
+      if(!hay.includes(q)) return false;
+    }
+    return true;
+  });
+  document.getElementById('persons-grid').innerHTML = filtered.map(p=>`
+    <div class="person-card" onclick="showToast('Opening profile: ${p.name}')">
+      <div class="person-avatar">${p.initials}</div>
+      <div class="person-name">${p.name}</div>
+      <div class="person-title">${p.title}</div>
+      <div class="person-province">${p.province}</div>
+      <div class="person-stats">
+        <div class="person-stat"><div class="person-stat-val">${p.pubs}</div><div class="person-stat-lab">Publications</div></div>
+        <div class="person-stat"><div class="person-stat-val">${p.events}</div><div class="person-stat-lab">Events</div></div>
+      </div>
+    </div>`).join('');
+}
+
+function renderAI(role) {
+  // Prepopulate chat
+  const messages = document.getElementById('chat-messages');
+  messages.innerHTML = `
+    <div class="chat-msg">
+      <div class="chat-avatar ai">✦</div>
+      <div class="chat-bubble ai">Hello! I'm the GSDP AI Assistant. I can help you search resources semantically, summarize documents, translate content across EN, IT, ESP, FRA, and POR, and answer questions about Salesian works worldwide.<br><br>How can I help you today?</div>
+    </div>`;
+  
+  const suggested = [
+    'Drug addiction resources in South Asia',
+    'Summarize Youth Ministry Report 2025',
+    'Translate to Spanish: Formation guidelines',
+    'Show similar resources to Preventive System',
+  ];
+  document.getElementById('suggested-queries').innerHTML = suggested.map(q=>`
+    <div onclick="triggerQuery('${q}')" style="padding:8px 10px;background:var(--cream);border-radius:8px;font-size:12px;color:var(--slate);cursor:pointer;border:1px solid var(--border);" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'">${q}</div>`).join('');
+}
+
+function renderAnalytics(role) {
+  if(!ROLES[role].canAdmin && role!=='editor') return;
+  refreshAnalyticsCharts();
+}
+
+function renderGovernance(role) {
+  if(!ROLES[role].canAdmin) return;
+
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  const mm = String(today.getMonth()+1).padStart(2,'0');
+  const dd = String(today.getDate()).padStart(2,'0');
+  const todayStr = `${yyyy}-${mm}-${dd}`;
+
+  const auditLog = [
+    {dot:'dot-green',text:'Resource <strong>RES-SUB-041</strong> in library — Bronze Layer',time:`${todayStr} 08:14`},
+    {dot:'dot-blue',text:'AI Classifier tagged RES-SUB-041 with 4 taxonomy terms (conf: 94%)',time:`${todayStr} 08:15`},
+    {dot:'dot-gold',text:'CristO–Religio sync: 23 institution records updated (Province INK)',time:`${todayStr} 06:00`},
+    {dot:'dot-red',text:'Compliance alert raised: Province BGS metadata score 74% (threshold: 80%)',time:`${todayStr} 22:30`},
+    {dot:'dot-green',text:'ANS integration: 142 events ingested into event module',time:`${todayStr} 18:00`},
+  ];
+  document.getElementById('audit-log').innerHTML = auditLog.map(a=>`
+    <div class="activity-item"><div class="activity-dot ${a.dot}"></div><div><div class="activity-text">${a.text}</div><div class="activity-time">${a.time}</div></div></div>`).join('');
+
+  const provinces = [
+    {name:'INS – South Asia',score:94,status:'synced'},
+    {name:'INK – Kolkata',score:88,status:'synced'},
+    {name:'ITP – Italy',score:96,status:'synced'},
+    {name:'BGS – Belgium',score:74,status:'below threshold'},
+    {name:'AFE – East Africa',score:81,status:'synced'},
+  ];
+  document.getElementById('province-status').innerHTML = provinces.map(p=>`
+    <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);">
+      <div style="flex:1;font-size:13px;font-weight:500;color:var(--deep)">${p.name}</div>
+      <div style="flex:1"><div class="bar-track"><div class="bar-fill" style="width:${p.score}%;background:${p.score>=80?'linear-gradient(90deg,#059669,#34D399)':'linear-gradient(90deg,#DC2626,#F87171)'}"></div></div></div>
+      <div style="font-size:12px;font-weight:700;color:var(--muted);width:30px">${p.score}%</div>
+      <span class="pending-status status-${p.status==='synced'?'approved':'review'}">${p.status}</span>
+    </div>`).join('');
+
+  document.getElementById('compliance-panel').innerHTML = `
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <div style="padding:14px;background:var(--cream);border-radius:10px;border-left:4px solid var(--success)">
+        <div style="font-size:13px;font-weight:700;color:var(--deep);margin-bottom:4px">✅ Supported Data Sources</div>
+        <div style="font-size:12px;color:var(--muted)">API integration · Secure upload portal · Cloud storage · Structured export · Subdomain API sync</div>
+      </div>
+      <div style="padding:14px;background:#FEE2E2;border-radius:10px;border-left:4px solid var(--danger)">
+        <div style="font-size:13px;font-weight:700;color:var(--danger);margin-bottom:4px">🚫 Prohibited Methods</div>
+        <div style="font-size:12px;color:#7F1D1D">No scraping · No unauthorized crawling · No bypassing access controls · No personal data without consent</div>
+      </div>
+      <div style="padding:14px;background:#DBEAFE;border-radius:10px;border-left:4px solid var(--info)">
+        <div style="font-size:13px;font-weight:700;color:var(--info);margin-bottom:4px">📋 Data Standards</div>
+        <div style="font-size:12px;color:#1E3A5F">Metadata standards · AI tagging · Publication readiness checks</div>
+      </div>
+      <div style="padding:14px;background:var(--cream);border-radius:10px;border-left:4px solid var(--gold)">
+        <div style="font-size:13px;font-weight:700;color:var(--deep);margin-bottom:4px">🔐 Security & Compliance</div>
+        <div style="font-size:12px;color:var(--muted)">GDPR compliant · Role-based access control · Full audit logs · Data lineage tracking · 99.5% uptime SLA</div>
+      </div>
+    </div>`;
+}
+
+function renderAccessControl(role) {
+  if(!ROLES[role].canAdmin) return;
+
+  const modules = [
+    {id:'dashboard',label:'Dashboard'},
+    {id:'resources',label:'Resources'},
+    {id:'institutions',label:'Institutions'},
+    {id:'events',label:'Events'},
+    {id:'persons',label:'Persons'},
+    {id:'ai',label:'AI Assistant'},
+    {id:'upload',label:'OWL / Upload'},
+    {id:'analytics',label:'Analytics'},
+    {id:'governance',label:'Governance'}
+  ];
+  const rolesForAccess = ['public','registered','liaison','editor','admin'];
+  const rows = rolesForAccess.map(key=>{
+    const r = ROLES[key];
+    const checks = modules.map(m=>`
+      <label style="display:inline-flex;align-items:center;gap:4px;padding:4px 8px;border-radius:999px;border:1px solid var(--border);background:var(--cream);cursor:pointer;font-size:11px;color:var(--deep);">
+        <input type="checkbox" ${r.pages.includes(m.id)?'checked':''} onchange="toggleModuleAccess('${key}','${m.id}',this.checked)" style="accent-color:var(--gold);">
+        <span>${m.label}</span>
+      </label>`).join('');
+    return `
+      <div style="display:flex;align-items:flex-start;gap:16px;padding:6px 0;border-bottom:1px solid var(--border);">
+        <div style="width:180px;font-size:12px;font-weight:600;color:var(--deep);">${r.label}</div>
+        <div style="flex:1;display:flex;flex-wrap:wrap;gap:6px;">${checks}</div>
+      </div>`;
+  }).join('');
+  const ac = document.getElementById('access-control-panel');
+  if(ac){
+    ac.innerHTML = `
+      <div style="display:flex;flex-direction:column;gap:10px;font-size:12px;color:var(--muted);">
+        <p style="margin:0 0 4px;">Toggle which modules each role can access. Changes apply immediately to the navigation and access checks.</p>
+        ${rows}
+      </div>`;
+  }
+}
+
+function toggleModuleAccess(roleKey, moduleId, allowed) {
+  const role = ROLES[roleKey];
+  if(!role) return;
+  const pages = role.pages;
+  const idx = pages.indexOf(moduleId);
+  if(allowed) {
+    if(idx===-1) pages.push(moduleId);
+  } else {
+    if(idx!==-1) pages.splice(idx,1);
+  }
+  if(currentRole === roleKey) {
+    applyRole(roleKey);
+    showPage('dashboard', document.querySelector('[data-page=dashboard]'));
+  }
+  showToast((allowed?'Enabled ':'Disabled ') + moduleId + ' for ' + role.label);
+}
+
+// ══════════════════════════════════════════
+// GLOBAL SEARCH
+// ══════════════════════════════════════════
+let gsActiveIndex = -1;
+
+function highlight(text, q) {
+  if(!q) return text;
+  const re = new RegExp('('+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')', 'gi');
+  return text.replace(re, '<mark class="gs-item-mark">$1</mark>');
+}
+
+function globalSearch(q) {
+  const dd = document.getElementById('global-search-dropdown');
+  q = q.trim();
+  if(!q) { dd.style.display='none'; return; }
+  const ql = q.toLowerCase();
+
+  let sections = [];
+
+  // Resources
+  const resHits = RESOURCES.filter(r =>
+    (r.title+' '+r.author+' '+r.tags.join(' ')+' '+r.area+' '+r.province).toLowerCase().includes(ql)
+  ).slice(0,4);
+  if(resHits.length) sections.push({
+    label:'📚 Resources', items: resHits.map(r=>({
+      icon:'📄', title: r.title, meta: r.author+' · '+r.province+' · '+r.year,
+      badge: r.type, page:'resources'
+    }))
+  });
+
+  // Institutions
+  const instHits = INSTITUTIONS.filter(i =>
+    (i.name+' '+i.type+' '+i.province+' '+i.country).toLowerCase().includes(ql)
+  ).slice(0,3);
+  if(instHits.length) sections.push({
+    label:'🏛 Institutions', items: instHits.map(i=>({
+      icon:'🏫', title: i.name, meta: i.type+' · '+i.province+' · '+i.country,
+      badge: i.status, page:'institutions'
+    }))
+  });
+
+  // Events
+  const evHits = EVENTS.filter(e =>
+    (e.title+' '+e.location+' '+e.org+' '+e.region).toLowerCase().includes(ql)
+  ).slice(0,3);
+  if(evHits.length) sections.push({
+    label:'📅 Events', items: evHits.map(e=>({
+      icon:'📌', title: e.title, meta: e.location+' · '+e.mon+' · '+e.org,
+      badge: e.typeName, page:'events'
+    }))
+  });
+
+  // Persons
+  const perHits = PERSONS.filter(p =>
+    (p.name+' '+p.title+' '+p.province+' '+p.affiliation).toLowerCase().includes(ql)
+  ).slice(0,3);
+  if(perHits.length) sections.push({
+    label:'👥 Persons', items: perHits.map(p=>({
+      icon:'👤', title: p.name, meta: p.title+' · '+p.province,
+      badge: p.affiliation, page:'persons'
+    }))
+  });
+
+  if(!sections.length) {
+    dd.innerHTML = `<div class="gs-empty">No results found for "<strong>${q}</strong>"</div>`;
+    dd.style.display='block';
+    gsActiveIndex = -1;
+    return;
+  }
+
+  let html = '';
+  sections.forEach(sec => {
+    html += `<div class="gs-section-label">${sec.label}</div>`;
+    sec.items.forEach((item, idx) => {
+      html += `<div class="gs-item" onclick="gsNavigate('${item.page}')">
+        <div class="gs-item-icon">${item.icon}</div>
+        <div class="gs-item-body">
+          <div class="gs-item-title">${highlight(item.title, q)}</div>
+          <div class="gs-item-meta">${item.meta}</div>
+        </div>
+        <span class="gs-item-badge">${item.badge}</span>
+      </div>`;
+    });
+  });
+
+  dd.innerHTML = html;
+  dd.style.display = 'block';
+  gsActiveIndex = -1;
+}
+
+function gsNavigate(page) {
+  const navEl = document.querySelector('[data-page='+page+']');
+  showPage(page, navEl);
+  closeGlobalSearch();
+}
+
+function closeGlobalSearch() {
+  const dd = document.getElementById('global-search-dropdown');
+  if(dd) dd.style.display='none';
+  gsActiveIndex = -1;
+}
+
+function globalSearchKey(e) {
+  const dd = document.getElementById('global-search-dropdown');
+  const items = dd ? dd.querySelectorAll('.gs-item') : [];
+  if(!items.length) return;
+
+  if(e.key==='ArrowDown'){
+    e.preventDefault();
+    gsActiveIndex = Math.min(gsActiveIndex+1, items.length-1);
+    items.forEach((el,i)=>el.classList.toggle('active', i===gsActiveIndex));
+    items[gsActiveIndex]?.scrollIntoView({block:'nearest'});
+  } else if(e.key==='ArrowUp'){
+    e.preventDefault();
+    gsActiveIndex = Math.max(gsActiveIndex-1, 0);
+    items.forEach((el,i)=>el.classList.toggle('active', i===gsActiveIndex));
+    items[gsActiveIndex]?.scrollIntoView({block:'nearest'});
+  } else if(e.key==='Enter'){
+    if(gsActiveIndex>=0 && items[gsActiveIndex]) items[gsActiveIndex].click();
+    else if(items.length) items[0].click();
+  } else if(e.key==='Escape'){
+    closeGlobalSearch();
+    document.getElementById('global-search-input').blur();
+  }
+}
+
+// ══════════════════════════════════════════
+// FILTER INITIALISATION
+// ══════════════════════════════════════════
+function initFilters() {
+  // Resources filters (6 selects: area, docType, region, language, salesianGroup, province)
+  const resPage = document.getElementById('page-resources');
+  if(resPage) {
+    const selects = resPage.querySelectorAll('.filter-bar .filter-select');
+    const searchInput = resPage.querySelector('.filter-bar .filter-search');
+    const clearBtn = resPage.querySelector('.filter-bar .filter-clear');
+    if(selects.length >= 6) {
+      selects[0].addEventListener('change', e=>{ resourceFilters.area = e.target.value; renderResources(currentRole); });
+      selects[1].addEventListener('change', e=>{ resourceFilters.docType = e.target.value; renderResources(currentRole); });
+      selects[2].addEventListener('change', e=>{ resourceFilters.region = e.target.value; renderResources(currentRole); });
+      selects[3].addEventListener('change', e=>{ resourceFilters.language = e.target.value; renderResources(currentRole); });
+      selects[4].addEventListener('change', e=>{ resourceFilters.salesianGroup = e.target.value; renderResources(currentRole); });
+      selects[5].addEventListener('change', e=>{ resourceFilters.province = e.target.value; renderResources(currentRole); });
+    }
+    if(searchInput) {
+      searchInput.addEventListener('input', e=>{ resourceFilters.search = e.target.value; renderResources(currentRole); });
+    }
+    if(clearBtn) {
+      clearBtn.addEventListener('click', ()=>{
+        resourceFilters.area = 'All Areas';
+        resourceFilters.docType = 'All Doc Types';
+        resourceFilters.region = 'All Regions';
+        resourceFilters.language = 'All Languages';
+        resourceFilters.salesianGroup = 'All Salesian Groups';
+        resourceFilters.province = 'All Provinces';
+        resourceFilters.search = '';
+        if(selects.length>=6){selects[0].value='All Areas';selects[1].value='All Doc Types';selects[2].value='All Regions';selects[3].value='All Languages';selects[4].value='All Salesian Groups';selects[5].value='All Provinces';}
+        if(searchInput) searchInput.value='';
+        renderResources(currentRole);
+      });
+    }
+  }
+
+  // Institutions filters (3 selects: type, province, salesianGroup)
+  const instPage = document.getElementById('page-institutions');
+  if(instPage) {
+    const selects = instPage.querySelectorAll('.filter-bar .filter-select');
+    const searchInput = instPage.querySelector('.filter-bar .filter-search');
+    const clearBtn = instPage.querySelector('.filter-bar .filter-clear');
+    if(selects.length >= 3) {
+      selects[0].addEventListener('change', e=>{ institutionFilters.type = e.target.value; renderInstitutions(currentRole); });
+      selects[1].addEventListener('change', e=>{ institutionFilters.province = e.target.value; renderInstitutions(currentRole); });
+      selects[2].addEventListener('change', e=>{ institutionFilters.salesianGroup = e.target.value; renderInstitutions(currentRole); });
+    }
+    if(searchInput) {
+      searchInput.addEventListener('input', e=>{ institutionFilters.search = e.target.value; renderInstitutions(currentRole); });
+    }
+    if(clearBtn) {
+      clearBtn.addEventListener('click', ()=>{
+        institutionFilters.type = 'All Types';
+        institutionFilters.province = 'All Provinces';
+        institutionFilters.salesianGroup = 'All Salesian Groups';
+        institutionFilters.search = '';
+        if(selects.length>=3){selects[0].value='All Types';selects[1].value='All Provinces';selects[2].value='All Salesian Groups';}
+        if(searchInput) searchInput.value='';
+        renderInstitutions(currentRole);
+      });
+    }
+  }
+
+  // Events filters (4 selects: type, region, salesianGroup, province)
+  const evPage = document.getElementById('page-events');
+  if(evPage) {
+    const selects = evPage.querySelectorAll('.filter-bar .filter-select');
+    const searchInput = evPage.querySelector('.filter-bar .filter-search');
+    const clearBtn = evPage.querySelector('.filter-bar .filter-clear');
+    if(selects.length >= 4) {
+      selects[0].addEventListener('change', e=>{ eventFilters.type = e.target.value; renderEvents(currentRole); });
+      selects[1].addEventListener('change', e=>{ eventFilters.region = e.target.value; renderEvents(currentRole); });
+      selects[2].addEventListener('change', e=>{ eventFilters.salesianGroup = e.target.value; renderEvents(currentRole); });
+      selects[3].addEventListener('change', e=>{ eventFilters.province = e.target.value; renderEvents(currentRole); });
+    }
+    if(searchInput) {
+      searchInput.addEventListener('input', e=>{ eventFilters.search = e.target.value; renderEvents(currentRole); });
+    }
+    if(clearBtn) {
+      clearBtn.addEventListener('click', ()=>{
+        eventFilters.type = 'All Types';
+        eventFilters.region = 'All Regions';
+        eventFilters.salesianGroup = 'All Salesian Groups';
+        eventFilters.province = 'All Provinces';
+        eventFilters.search = '';
+        if(selects.length>=4){selects[0].value='All Types';selects[1].value='All Regions';selects[2].value='All Salesian Groups';selects[3].value='All Provinces';}
+        if(searchInput) searchInput.value='';
+        renderEvents(currentRole);
+      });
+    }
+  }
+
+  // Persons filters (2 selects: province, salesianGroup)
+  const personsPage = document.getElementById('page-persons');
+  if(personsPage) {
+    const selects = personsPage.querySelectorAll('.filter-bar .filter-select');
+    const searchInput = personsPage.querySelector('.filter-bar .filter-search');
+    const clearBtn = personsPage.querySelector('.filter-bar .filter-clear');
+    if(selects.length >= 2) {
+      selects[0].addEventListener('change', e=>{ personFilters.province = e.target.value; renderPersons(currentRole); });
+      selects[1].addEventListener('change', e=>{ personFilters.salesianGroup = e.target.value; renderPersons(currentRole); });
+    }
+    if(searchInput) {
+      searchInput.addEventListener('input', e=>{ personFilters.search = e.target.value; renderPersons(currentRole); });
+    }
+    if(clearBtn) {
+      clearBtn.addEventListener('click', ()=>{
+        personFilters.province = 'All Provinces';
+        personFilters.salesianGroup = 'All Salesian Groups';
+        personFilters.search = '';
+        if(selects.length>=2){selects[0].value='All Provinces';selects[1].value='All Salesian Groups';}
+        if(searchInput) searchInput.value='';
+        renderPersons(currentRole);
+      });
+    }
+  }
+}
+
+// ══════════════════════════════════════════
+// INTERACTIONS
+// ══════════════════════════════════════════
+function openResourceModal(id) {
+  const r = RESOURCES.find(x=>x.id===id);
+  if(!r) return;
+  document.getElementById('modal-content').innerHTML = `
+    <span class="resource-type-badge ${r.badge}" style="margin-bottom:12px">${r.icon} ${r.type}</span>
+    <div class="modal-title">${r.title}</div>
+    <div class="modal-sub">${r.author} · ${r.year} · ${r.province}</div>
+    <div style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap">${r.tags.map(t=>`<span class="res-tag">${t}</span>`).join('')}<span class="res-tag">🌐 ${r.lang}</span></div>
+    <div style="background:var(--cream);border-radius:10px;padding:14px;margin-bottom:16px">
+      <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px">Taxonomy Classification</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px;">
+        <div><strong>Area:</strong> ${r.area}</div>
+        <div><strong>Language:</strong> ${r.lang}</div>
+        <div><strong>Province:</strong> ${r.province}</div>
+        <div><strong>ID:</strong> ${r.id}</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;">
+      <button class="topbar-btn btn-gold" onclick="showToast('Downloading: ${r.title.substring(0,30)}...');closeModal('resource-modal')">⬇ Download</button>
+      <button class="topbar-btn btn-outline-dark" onclick="openAIOnResource('${r.id}');closeModal('resource-modal')">✦ Ask AI About This</button>
+      <button class="topbar-btn btn-outline-dark" onclick="showToast('Saved to library');closeModal('resource-modal')">🔖 Save</button>
+    </div>`;
+  document.getElementById('resource-modal').classList.add('open');
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+
+function openAIOnResource(id) {
+  const r = RESOURCES.find(x=>x.id===id);
+  showPage('ai', document.querySelector('[data-page=ai]'));
+  if(r) {
+    setTimeout(()=>{
+      const input = document.getElementById('chat-input');
+      input.value = `Summarize the document: "${r.title}"`;
+      sendChat();
+    }, 100);
+  }
+}
+
+function triggerAITool(tool) {
+  const prompts = {
+    search:'Find resources on Youth Ministry in South Asia',
+    summarize:'Summarize the top 3 formation documents from 2025',
+    translate:'Translate to Spanish: "Salesian Preventive System guidelines"',
+    recommend:'Recommend resources similar to: Drug Addiction Prevention'
+  };
+  document.getElementById('chat-input').value = prompts[tool]||'';
+  sendChat();
+}
+
+function triggerQuery(q) {
+  document.getElementById('chat-input').value = q;
+  sendChat();
+}
+
+const AI_RESPONSES = {
+  default: (q) => `I found <strong>12 resources</strong> matching "<em>${q}</em>" in the GSDP corpus.<br><br>Top results:<br>• Youth Ministry Annual Report — South Asia 2025 (Province INS)<br>• Drug Addiction Prevention — Pastoral Guide (Province ESP)<br>• Social Work Commission Field Report 2024<br><br>Would you like me to summarize any of these, or translate them to another language?`,
+  summarize: () => `<strong>Summary generated:</strong><br><br>This document presents the Youth Ministry framework for South Asia, focusing on three key pillars: <em>evangelization</em>, <em>youth accompaniment</em>, and <em>institutional collaboration</em>. Key findings include a 23% increase in youth center participation across 8 provinces and 14 new oratory projects launched in 2025. The report recommends strengthening digital literacy programs and cross-provincial knowledge sharing.<br><br>📄 Full document: 47 pages · Language: English · Province: INS`,
+  translate: () => `<strong>Translation complete (EN → ES):</strong><br><br>"Las directrices del Sistema Preventivo de Don Bosco enfatizan el papel central del educador salesiano como acompañante de los jóvenes, especialmente los más vulnerables..."<br><br>🌐 Translation powered by Azure OpenAI · 5 languages supported`,
+  recommend: () => `<strong>Recommended resources</strong> based on semantic similarity:<br><br>1. 🔗 <em>Youth at Risk — Pastoral Approaches 2024</em> (similarity: 94%)<br>2. 🔗 <em>Social Work Best Practices — Africa 2024</em> (similarity: 89%)<br>3. 🔗 <em>Prevention Programs — Latin America 2023</em> (similarity: 87%)<br><br>Recommendations powered by vector embeddings · Databricks ML Layer`,
+};
+
+function sendChat() {
+  const input = document.getElementById('chat-input');
+  const msg = input.value.trim();
+  if(!msg) return;
+  const messages = document.getElementById('chat-messages');
+  messages.innerHTML += `<div class="chat-msg user"><div class="chat-avatar user">U</div><div class="chat-bubble user">${msg}</div></div>`;
+  input.value = '';
+  messages.scrollTop = messages.scrollHeight;
+  setTimeout(()=>{
+    let resp;
+    if(msg.toLowerCase().includes('summar')) resp = AI_RESPONSES.summarize();
+    else if(msg.toLowerCase().includes('translat')) resp = AI_RESPONSES.translate();
+    else if(msg.toLowerCase().includes('recommend')||msg.toLowerCase().includes('similar')) resp = AI_RESPONSES.recommend();
+    else resp = AI_RESPONSES.default(msg);
+    messages.innerHTML += `<div class="chat-msg"><div class="chat-avatar ai">✦</div><div class="chat-bubble ai">${resp}</div></div>`;
+    messages.scrollTop = messages.scrollHeight;
+  }, 700);
+}
+
+// ══════════════════════════════════════════
+// OWL ONTOLOGY PIPELINE
+// ══════════════════════════════════════════
+const OWL_STEPS = [
+  { id:'validate-taxonomy',   label:'Validate Taxonomy',       icon:'🏷', desc:'Checking all taxonomy terms and class definitions...', duration:1800, detail:'Scanned 847 classes · 0 conflicts found' },
+  { id:'build-hierarchy',     label:'Build Class Hierarchy',   icon:'🌳', desc:'Constructing OWL class hierarchy from taxonomy tree...', duration:2200, detail:'312 properties mapped · hierarchy depth: 6 levels' },
+  { id:'map-salesian-groups', label:'Map Salesian Groups',     icon:'✝', desc:'Mapping SDB, FMA, Cooperators, ADMA and sub-groups...', duration:1600, detail:'6 Salesian groups · 42 sub-group relations indexed' },
+  { id:'map-provinces',       label:'Map Provinces & Regions', icon:'🌍', desc:'Linking 92 provinces to regional and geographic nodes...', duration:2000, detail:'92 provinces · 8 regions · 3,241 geo-relations' },
+  { id:'generate-owl',        label:'Generate OWL File',       icon:'📄', desc:'Serialising ontology to OWL/RDF format...', duration:2800, detail:'gsdp-ontology-v3.4.2.owl · 2.3 MB · RDF/XML format' },
+  { id:'push-server',         label:'Push to Server',          icon:'🚀', desc:'Deploying OWL file to GSDP ontology endpoint...', duration:1400, detail:'Deployed to https://onto.gsdp.salesian.org · CDN flushed' },
+];
+
+let owlRunning = false;
+
+function initOWLSteps() {
+  const container = document.getElementById('owl-steps-container');
+  if(!container) return;
+  container.innerHTML = OWL_STEPS.map((s,i)=>`
+    <div class="owl-step step-idle" id="owl-step-${s.id}">
+      <div class="owl-step-icon" id="owl-icon-${s.id}">${i+1}</div>
+      <div class="owl-step-body">
+        <div class="owl-step-title">${s.icon} ${s.label}</div>
+        <div class="owl-step-meta" id="owl-meta-${s.id}">Waiting...</div>
+        <div class="owl-step-bar"><div class="owl-step-bar-fill" id="owl-bar-${s.id}"></div></div>
+      </div>
+      <span class="owl-step-badge badge-idle" id="owl-badge-${s.id}">Idle</span>
+    </div>`).join('');
+  const summary = document.getElementById('owl-summary');
+  if(summary) summary.style.display='none';
+  const overall = document.getElementById('owl-overall-status');
+  if(overall) { overall.textContent='Idle'; overall.style.color='var(--muted)'; }
+}
+
+function setStepState(stepId, state, metaText) {
+  const el   = document.getElementById('owl-step-'+stepId);
+  const icon = document.getElementById('owl-icon-'+stepId);
+  const meta = document.getElementById('owl-meta-'+stepId);
+  const badge= document.getElementById('owl-badge-'+stepId);
+  if(!el) return;
+  el.className = 'owl-step step-'+state;
+  if(metaText) meta.textContent = metaText;
+  if(state==='running'){ icon.textContent='⟳'; badge.className='owl-step-badge badge-running'; badge.textContent='Running'; }
+  if(state==='done')   { icon.textContent='✓'; badge.className='owl-step-badge badge-done';    badge.textContent='Complete'; }
+  if(state==='fail')   { icon.textContent='✕'; badge.className='owl-step-badge badge-fail';    badge.textContent='Failed'; }
+  el.scrollIntoView({block:'nearest',behavior:'smooth'});
+}
+
+function animateBar(stepId, duration) {
+  const bar = document.getElementById('owl-bar-'+stepId);
+  if(!bar) return;
+  let w = 0;
+  const step = 100 / (duration / 80);
+  const timer = setInterval(()=>{
+    w = Math.min(w + step + (Math.random()*step*0.5), 92);
+    bar.style.width = w+'%';
+    if(w >= 92) clearInterval(timer);
+  }, 80);
+  return timer;
+}
+
+async function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
+
+async function triggerOWLUpdate() {
+  if(owlRunning) return;
+  owlRunning = true;
+
+  const runBtn   = document.getElementById('owl-run-btn');
+  const resetBtn = document.getElementById('owl-reset-btn');
+  const overall  = document.getElementById('owl-overall-status');
+  const badge    = document.getElementById('owl-status-badge');
+  const navItem  = document.getElementById('owl-trigger-nav');
+
+  runBtn.disabled = true;
+  runBtn.textContent = '⟳ Running...';
+  if(badge){ badge.style.display='inline-block'; badge.textContent='●'; badge.className='nav-badge'; }
+  if(overall){ overall.textContent='Running'; overall.style.color='var(--gold)'; }
+
+  initOWLSteps();
+  showToast('🦉 OWL ontology pipeline started...');
+
+  let allPassed = true;
+  let failedStep = null;
+
+  for(let i=0; i<OWL_STEPS.length; i++){
+    const s = OWL_STEPS[i];
+    setStepState(s.id, 'running', s.desc);
+    const barTimer = animateBar(s.id, s.duration);
+
+    // Simulate real API call — random small chance of failure on step 5 for realism
+    await sleep(s.duration);
+    clearInterval(barTimer);
+    const bar = document.getElementById('owl-bar-'+s.id);
+    if(bar) bar.style.width='100%';
+    await sleep(150);
+
+    // Simulate occasional failure on Push to Server (last step) ~15% chance
+    const failed = (i === 5 && Math.random() < 0.15);
+
+    if(failed){
+      setStepState(s.id, 'fail', '⚠ Connection timeout — server did not respond within 30s');
+      allPassed = false;
+      failedStep = s;
+      break;
+    } else {
+      setStepState(s.id, 'done', s.detail);
+    }
+  }
+
+  // Show summary
+  const summary = document.getElementById('owl-summary');
+  const now = new Date().toISOString().replace('T',' ').substring(0,19)+' UTC';
+  if(summary){
+    summary.style.display='block';
+    if(allPassed){
+      summary.style.background='#F0FDF4';
+      summary.style.border='1px solid #86EFAC';
+      summary.innerHTML=`<div style="font-size:14px;font-weight:700;color:#15803D;margin-bottom:6px;">✅ All 6 stages completed successfully</div>
+        <div style="font-size:12px;color:#166534;line-height:1.8;">OWL file updated to <strong>v3.4.2</strong> · Deployed at <strong>${now}</strong><br>847 classes · 312 properties · 92 provinces · 6 Salesian groups mapped</div>`;
+      if(overall){ overall.textContent='✅ Complete'; overall.style.color='#15803D'; }
+      if(badge){ badge.textContent='✓'; badge.className='nav-badge success'; }
+      showToast('✅ OWL update complete — v3.4.2 deployed successfully');
+      // Append to history log
+      const log = document.getElementById('owl-update-log');
+      if(log){
+        const entry = document.createElement('div');
+        entry.className='activity-item';
+        entry.innerHTML=`<div class="activity-dot dot-green"></div><div><div class="activity-text">OWL <strong>v3.4.2</strong> — all 6 stages completed · Triggered by <strong>${ROLES[currentRole].name}</strong></div><div class="activity-time">${now}</div></div>`;
+        log.insertBefore(entry, log.firstChild);
+      }
+      // Update version display
+      const verEl = document.getElementById('owl-current-ver');
+      if(verEl) verEl.textContent='v3.4.2';
+      const lastUpd = document.getElementById('owl-last-updated');
+      if(lastUpd) lastUpd.textContent=now.substring(0,16);
+    } else {
+      summary.style.background='#FEF2F2';
+      summary.style.border='1px solid #FCA5A5';
+      summary.innerHTML=`<div style="font-size:14px;font-weight:700;color:#B91C1C;margin-bottom:6px;">❌ Pipeline failed at: ${failedStep.icon} ${failedStep.label}</div>
+        <div style="font-size:12px;color:#7F1D1D;line-height:1.8;">The process stopped at stage ${OWL_STEPS.indexOf(failedStep)+1}. Previous stages are preserved.<br>Please check the server connection and click <strong>Reset</strong> to try again.</div>`;
+      if(overall){ overall.textContent='❌ Failed'; overall.style.color='#B91C1C'; }
+      if(badge){ badge.textContent='✕'; badge.className='nav-badge error'; }
+      showToast('❌ OWL pipeline failed at: '+failedStep.label+' — check log');
+      const log = document.getElementById('owl-update-log');
+      if(log){
+        const entry = document.createElement('div');
+        entry.className='activity-item';
+        entry.innerHTML=`<div class="activity-dot dot-red"></div><div><div class="activity-text">OWL update <strong>failed</strong> at stage: ${failedStep.label} · Triggered by <strong>${ROLES[currentRole].name}</strong></div><div class="activity-time">${now}</div></div>`;
+        log.insertBefore(entry, log.firstChild);
+      }
+    }
+  }
+
+  owlRunning = false;
+  runBtn.disabled = false;
+  runBtn.textContent = '🦉 Run OWL Update';
+  if(resetBtn) resetBtn.style.display='flex';
+  setTimeout(()=>{ if(badge){ badge.style.display='none'; } }, 8000);
+}
+
+function resetOWLProcess() {
+  initOWLSteps();
+  const overall = document.getElementById('owl-overall-status');
+  if(overall){ overall.textContent='Idle'; overall.style.color='var(--muted)'; }
+  const resetBtn = document.getElementById('owl-reset-btn');
+  if(resetBtn) resetBtn.style.display='none';
+  const runBtn = document.getElementById('owl-run-btn');
+  if(runBtn){ runBtn.disabled=false; runBtn.textContent='🦉 Run OWL Update'; }
+}
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(window._toastTimer);
+  window._toastTimer = setTimeout(()=>t.classList.remove('show'), 3000);
+}
+
+// Close modal on overlay click
+document.getElementById('resource-modal').addEventListener('click', function(e) {
+  if(e.target===this) closeModal('resource-modal');
+});
+
+// Initialise filters only — login screen shown first
+initFilters();
+initAnalyticsFilters();
+initOWLSteps();
+</script>
+</body>
+</html>

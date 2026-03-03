@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GSDP – Global Salesian Digital Platform</title>
+<title>Global Salesian Digital Platform</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -408,8 +408,8 @@
   <div class="nav-logo">
     <div class="nav-logo-icon">G</div>
     <div class="nav-logo-text">
-      <strong>GSDP</strong>
-      <span>Global Salesian Digital Platform</span>
+      <strong>Global Salesian Digital Platform</strong>
+
     </div>
   </div>
   <div class="nav-links">
@@ -421,7 +421,7 @@
     <a href="#">Salesian Family</a>
   </div>
   <div class="nav-right">
-    <button class="btn-nav btn-outline"><a href="dashboard.html">Sign In</a></button>
+    <button class="btn-nav btn-outline" onclick="SignIn()">Sign In</button>
     <button class="btn-nav btn-primary">Get Access</button>
   </div>
 </nav>
@@ -431,7 +431,7 @@
   <div class="hero-grid">
     <div class="hero-left">
       <div class="hero-eyebrow"><span>Unified Knowledge Ecosystem</span></div>
-      <h1>One Platform.<br>The Entire <em>Salesian</em><br>Mission.</h1>
+      <h1>One Platform.<br>The  <em>Salesian</em><br>Mission.</h1>
       <p>A unified digital infrastructure connecting 92 provinces, all departments, and the entire Salesian Family — making the global mission visible, searchable, and shared.</p>
       <div class="hero-cta">
         <button class="btn-hero-primary">Explore Resources ↗</button>
@@ -695,8 +695,8 @@
       <div class="nav-logo">
         <div class="nav-logo-icon">G</div>
         <div class="nav-logo-text">
-          <strong>GSDP</strong>
-          <span>Global Salesian Digital Platform</span>
+          <strong>Global Salesian Digital Platform</strong>
+         
         </div>
       </div>
       <p class="footer-brand-text">A unified, modular, and mission-driven digital ecosystem serving the whole Congregation and the entire Salesian Family. Faithful to the spirit of Don Bosco.</p>
@@ -734,6 +734,12 @@
     <div class="footer-copy">GDPR Compliant · Databricks Architecture</div>
   </div>
 </footer>
+
+<script>
+  function SignIn() {
+    window.location.href = 'dashboard.html';
+  }
+</script>
 
 </body>
 </html>

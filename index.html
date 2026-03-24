@@ -347,19 +347,26 @@ input:focus-visible,select:focus-visible{outline:2px solid var(--sdb-blue);outli
 }
 .pp-kicker{font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--sdb-orange);margin-bottom:4px;}
 .pp-title{font-family:'Merriweather',serif;font-size:18px;font-weight:800;color:var(--sdb-blue-deep);line-height:1.35;max-width:640px;}
+.pp-fresh-row{
+  margin-top:12px;padding:10px 14px;border-radius:var(--radius-lg);
+  background:linear-gradient(90deg,rgba(232,96,10,.1),rgba(0,87,168,.06));
+  border:1px solid rgba(232,96,10,.22);
+  font-size:13px;color:var(--slate);line-height:1.55;display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 12px;
+  max-width:720px;
+}
+#pp-updated-label{
+  font-family:'Merriweather',serif;font-size:15px;font-weight:800;color:var(--sdb-orange);font-style:normal;
+}
+.pp-fresh-sep{color:var(--mid);font-weight:600;opacity:.65;}
+.pp-fresh-detail{color:var(--slate);}
 .pp-grid{
-  display:grid;grid-template-columns:repeat(4,1fr);gap:16px;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:16px;
 }
 .pp-stat{
   background:var(--paper);border:1px solid var(--border);border-radius:var(--radius-lg);
   padding:18px 16px;text-align:center;box-shadow:0 4px 18px rgba(0,57,117,.06);
 }
-.pp-stat--accent{
-  border-color:var(--sdb-orange);background:linear-gradient(165deg,#fff 0%,var(--warm-cream) 100%);
-  box-shadow:0 6px 22px rgba(232,96,10,.12);
-}
 .pp-val{font-family:'Merriweather',serif;font-size:28px;font-weight:900;color:var(--sdb-blue-deep);line-height:1.1;}
-.pp-stat--accent .pp-val{color:var(--sdb-orange);font-size:22px;}
 .pp-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--mid);margin-top:8px;}
 .pp-sub{font-size:12px;color:var(--slate);margin-top:8px;line-height:1.45;}
 .pp-footnote{font-size:12px;color:var(--mid);margin-top:16px;text-align:center;max-width:720px;margin-left:auto;margin-right:auto;line-height:1.55;}
@@ -392,6 +399,14 @@ input:focus-visible,select:focus-visible{outline:2px solid var(--sdb-blue);outli
 .pub-section-more{margin-left:auto;font-size:13px;font-weight:600;color:var(--orange-text);cursor:pointer;padding:6px 10px;border-radius:var(--radius);transition:background .15s;}
 .pub-section-more:hover{background:rgba(184,77,0,.08);}
 .pub-section-divider{width:48px;height:3px;background:var(--sdb-orange);border-radius:2px;margin-bottom:20px;}
+.pub-access-note{
+  margin-top:16px;padding:14px 18px;border-radius:var(--radius-lg);
+  border:1px solid var(--sdb-blue-light);
+  background:linear-gradient(180deg,var(--sdb-blue-pale) 0%,var(--paper) 100%);
+  font-size:13px;color:var(--slate);line-height:1.65;max-width:820px;
+}
+.pub-access-note strong{color:var(--sdb-blue-deep);font-weight:700;}
+.pub-access-note .pub-access-lead{display:block;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--sdb-orange);margin-bottom:8px;}
 
 .coll-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
 .coll-card{background:var(--paper);border-radius:var(--radius-lg);overflow:hidden;cursor:pointer;border:1px solid var(--border);transition:all .2s;}
@@ -660,7 +675,27 @@ input:focus-visible,select:focus-visible{outline:2px solid var(--sdb-blue);outli
 .filter-toggle-mobile::before{content:'▾ ';opacity:.7;}
 #page-resources .filter-bar.is-collapsible{transition:max-height .35s ease,padding .2s ease,margin .2s ease,opacity .2s ease;overflow:hidden;}
 .resource-card-inner{display:flex;gap:0;align-items:stretch;}
-.resource-card-thumb{width:86px;min-height:100px;flex-shrink:0;background:linear-gradient(160deg,var(--sdb-blue-light),var(--warm-cream));display:flex;align-items:center;justify-content:center;font-size:26px;border-right:1px solid var(--border-soft);}
+.resource-card-thumb{
+  width:100px;min-width:100px;min-height:128px;flex-shrink:0;background:linear-gradient(160deg,var(--sdb-blue-light),var(--warm-cream));
+  display:flex;align-items:center;justify-content:center;font-size:26px;border-right:1px solid var(--border-soft);
+  overflow:hidden;position:relative;
+}
+.resource-card-thumb img{width:100%;height:100%;min-height:128px;object-fit:cover;display:block;}
+.resource-card-thumb .resource-thumb-fallback{font-size:28px;line-height:1;opacity:.85;}
+.filter-primary-row{display:flex;flex-wrap:wrap;align-items:flex-end;gap:10px 14px;width:100%;}
+.filter-secondary-row{display:flex;flex-wrap:wrap;align-items:flex-end;gap:10px;margin-top:12px;padding-top:12px;border-top:1px solid var(--border-soft);width:100%;}
+.filter-field{display:flex;flex-direction:column;gap:4px;min-width:0;}
+.filter-field-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--mid);white-space:nowrap;}
+.filter-keyterms-wrap{width:100%;margin-top:12px;padding-top:12px;border-top:1px solid var(--border-soft);}
+.filter-keyterms-wrap .filter-keyterms-hint{font-size:11px;color:var(--mid);margin-bottom:6px;font-weight:500;}
+.resource-keyterm-bar{display:flex;flex-wrap:wrap;gap:6px;max-height:96px;overflow-y:auto;padding:2px 0;}
+.resource-keyterm-bar label{
+  display:inline-flex;align-items:center;gap:5px;font-size:11px;padding:4px 9px;border-radius:6px;border:1px solid var(--border);
+  background:var(--off-white);cursor:pointer;user-select:none;color:var(--slate);
+}
+.resource-keyterm-bar label.is-kt-on{background:var(--sdb-blue-pale);border-color:var(--sdb-blue-light);color:var(--sdb-blue-deep);}
+.resource-keyterm-bar input{accent-color:var(--sdb-blue);flex-shrink:0;}
+.res-keyterm-pill{display:inline-block;font-size:10px;font-weight:600;padding:3px 8px;border-radius:4px;background:var(--warm-cream);color:var(--slate);margin:2px 4px 2px 0;border:1px solid var(--border-soft);vertical-align:middle;}
 .resource-card-main{flex:1;min-width:0;}
 @media(max-width:960px){
   .filter-toggle-mobile{display:block;}
@@ -674,7 +709,8 @@ input:focus-visible,select:focus-visible{outline:2px solid var(--sdb-blue);outli
   .pub-nav-actions{grid-column:2;grid-row:1;align-self:center;}
   .pub-nav-links{grid-column:1/-1;grid-row:2;justify-content:flex-start;gap:4px;}
   .resource-card-inner{flex-direction:column;}
-  .resource-card-thumb{width:100%;min-height:64px;border-right:0;border-bottom:1px solid var(--border-soft);}
+  .resource-card-thumb{width:100%;min-height:140px;border-right:0;border-bottom:1px solid var(--border-soft);}
+  .resource-card-thumb img{min-height:140px;}
   .about-section{grid-template-columns:1fr;gap:36px;}
 }
 @media(max-width:520px){
@@ -795,6 +831,20 @@ input:focus-visible,select:focus-visible{outline:2px solid var(--sdb-blue);outli
 .chat-bubble{max-width:75%;padding:11px 14px;border-radius:10px;font-size:13px;line-height:1.6;}
 .chat-bubble.ai{background:var(--sdb-blue-pale);color:var(--ink);}
 .chat-bubble.user{background:var(--sdb-orange);color:#fff;}
+.ai-example-hint{font-size:12px;color:var(--mid);line-height:1.5;padding:10px 14px 8px;border-top:1px solid var(--border);background:var(--off-white);}
+.ai-example-hint strong{color:var(--ink);font-weight:600;}
+.ai-example-queries-grid{
+  display:flex;flex-direction:column;gap:8px;margin-top:10px;max-height:min(42vh,320px);overflow-y:auto;padding-right:4px;
+}
+.ai-example-query{
+  display:block;padding:9px 12px;text-align:left;width:100%;border:1px dashed var(--sdb-blue-light);border-radius:var(--radius);
+  background:var(--paper);color:var(--sdb-blue-deep);font-size:12px;font-family:'Merriweather',serif;font-style:italic;cursor:pointer;line-height:1.45;
+  transition:border-color .15s,background .15s;flex-shrink:0;
+}
+.ai-example-query:hover{border-color:var(--sdb-blue);background:var(--sdb-blue-pale);}
+@media(min-width:720px){
+  .ai-example-queries-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;align-content:start;}
+}
 .ai-input-bar{padding:12px;border-top:1px solid var(--border);display:flex;gap:10px;}
 .ai-input{flex:1;padding:9px 13px;border:1px solid var(--border);border-radius:var(--radius);font-size:13px;font-family:'Noto Sans',sans-serif;outline:none;transition:border-color .2s;}
 .ai-input:focus{border-color:var(--sdb-blue);}
@@ -890,6 +940,14 @@ input:focus-visible,select:focus-visible{outline:2px solid var(--sdb-blue);outli
 .bubble-msg.ai{background:var(--sdb-blue-pale);color:var(--ink);}
 .bubble-msg.user{background:var(--sdb-orange);color:#fff;align-self:flex-end;max-width:80%;}
 .bubble-bar{padding:9px;border-top:1px solid var(--border);display:flex;gap:7px;}
+.bubble-example-hint{padding:8px 12px 0;font-size:11px;color:var(--mid);line-height:1.45;}
+.bubble-example-label{display:block;font-weight:600;color:var(--ink);margin-bottom:4px;}
+.bubble-example-queries,.bubble-example-queries-grid{display:flex;flex-direction:column;gap:6px;max-height:200px;overflow-y:auto;padding-right:2px;margin-bottom:2px;}
+.bubble-example-btn{
+  display:block;width:100%;margin:0;padding:7px 9px;border:1px dashed var(--sdb-blue-light);border-radius:var(--radius);background:var(--paper);
+  color:var(--sdb-blue-deep);font-size:11px;font-family:'Merriweather',serif;font-style:italic;text-align:left;cursor:pointer;line-height:1.4;flex-shrink:0;
+}
+.bubble-example-btn:hover{background:var(--sdb-blue-pale);border-color:var(--sdb-blue);}
 .bubble-inp{flex:1;padding:7px 11px;border:1px solid var(--border);border-radius:var(--radius);font-size:12px;font-family:'Noto Sans',sans-serif;outline:none;}
 .bubble-inp:focus{border-color:var(--sdb-blue);}
 .bubble-send{padding:7px 14px;background:var(--sdb-blue);color:#fff;border:none;border-radius:var(--radius);font-size:12px;font-weight:600;cursor:pointer;}
@@ -1076,6 +1134,50 @@ mark.gs-mark{background:rgba(184,77,0,.12);color:var(--orange-text);border-radiu
 .network-link-arrow{margin-left:auto;font-size:13px;color:var(--mid);}
 .salesian-way-pill{padding:9px 10px;border-radius:var(--radius);background:var(--sdb-blue-pale);border:1px solid var(--sdb-blue-light);font-size:12px;font-weight:600;color:var(--sdb-blue-deep);cursor:pointer;transition:background .15s,border-color .15s;text-align:center;}
 .salesian-way-pill:hover{background:var(--sdb-blue);color:#fff;border-color:var(--sdb-blue);}
+
+/* Networks page — overview slider */
+.networks-hero-slider{
+  position:relative;min-height:158px;border-radius:var(--radius-lg);overflow:hidden;margin-bottom:22px;
+  background:linear-gradient(135deg,#001f3d 0%,var(--sdb-blue-deep) 45%,#0a5a9e 100%);
+  border:1px solid rgba(0,87,168,.25);box-shadow:0 6px 24px rgba(0,57,117,.1);
+}
+.networks-hero-slide{
+  position:absolute;inset:0;padding:22px 26px 48px;
+  opacity:0;transition:opacity .65s ease;pointer-events:none;
+}
+.networks-hero-slide.active{opacity:1;pointer-events:auto;z-index:1;}
+.networks-hero-kicker{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#FFB380;margin-bottom:8px;}
+.networks-hero-title{font-family:'Merriweather',serif;font-size:20px;font-weight:800;color:#fff;line-height:1.25;margin-bottom:8px;max-width:560px;}
+.networks-hero-text{font-size:13px;color:rgba(255,255,255,.82);line-height:1.6;max-width:540px;}
+.networks-hero-controls{
+  position:absolute;bottom:14px;left:22px;right:22px;z-index:2;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+}
+.networks-hero-nav{display:flex;align-items:center;gap:7px;}
+.networks-hero-dot{
+  width:9px;height:9px;border-radius:50%;border:none;padding:0;cursor:pointer;
+  background:rgba(255,255,255,.35);transition:transform .15s,background .15s;
+}
+.networks-hero-dot:hover{background:rgba(255,255,255,.55);}
+.networks-hero-dot.active{background:var(--sdb-orange);transform:scale(1.2);}
+.networks-slider-pause{
+  width:32px;height:32px;border-radius:var(--radius);border:1px solid rgba(255,255,255,.25);
+  background:rgba(255,255,255,.1);color:#fff;font-size:14px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;font-family:'Noto Sans',sans-serif;
+  transition:background .15s;
+}
+.networks-slider-pause:hover{background:rgba(255,255,255,.2);}
+#page-networks .networks-kpi-row{display:grid;}
+@media(max-width:960px){
+  #page-networks .networks-kpi-row{
+    display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;padding-bottom:6px;
+    margin-bottom:20px;-webkit-overflow-scrolling:touch;
+  }
+  #page-networks .networks-kpi-row .stat-card{flex:0 0 min(220px,82vw);scroll-snap-align:start;}
+}
+@media(max-width:1100px){
+  #page-networks .networks-three-col{grid-template-columns:1fr!important;}
+}
 
 /* ── Full Footer ── */
 .full-footer{background:var(--sdb-blue-deep);border-top:3px solid var(--sdb-orange);}
@@ -1320,28 +1422,28 @@ mark.gs-mark{background:rgba(184,77,0,.12);color:var(--orange-text);border-radiu
         <div>
           <div class="pp-kicker">Live · indexed · growing</div>
           <div class="pp-title">Public metrics so visitors see the platform is active — not an empty shell</div>
+          <p class="pp-fresh-row" aria-live="polite">
+            <strong id="pp-updated-label">Updated yesterday</strong>
+            <span class="pp-fresh-sep" aria-hidden="true">·</span>
+            <span class="pp-fresh-detail" id="pp-sync-detail">—</span>
+          </p>
         </div>
       </div>
       <div class="pp-grid">
         <div class="pp-stat">
           <div class="pp-val">12,847</div>
-          <div class="pp-lbl">Resources</div>
-          <div class="pp-sub">Books, reports, guides, media — open access where policy allows</div>
+          <div class="pp-lbl">Catalogue records</div>
+          <div class="pp-sub">Documents and media tagged with the shared ontology — theme, document type, province, language — so filters and smart search match how the Family actually classifies knowledge.</div>
         </div>
         <div class="pp-stat">
           <div class="pp-val">7,240</div>
-          <div class="pp-lbl">Institutions</div>
-          <div class="pp-sub">Schools, oratories, social works — CristO–Religio footprint</div>
-        </div>
-        <div class="pp-stat pp-stat--accent">
-          <div class="pp-val" id="pp-updated-label">Updated yesterday</div>
-          <div class="pp-lbl">Last catalogue sync</div>
-          <div class="pp-sub" id="pp-sync-detail">—</div>
+          <div class="pp-lbl">Pastoral works</div>
+          <div class="pp-sub">Schools, oratories, social centres, and houses anchored in CristO–Religio: stable IDs, geography, and links to the resources that matter for each place.</div>
         </div>
         <div class="pp-stat">
-          <div class="pp-val">+124</div>
-          <div class="pp-lbl">This week</div>
-          <div class="pp-sub">New &amp; revised records (resources + institutions + events)</div>
+          <div class="pp-val">92</div>
+          <div class="pp-lbl">Provinces in workflow</div>
+          <div class="pp-sub">The same province codes you use in correspondence; uploads, validation, and visibility follow Salesian governance — not anonymous “global content.”</div>
         </div>
       </div>
       <p class="pp-footnote">Figures are representative of the production target; wireframe uses static demo values. Production would bind to your analytics API and CristO–Religio sync logs.</p>
@@ -1369,6 +1471,10 @@ mark.gs-mark{background:rgba(184,77,0,.12);color:var(--orange-text);border-radiu
         <div class="pub-section-title">ANS Latest News</div>
         <div class="pub-section-divider"></div>
         <div class="pub-section-sub">Agenzia News Salesiana · news from 136 nations</div>
+        <div class="pub-access-note">
+          <span class="pub-access-lead">Public resources</span>
+          Stories open with a <strong>cover preview</strong>; linked reports and PDFs from ANS use the same ladder as the rest of the hub — <strong>full PDF</strong> when the item is public, and <strong>chapter-level access</strong> when the file is structured that way. <strong>Freedom to read and reuse comes before restriction</strong>, except where copyright or pastoral sensitivity clearly requires a limit.
+        </div>
       </div>
       <span class="pub-section-more" onclick="showToast('Opening ANS full feed')">All ANS news →</span>
     </div>
@@ -1386,6 +1492,10 @@ mark.gs-mark{background:rgba(184,77,0,.12);color:var(--orange-text);border-radiu
         <div class="pub-section-title">Curated Collections</div>
         <div class="pub-section-divider"></div>
         <div class="pub-section-sub">Thematic knowledge paths — discover without needing an exact query</div>
+        <div class="pub-access-note">
+          <span class="pub-access-lead">Public resources</span>
+          Every path leads into the same catalogue rules: <strong>cover preview</strong> first, then <strong>full PDF</strong> (or equivalent) for open items, and <strong>chapter- or section-level navigation</strong> when metadata supports it. Collections do not hide a stricter gate — <strong>freedom to read and reuse comes before restriction</strong>, with exceptions only where policy demands.
+        </div>
       </div>
       <span class="pub-section-more" onclick="doLogin()">All collections →</span>
     </div>
@@ -1406,6 +1516,10 @@ mark.gs-mark{background:rgba(184,77,0,.12);color:var(--orange-text);border-radiu
         <div class="pub-section-title">Events & gatherings</div>
         <div class="pub-section-divider"></div>
         <div class="pub-section-sub">Highlighted here when they add context to resources and collections — full province calendars may remain on AMS and other official tools.</div>
+        <div class="pub-access-note">
+          <span class="pub-access-lead">Public resources</span>
+          Programmes, outcome reports, and liturgical or formation packs attached to an event follow the same pattern: <strong>preview</strong> (cover or summary), then <strong>full PDF</strong> for public documents, and <strong>chapter-level access</strong> when the source is structured. <strong>Freedom to read and reuse comes before restriction</strong>; embargoes or internal-only labels apply only where organisers explicitly set them.
+        </div>
       </div>
       <span class="pub-section-more" onclick="doLogin()">Platform calendar →</span>
     </div>
@@ -1435,6 +1549,10 @@ mark.gs-mark{background:rgba(184,77,0,.12);color:var(--orange-text);border-radiu
         <div class="pub-section-title">Pastoral Works & Institutions</div>
         <div class="pub-section-divider"></div>
         <div class="pub-section-sub">7,240 schools, oratories, parishes, and social works — click any point to explore profile and related resources</div>
+        <div class="pub-access-note">
+          <span class="pub-access-lead">Public resources</span>
+          Work profiles stay readable without an account; every <strong>linked document</strong> in the hub opens with a <strong>cover preview</strong>, then <strong>full PDF</strong> when open access, and <strong>chapter-level reading</strong> when the file is structured. <strong>Freedom to read and reuse comes before restriction</strong> — directory data and public pastoral PDFs default open; only sensitive or rights-limited items stay gated.
+        </div>
       </div>
       <span class="pub-section-more" onclick="doLogin()">Full directory →</span>
     </div>
@@ -1881,6 +1999,10 @@ mark.gs-mark{background:rgba(184,77,0,.12);color:var(--orange-text);border-radiu
     <div class="bubble-msgs" id="bubble-msgs">
       <div class="bubble-msg ai">Hello — I’m here to help you explore, not to replace the library. Try: “Find resources on the Preventive System in Latin America (1950–1970)” or open a collection if you’re not sure what to search.</div>
     </div>
+    <div class="bubble-example-hint" id="bubble-example-suggestions">
+      <span class="bubble-example-label">Provide example queries:</span>
+      <div class="bubble-example-queries-grid" id="bubble-example-queries"></div>
+    </div>
     <div class="bubble-bar">
       <input class="bubble-inp" id="bubble-inp" placeholder="Ask anything…" onkeypress="if(event.key==='Enter')bubbleSend()">
       <button class="bubble-send" onclick="bubbleSend()">Send</button>
@@ -1986,21 +2108,50 @@ mark.gs-mark{background:rgba(184,77,0,.12);color:var(--orange-text);border-radiu
             <button type="button" class="topbar-btn btn-outline-app" onclick="copyResourceSearchLink()" title="Copy link to this search">🔗 Copy search link</button></div>
           <button type="button" class="filter-toggle-mobile" id="resource-filter-toggle" aria-expanded="true" onclick="toggleResourceFilters()">Filters &amp; facets</button>
           <div class="filter-bar is-collapsible expanded" id="resource-filter-bar">
-            <select class="filter-select" id="rf-theme" onchange="renderResources()"><option value="">All themes</option><option>Youth Ministry</option><option>Education</option><option>Pedagogy</option><option>Spirituality</option><option>Social Development</option><option>Formation</option><option>Missiology</option></select>
-            <select class="filter-select" id="rf-type" onchange="renderResources()"><option value="">All types</option><option>Official Publication</option><option>Study</option><option>Good Practice</option><option>Multimedia</option><option>MARC21</option></select>
-            <select class="filter-select" id="rf-macro" onchange="renderResources()"><option value="">All macro-regions</option><option>Europe</option><option>Latin America</option><option>Africa</option><option>Asia &amp; Oceania</option><option>Middle East</option><option>North America</option><option>Global</option></select>
-            <select class="filter-select" id="rf-region" onchange="renderResources()"><option value="">All sub-regions</option><option>South Asia</option><option>Europe</option><option>Latin America</option><option>Africa</option><option>East Asia</option></select>
-            <select class="filter-select" id="rf-lang" onchange="renderResources()"><option value="">All Languages</option><option>English</option><option>Tamil</option><option>Telugu</option><option>Hindi</option><option>Italian</option><option>Spanish</option><option>French</option><option>Portuguese</option></select>
-            <select class="filter-select" id="rf-year-min" onchange="renderResources()"><option value="">Year from</option><option>2026</option><option>2025</option><option>2024</option><option>2023</option><option>2022</option><option>2021</option><option>2020</option></select>
-            <select class="filter-select" id="rf-year-max" onchange="renderResources()"><option value="">Year to</option><option>2026</option><option>2025</option><option>2024</option><option>2023</option><option>2022</option><option>2021</option><option>2020</option></select>
-            <select class="filter-select" id="rf-author" onchange="renderResources()"><option value="">All authors</option></select>
-            <select class="filter-select" id="rf-publisher" onchange="renderResources()"><option value="">All publishers</option></select>
-            <select class="filter-select" id="rf-province" onchange="renderResources()"><option value="">All Provinces</option><option value="INK">INK Bangalore</option><option value="INM">INM Chennai</option><option value="IND">IND Dimapur</option><option value="ING">ING Guwahati</option><option value="INH">INH Hyderabad</option><option value="INC">INC Kolkata</option><option value="INB">INB Mumbai</option><option value="INN">INN New Delhi</option><option value="INP">INP Panjim</option><option value="INS">INS Shillong</option><option value="INT">INT Tiruchy</option><option value="LKC">LKC Sri Lanka</option><option value="All SA">All SA</option><option value="Global">Global</option></select>
-            <select class="filter-select" id="rf-access" onchange="renderResources()"><option value="">All Access</option><option value="open">Open Access</option></select>
-            <select class="filter-select" id="rf-group" onchange="renderResources()"><option value="">All Groups</option><option>SDB</option><option>FMA</option><option>Cooperators</option><option>ADMA</option><option>Past Pupils</option></select>
-            <label class="sr-only" for="res-search-inp">Search resources</label>
-            <input id="res-search-inp" class="filter-search" placeholder="🔍 Search title, author, province, tags…" oninput="renderResources()">
-            <span class="filter-clear" onclick="clearResourceFilters()">Clear all</span>
+            <div class="filter-primary-row">
+              <div class="filter-field">
+                <label class="filter-field-lbl" for="rf-lang">Language</label>
+                <select class="filter-select" id="rf-lang" onchange="renderResources()"><option value="">All languages</option><option>English</option><option>Tamil</option><option>Telugu</option><option>Hindi</option><option>Italian</option><option>Spanish</option><option>French</option><option>Portuguese</option></select>
+              </div>
+              <div class="filter-field">
+                <label class="filter-field-lbl" for="rf-macro">Geographic area (macro-region)</label>
+                <select class="filter-select" id="rf-macro" onchange="renderResources()"><option value="">All macro-regions</option><option>Europe</option><option>Latin America</option><option>Africa</option><option>Asia &amp; Oceania</option><option>Middle East</option><option>North America</option><option>Global</option></select>
+              </div>
+              <div class="filter-field">
+                <label class="filter-field-lbl" for="rf-region">Sub-region</label>
+                <select class="filter-select" id="rf-region" onchange="renderResources()"><option value="">All sub-regions</option><option>South Asia</option><option>Europe</option><option>Latin America</option><option>Africa</option><option>East Asia</option></select>
+              </div>
+              <div class="filter-field">
+                <label class="filter-field-lbl" for="rf-year-min">Publication year (from)</label>
+                <select class="filter-select" id="rf-year-min" onchange="renderResources()"><option value="">Any</option><option>2026</option><option>2025</option><option>2024</option><option>2023</option><option>2022</option><option>2021</option><option>2020</option></select>
+              </div>
+              <div class="filter-field">
+                <label class="filter-field-lbl" for="rf-year-max">Publication year (to)</label>
+                <select class="filter-select" id="rf-year-max" onchange="renderResources()"><option value="">Any</option><option>2026</option><option>2025</option><option>2024</option><option>2023</option><option>2022</option><option>2021</option><option>2020</option></select>
+              </div>
+              <div class="filter-field">
+                <label class="filter-field-lbl" for="rf-theme">Thematic category</label>
+                <select class="filter-select" id="rf-theme" onchange="renderResources()"><option value="">All categories</option><option>Youth Ministry</option><option>Education</option><option>Pedagogy</option><option>Spirituality</option><option>Social Development</option><option>Formation</option><option>Missiology</option></select>
+              </div>
+            </div>
+            <div class="filter-keyterms-wrap">
+              <div class="filter-keyterms-hint"><span class="filter-field-lbl" style="display:inline;margin-right:6px;">Key terms</span> Select one or more — a resource matches if <em>any</em> selected term appears in its key terms or tags.</div>
+              <div id="resource-keyterm-filters" class="resource-keyterm-bar" role="group" aria-label="Filter by key terms"></div>
+            </div>
+            <div class="filter-secondary-row">
+              <div class="filter-field">
+                <label class="filter-field-lbl" for="rf-type">Document type</label>
+                <select class="filter-select" id="rf-type" onchange="renderResources()"><option value="">All types</option><option>Official Publication</option><option>Study</option><option>Good Practice</option><option>Multimedia</option><option>MARC21</option></select>
+              </div>
+              <select class="filter-select" id="rf-author" onchange="renderResources()"><option value="">All authors</option></select>
+              <select class="filter-select" id="rf-publisher" onchange="renderResources()"><option value="">All publishers</option></select>
+              <select class="filter-select" id="rf-province" onchange="renderResources()"><option value="">All Provinces</option><option value="INK">INK Bangalore</option><option value="INM">INM Chennai</option><option value="IND">IND Dimapur</option><option value="ING">ING Guwahati</option><option value="INH">INH Hyderabad</option><option value="INC">INC Kolkata</option><option value="INB">INB Mumbai</option><option value="INN">INN New Delhi</option><option value="INP">INP Panjim</option><option value="INS">INS Shillong</option><option value="INT">INT Tiruchy</option><option value="LKC">LKC Sri Lanka</option><option value="All SA">All SA</option><option value="Global">Global</option></select>
+              <select class="filter-select" id="rf-access" onchange="renderResources()"><option value="">All Access</option><option value="open">Open Access</option></select>
+              <select class="filter-select" id="rf-group" onchange="renderResources()"><option value="">All Groups</option><option>SDB</option><option>FMA</option><option>Cooperators</option><option>ADMA</option><option>Past Pupils</option></select>
+              <label class="sr-only" for="res-search-inp">Search resources</label>
+              <input id="res-search-inp" class="filter-search" placeholder="🔍 Search title, author, province, tags…" oninput="renderResources()">
+              <span class="filter-clear" onclick="clearResourceFilters()">Clear all</span>
+            </div>
           </div>
           <div class="resource-grid" id="resource-grid"></div>
         </div>
@@ -2045,8 +2196,35 @@ mark.gs-mark{background:rgba(184,77,0,.12);color:var(--orange-text);border-radiu
         <div class="page" id="page-networks">
           <div class="section-header"><div><h3>Salesian Networks</h3><p>Provincial, regional, and global network directory — South Asia</p></div></div>
 
+          <!-- Overview slider (provinces · regional · global) -->
+          <div class="networks-hero-slider" id="networks-hero-slider" role="region" aria-label="Salesian networks overview">
+            <div class="networks-hero-slide active" id="ns-slide-0" aria-hidden="false">
+              <div class="networks-hero-kicker">South Asia provinces</div>
+              <h4 class="networks-hero-title">12 provinces · one platform</h4>
+              <p class="networks-hero-text">From Bangalore to Sri Lanka — provincial codes, focus areas, and a direct path to meet provincials in the Persons directory.</p>
+            </div>
+            <div class="networks-hero-slide" id="ns-slide-1" aria-hidden="true">
+              <div class="networks-hero-kicker">Regional networks</div>
+              <h4 class="networks-hero-title">DBYA · DB Tech · Bosconet · YaR</h4>
+              <p class="networks-hero-text">Schools, higher education, job placement, indigenous cultures, and social communication — coordinated networks across South Asia.</p>
+            </div>
+            <div class="networks-hero-slide" id="ns-slide-2" aria-hidden="true">
+              <div class="networks-hero-kicker">Global Salesian family</div>
+              <h4 class="networks-hero-title">Worldwide links &amp; the Preventive System</h4>
+              <p class="networks-hero-text">sdb.org, ANS, Green Alliance, IUS, and the Salesian Family — plus the eight “We …” dimensions of the Salesian Way below.</p>
+            </div>
+            <div class="networks-hero-controls">
+              <div class="networks-hero-nav" role="group" aria-label="Slide indicators">
+                <button type="button" class="networks-hero-dot active" onclick="networksDotClick(0)" aria-label="Slide 1: Provinces" aria-current="true"></button>
+                <button type="button" class="networks-hero-dot" onclick="networksDotClick(1)" aria-label="Slide 2: Regional networks"></button>
+                <button type="button" class="networks-hero-dot" onclick="networksDotClick(2)" aria-label="Slide 3: Global"></button>
+              </div>
+              <button type="button" class="networks-slider-pause" id="networks-slider-pause" onclick="toggleNetworksSlider()" aria-label="Pause slideshow" title="Pause or resume">⏸</button>
+            </div>
+          </div>
+
           <!-- SA Stats cards row -->
-          <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:24px;">
+          <div class="networks-kpi-row" style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:24px;">
             <div class="stat-card orange-top"><div class="stat-card-top"><div class="stat-card-icon" style="background:#FEF3C7;">🏫</div></div><div class="stat-card-value">261</div><div class="stat-card-label">Schools</div></div>
             <div class="stat-card"><div class="stat-card-top"><div class="stat-card-icon" style="background:#D1FAE5;">🎓</div></div><div class="stat-card-value">51</div><div class="stat-card-label">Colleges</div></div>
             <div class="stat-card"><div class="stat-card-top"><div class="stat-card-icon" style="background:var(--sdb-blue-pale);">🔧</div></div><div class="stat-card-value">138</div><div class="stat-card-label">Technical Institutes</div></div>
@@ -2054,7 +2232,7 @@ mark.gs-mark{background:rgba(184,77,0,.12);color:var(--orange-text);border-radiu
             <div class="stat-card"><div class="stat-card-top"><div class="stat-card-icon" style="background:#D1FAE5;">🏠</div></div><div class="stat-card-value">192</div><div class="stat-card-label">Hostels</div></div>
           </div>
 
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;">
+          <div class="networks-three-col" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;">
 
             <!-- Provincial Links -->
             <div class="card">
@@ -2103,12 +2281,12 @@ mark.gs-mark{background:rgba(184,77,0,.12);color:var(--orange-text);border-radiu
                 <div class="card-header"><span class="card-title">🌐 Global Links</span></div>
                 <div class="card-body" style="padding:12px;">
                   <div style="display:flex;flex-direction:column;gap:4px;">
-                    <a href="https://www.sdb.org/en" target="_blank" class="network-link-row"><span class="network-icon-dot" style="background:#0057A8;"></span><span>Salesian Worldwide (sdb.org)</span><span class="network-link-arrow">↗</span></a>
-                    <a href="https://infoans.org/en/" target="_blank" class="network-link-row"><span class="network-icon-dot" style="background:#B84D00;"></span><span>Info ANS (News Agency)</span><span class="network-link-arrow">↗</span></a>
-                    <a href="https://www.donboscogreen.org/" target="_blank" class="network-link-row"><span class="network-icon-dot" style="background:#1A6B3C;"></span><span>Don Bosco Green Alliance</span><span class="network-link-arrow">↗</span></a>
-                    <a href="https://famigliasalesiana.org/en" target="_blank" class="network-link-row"><span class="network-icon-dot" style="background:#5B21B6;"></span><span>Salesian Family (32 groups)</span><span class="network-link-arrow">↗</span></a>
-                    <a href="https://ius-sdb.com/" target="_blank" class="network-link-row"><span class="network-icon-dot" style="background:#2272C3;"></span><span>IUS — Salesian Universities</span><span class="network-link-arrow">↗</span></a>
-                    <a href="https://www.donboscosouthasia.org" target="_blank" class="network-link-row"><span class="network-icon-dot" style="background:#003A75;"></span><span>Don Bosco South Asia Portal</span><span class="network-link-arrow">↗</span></a>
+                    <a href="https://www.sdb.org/en" target="_blank" rel="noopener noreferrer" class="network-link-row"><span class="network-icon-dot" style="background:#0057A8;"></span><span>Salesian Worldwide (sdb.org)</span><span class="network-link-arrow">↗</span></a>
+                    <a href="https://infoans.org/en/" target="_blank" rel="noopener noreferrer" class="network-link-row"><span class="network-icon-dot" style="background:#B84D00;"></span><span>Info ANS (News Agency)</span><span class="network-link-arrow">↗</span></a>
+                    <a href="https://www.donboscogreen.org/" target="_blank" rel="noopener noreferrer" class="network-link-row"><span class="network-icon-dot" style="background:#1A6B3C;"></span><span>Don Bosco Green Alliance</span><span class="network-link-arrow">↗</span></a>
+                    <a href="https://famigliasalesiana.org/en" target="_blank" rel="noopener noreferrer" class="network-link-row"><span class="network-icon-dot" style="background:#5B21B6;"></span><span>Salesian Family (32 groups)</span><span class="network-link-arrow">↗</span></a>
+                    <a href="https://ius-sdb.com/" target="_blank" rel="noopener noreferrer" class="network-link-row"><span class="network-icon-dot" style="background:#2272C3;"></span><span>IUS — Salesian Universities</span><span class="network-link-arrow">↗</span></a>
+                    <a href="https://www.donboscosouthasia.org" target="_blank" rel="noopener noreferrer" class="network-link-row"><span class="network-icon-dot" style="background:#003A75;"></span><span>Don Bosco South Asia Portal</span><span class="network-link-arrow">↗</span></a>
                   </div>
                 </div>
               </div>
@@ -2168,8 +2346,12 @@ mark.gs-mark{background:rgba(184,77,0,.12);color:var(--orange-text);border-radiu
           <div class="ai-layout">
             <div class="ai-chat-main">
               <div class="ai-messages" id="chat-messages"></div>
+              <div class="ai-example-hint" id="ai-main-example-suggestions">
+                <strong>Provide example queries:</strong>
+                <div class="ai-example-queries-grid" id="ai-example-queries"></div>
+              </div>
               <div class="ai-input-bar">
-                <input class="ai-input" id="chat-input" placeholder="Ask anything… e.g. 'Summarize resources on Drug Addiction in South Asia'" onkeypress="if(event.key==='Enter')sendChat()">
+                <input class="ai-input" id="chat-input" placeholder="Type a question or tap an example above…" onkeypress="if(event.key==='Enter')sendChat()">
                 <button class="ai-send-btn" onclick="sendChat()">Send ✦</button>
               </div>
             </div>
@@ -2185,7 +2367,7 @@ mark.gs-mark{background:rgba(184,77,0,.12);color:var(--orange-text);border-radiu
                 <h4>How semantic search works</h4>
                 <p>Unlike keyword search, semantic search understands meaning. Ask "formation for young people in difficult contexts" and it finds youth-at-risk resources, oratory pedagogy, and social work — even if those exact words don't appear.</p>
               </div>
-              <div class="ai-tools-card">
+              <div class="ai-tools-card" id="ai-sidebar-suggested-card">
                 <div class="card-title" style="margin-bottom:8px;">Suggested queries</div>
                 <div style="display:flex;flex-direction:column;gap:6px;" id="suggested-queries"></div>
               </div>
@@ -2457,10 +2639,10 @@ mark.gs-mark{background:rgba(184,77,0,.12);color:var(--orange-text);border-radiu
     <button type="button" class="modal-close" onclick="closeOverviewModal()" aria-label="Close overview">✕</button>
     <div class="overview-modal-head">
       <h2 id="overview-modal-title" class="modal-title" style="margin:0;">Platform overview</h2>
-      <p class="modal-sub" style="margin-bottom:0;margin-top:8px;">A short visual tour in the frame below — same three ideas a narrated video would cover: what GSDP is, how to use it, and how we ease your first visit.</p>
+      <p class="modal-sub" style="margin-bottom:0;margin-top:8px;">Watch the overview video below (with captions). It introduces what GSDP is, how to explore it, and how to get started.</p>
     </div>
     <div class="overview-modal-body">
-      <p class="overview-lead" style="margin-bottom:14px;">Follow the slides (they advance automatically). Pause by hovering the frame, or use the arrows. For a recorded voice-over later, set <code>OVERVIEW_VIDEO.youtubeId</code> to your official clip.</p>
+      <p class="overview-lead" style="margin-bottom:14px;">Use the player controls to play, pause, turn captions on or off, and adjust volume. Close this window when you’re done, then try search or <strong>Enter Platform</strong> for the full experience.</p>
       <div id="overview-video-wrap">
         <span class="overview-slide-hint" id="overview-slide-hint">Visual tour</span>
         <div id="overview-slide-deck" class="overview-slide-deck" role="region" aria-roledescription="carousel" aria-labelledby="overview-modal-title" aria-live="polite">
@@ -2511,12 +2693,12 @@ mark.gs-mark{background:rgba(184,77,0,.12);color:var(--orange-text);border-radiu
           </div>
         </div>
         <div id="overview-video-fallback" class="overview-video-fallback" hidden>
-          <span>Could not load the overview file.</span>
-          <span>Add <code>media/gsdp-overview.mp4</code> or set <code>OVERVIEW_VIDEO.youtubeId</code> in the page script.</span>
+          <span>Could not load the overview video.</span>
+          <span>Ensure <code>video/Watch Overview - GSDP_720p_caption.mp4</code> is present, or set <code>OVERVIEW_VIDEO.youtubeId</code> in the page script.</span>
         </div>
         <video id="overview-video" controls playsinline preload="metadata" hidden poster="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%201920%201080%22%3E%3Crect%20fill%3D%22%23003A75%22%20width%3D%22100%25%22%20height%3D%22100%25%22%2F%3E%3C%2Fsvg%3E"></video>
       </div>
-      <p class="overview-modal-foot">Default = in-frame slide tour with your three messages. Optional: set <code>OVERVIEW_VIDEO.useSlideTour</code> to <code>false</code> and use <code>media/gsdp-overview.mp4</code> or <code>youtubeId</code> for a single narrated video instead.</p>
+      <p class="overview-modal-foot">Overview uses the local file <code>video/Watch Overview - GSDP_720p_caption.mp4</code> by default. For YouTube instead, set <code>OVERVIEW_VIDEO.youtubeId</code>; for the slide tour, set <code>OVERVIEW_VIDEO.useSlideTour</code> to <code>true</code>.</p>
     </div>
   </div>
 </div>
@@ -2526,10 +2708,10 @@ mark.gs-mark{background:rgba(184,77,0,.12);color:var(--orange-text);border-radiu
 // ════════════ DATA ════════════
 const RESOURCES=[
   // INK — Bangalore Province (Sacred Heart)
-  {id:'RES-001',title:'Sacred Heart Province Bangalore (INK) — Annual Mission Report 2025',author:'Fr. Jose Koyickal, Provincial · dbbangalore.org',type:'Official Publication',badge:'badge-pdf',icon:'📄',area:'Formation',lang:'English',region:'South Asia',year:'2025',province:'INK',tags:['Bangalore','INK','Annual Report','Sacred Heart'],group:'SDB',desc:'Report covering 349 members, 44 houses across Karnataka and Kerala. Highlights: Skillthon 2025, YaR outreach, BREADS social work.',access:'open'},
-  {id:'RES-002',title:'"A Life Rewritten" — Shyam\'s Journey: Street Youth to Stable Livelihood',author:'INK Province Communications · dbbangalore.org',type:'Good Practice',badge:'badge-doc',icon:'📋',area:'Youth Ministry',lang:'English',region:'South Asia',year:'2026',province:'INK',tags:['YaR','Success Story','Livelihood','INK'],group:'SDB',desc:'Case study from Bosco Bangalore documenting a young at risk student\'s rehabilitation through vocational training and counselling.',access:'open'},
+  {id:'RES-001',title:'Sacred Heart Province Bangalore (INK) — Annual Mission Report 2025',author:'Fr. Jose Koyickal, Provincial · dbbangalore.org',type:'Official Publication',badge:'badge-pdf',icon:'📄',area:'Formation',lang:'English',region:'South Asia',year:'2025',province:'INK',tags:['Bangalore','INK','Annual Report','Sacred Heart'],keyTerms:['Provincial mission','Skillthon','Karnataka','Kerala','house reports'],group:'SDB',desc:'Report covering 349 members, 44 houses across Karnataka and Kerala. Highlights: Skillthon 2025, YaR outreach, BREADS social work.',access:'open'},
+  {id:'RES-002',title:'"A Life Rewritten" — Shyam\'s Journey: Street Youth to Stable Livelihood',author:'INK Province Communications · dbbangalore.org',type:'Good Practice',badge:'badge-doc',icon:'📋',area:'Youth Ministry',lang:'English',region:'South Asia',year:'2026',province:'INK',tags:['YaR','Success Story','Livelihood','INK'],keyTerms:['Street youth','Vocational training','Counselling','Case study'],group:'SDB',desc:'Case study from Bosco Bangalore documenting a young at risk student\'s rehabilitation through vocational training and counselling.',access:'open'},
   // INM — Chennai Province
-  {id:'RES-003',title:'Salesian Province of Chennai (INM) — DBYA South Asia SYMLEAD Manual 2024',author:'Fr. Don Bosco Lourdusamy · donboscochennai.org',type:'Official Publication',badge:'badge-pdf',icon:'📄',area:'Youth Ministry',lang:'English',region:'South Asia',year:'2024',province:'INM',tags:['DBYA','SYMLEAD','Youth Leadership','INM'],group:'SDB',desc:'Official leadership formation manual used across 9 SA province delegates. Includes youth ministry evaluation frameworks.',access:'open'},
+  {id:'RES-003',title:'Salesian Province of Chennai (INM) — DBYA South Asia SYMLEAD Manual 2024',author:'Fr. Don Bosco Lourdusamy · donboscochennai.org',type:'Official Publication',badge:'badge-pdf',icon:'📄',area:'Youth Ministry',lang:'English',region:'South Asia',year:'2024',province:'INM',tags:['DBYA','SYMLEAD','Youth Leadership','INM'],keyTerms:['Delegate manual','Evaluation','South Asia provinces'],group:'SDB',desc:'Official leadership formation manual used across 9 SA province delegates. Includes youth ministry evaluation frameworks.',access:'open'},
   {id:'RES-004',title:'Don Bosco Vazhikaatti — Career Guidance Programme Report',author:'INM Province · donboscochennai.org',type:'Study',badge:'badge-study',icon:'📖',area:'Education',lang:'English, Tamil',region:'South Asia',year:'2025',province:'INM',tags:['Career Guidance','Vazhikaatti','INM','Tamil Nadu'],group:'SDB',desc:'Comprehensive report on career counselling outcomes across Andaman, Tamil Nadu, and Puducherry centres.',access:'open'},
   // INH — Hyderabad Province (St. Joseph)
   {id:'RES-005',title:'INH Mission Poverty Eradication — Community Audit Report 2026',author:'Salesian Province of St. Joseph, Hyderabad · donboscohyderabad.org',type:'Study',badge:'badge-study',icon:'📖',area:'Social Development',lang:'English, Telugu',region:'South Asia',year:'2026',province:'INH',tags:['Poverty Eradication','INH','Hyderabad','Community Audit'],group:'SDB',desc:'Highlights wide outreach and calls for deeper reflection. Covers DHISHA job mela, PARA, and OOTA programs.',access:'open'},
@@ -2547,6 +2729,15 @@ const RESOURCES=[
   {id:'RES-014',title:'DB Tech India — Vocational Training Impact Report 2024',author:'DB Tech National Office · dbtech.in',type:'Study',badge:'badge-study',icon:'📖',area:'Education',lang:'English',region:'South Asia',year:'2024',province:'INN',tags:['DB Tech','Vocational','Skills','INN'],group:'SDB',desc:'Impact assessment of 138 DB Tech institutes. Students trained, placement rates, industry partnerships, SDG alignment.',access:'open'},
   {id:'RES-015',title:'INS Province Shillong — Formation Report & North East Mission 2025',author:'Fr. John Zosiama · donboscoshillong.org',type:'Official Publication',badge:'badge-pdf',icon:'📄',area:'Formation',lang:'English',region:'South Asia',year:'2025',province:'INS',tags:['Formation','Shillong','North East','INS'],group:'SDB',publisher:'INS Province — donboscoshillong.org',desc:'Formation network report for Province of St. John Paul II. Includes juniorate, philosophy and theology formation data.',access:'open'},
 ];
+const RESOURCE_COVER_ROTATION=[
+  'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=280&h=360&fit=crop&auto=format&q=65',
+  'https://images.unsplash.com/photo-1524997931299-9a1d0870c9b0?w=280&h=360&fit=crop&auto=format&q=65',
+  'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=280&h=360&fit=crop&auto=format&q=65',
+  'https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=280&h=360&fit=crop&auto=format&q=65',
+  'https://images.unsplash.com/photo-1529148484404-b4b20fb5e73e?w=280&h=360&fit=crop&auto=format&q=65',
+  'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=280&h=360&fit=crop&auto=format&q=65'
+];
+RESOURCES.forEach((r,i)=>{if(!r.cover)r.cover=RESOURCE_COVER_ROTATION[i%RESOURCE_COVER_ROTATION.length];});
 const RESOURCE_MACRO_MAP={'South Asia':'Asia & Oceania','East Asia':'Asia & Oceania','Europe':'Europe','Latin America':'Latin America','Africa':'Africa','Global':'Global'};
 function resourceMacroRegion(r){return r.macroRegion||RESOURCE_MACRO_MAP[r.region]||r.region||'Global';}
 function resourcePublisher(r){
@@ -2556,8 +2747,34 @@ function resourcePublisher(r){
   return (r.province?r.province+' Province — communications':'Salesian network');
 }
 function resourceShortAuthor(r){return (r.author.split('·')[0]||r.author).trim();}
-function resourceKeyTerms(r){return (r.keyTerms&&r.keyTerms.length)?r.keyTerms:r.tags;}
+/** Merges optional catalogue `keyTerms[]` with `tags[]`, deduped in order (key terms first). */
+function resourceKeyTerms(r){
+  const a=(r.keyTerms&&Array.isArray(r.keyTerms))?r.keyTerms.filter(Boolean):[];
+  const b=(r.tags&&Array.isArray(r.tags))?r.tags.filter(Boolean):[];
+  const out=[];const seen=new Set();
+  [...a,...b].forEach(t=>{if(t&&!seen.has(t)){seen.add(t);out.push(t);}});
+  return out;
+}
+function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function escAttr(s){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;');}
 let resourceFilterOptionsDone=false;
+let resourceKeyTermFiltersDone=false;
+function initResourceKeyTermFilters(){
+  if(resourceKeyTermFiltersDone)return;
+  const host=document.getElementById('resource-keyterm-filters');
+  if(!host)return;
+  const all=new Set();
+  RESOURCES.forEach(r=>resourceKeyTerms(r).forEach(t=>all.add(t)));
+  const sorted=[...all].sort((a,b)=>a.localeCompare(b));
+  host.innerHTML=sorted.map(t=>{
+    const v=encodeURIComponent(t);
+    return `<label><input type="checkbox" value="${v}" onchange="this.closest('label').classList.toggle('is-kt-on',this.checked);renderResources()"> ${escHtml(t)}</label>`;
+  }).join('');
+  resourceKeyTermFiltersDone=true;
+}
+function getSelectedKeyTermsFilter(){
+  return [...document.querySelectorAll('#resource-keyterm-filters input[type=checkbox]:checked')].map(cb=>decodeURIComponent(cb.value));
+}
 function initResourceFilterOptions(){
   if(resourceFilterOptionsDone)return;
   const authEl=document.getElementById('rf-author');
@@ -2569,6 +2786,7 @@ function initResourceFilterOptions(){
   authEl.innerHTML='<option value="">All authors</option>'+authors.map(a=>`<option value="${esc(a)}">${esc(a)}</option>`).join('');
   pubEl.innerHTML='<option value="">All publishers</option>'+pubs.map(p=>`<option value="${esc(p)}">${esc(p)}</option>`).join('');
   resourceFilterOptionsDone=true;
+  initResourceKeyTermFilters();
 }
 function toggleResourceFilters(){
   const bar=document.getElementById('resource-filter-bar');
@@ -2599,6 +2817,8 @@ function syncResourceFiltersToURL(){
       const v=document.getElementById(id)?.value;
       if(v)p.set(k,v);
     });
+    const kts=getSelectedKeyTermsFilter();
+    if(kts.length)p.set('kt',kts.map(t=>encodeURIComponent(t)).join(','));
     const qs=p.toString();
     history.replaceState({},'',(location.pathname||'/')+(qs?'?'+qs:'')+(location.hash||''));
   }catch(e){/* ignore file:// */ }
@@ -2620,6 +2840,14 @@ function loadResourceFiltersFromURL(){
     set('rf-province',p.get('province'));
     set('rf-access',p.get('access'));
     set('rf-group',p.get('group'));
+    const kt=p.get('kt');
+    const wantedKt=kt?new Set(kt.split(',').map(s=>decodeURIComponent(s))):null;
+    document.querySelectorAll('#resource-keyterm-filters input[type=checkbox]').forEach(cb=>{
+      if(wantedKt)cb.checked=wantedKt.has(decodeURIComponent(cb.value));
+      else cb.checked=false;
+      const lb=cb.closest('label');
+      if(lb)lb.classList.toggle('is-kt-on',cb.checked);
+    });
   }catch(e){}
 }
 function copyResourceSearchLink(){
@@ -2832,13 +3060,63 @@ function startCarousel(){if(!carouselPaused)slideTimer=setInterval(()=>goSlide((
 function toggleCarousel(){carouselPaused=!carouselPaused;const btn=document.getElementById('carousel-pause');if(carouselPaused){clearInterval(slideTimer);if(btn){btn.textContent='▶';btn.setAttribute('aria-label','Resume slideshow');}}else{startCarousel();if(btn){btn.textContent='⏸';btn.setAttribute('aria-label','Pause slideshow');}}}
 startCarousel();
 
+// ════════════ NETWORKS PAGE SLIDER ════════════
+let networksSlideIdx=0,networksSlideTimer=null,networksSliderPaused=false;
+function goNetworksSlide(n){
+  const slides=document.querySelectorAll('#networks-hero-slider .networks-hero-slide');
+  const dots=document.querySelectorAll('#networks-hero-slider .networks-hero-dot');
+  if(!slides.length)return;
+  networksSlideIdx=(n+slides.length)%slides.length;
+  slides.forEach((s,i)=>{
+    const on=i===networksSlideIdx;
+    s.classList.toggle('active',on);
+    s.setAttribute('aria-hidden',on?'false':'true');
+  });
+  dots.forEach((d,i)=>{
+    d.classList.toggle('active',i===networksSlideIdx);
+    if(i===networksSlideIdx)d.setAttribute('aria-current','true');else d.removeAttribute('aria-current');
+  });
+}
+function startNetworksSlideTimer(){
+  clearInterval(networksSlideTimer);
+  networksSlideTimer=null;
+  if(networksSliderPaused)return;
+  networksSlideTimer=setInterval(()=>goNetworksSlide(networksSlideIdx+1),6500);
+}
+function networksDotClick(i){
+  networksSliderPaused=false;
+  const btn=document.getElementById('networks-slider-pause');
+  if(btn){btn.textContent='⏸';btn.setAttribute('aria-label','Pause slideshow');btn.setAttribute('title','Pause');}
+  goNetworksSlide(i);
+  startNetworksSlideTimer();
+}
+function toggleNetworksSlider(){
+  networksSliderPaused=!networksSliderPaused;
+  const btn=document.getElementById('networks-slider-pause');
+  if(networksSliderPaused){
+    clearInterval(networksSlideTimer);
+    networksSlideTimer=null;
+    if(btn){btn.textContent='▶';btn.setAttribute('aria-label','Resume slideshow');btn.setAttribute('title','Resume');}
+  }else{
+    if(btn){btn.textContent='⏸';btn.setAttribute('aria-label','Pause slideshow');btn.setAttribute('title','Pause');}
+    startNetworksSlideTimer();
+  }
+}
+function initNetworksPageSlider(){
+  networksSliderPaused=false;
+  const btn=document.getElementById('networks-slider-pause');
+  if(btn){btn.textContent='⏸';btn.setAttribute('aria-label','Pause slideshow');btn.setAttribute('title','Pause');}
+  goNetworksSlide(0);
+  startNetworksSlideTimer();
+}
+
 // ════════════ PLATFORM OVERVIEW VIDEO (public hero) ════════════
 const OVERVIEW_VIDEO={
   youtubeId:'',
-  useSlideTour:true,
+  useSlideTour:false,
   slideMs:11000,
-  useDemo:true,
-  fileUrl:'media/gsdp-overview.mp4',
+  useDemo:false,
+  fileUrl:'video/Watch%20Overview%20-%20GSDP_720p_caption.mp4',
   fileType:'video/mp4',
   demoUrl:'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm',
   demoType:'video/webm'
@@ -2959,6 +3237,10 @@ function openOverviewModal(){
     overviewGoSlide(overviewSlideIdx);
     overviewStartTimer();
   }
+  const ov=document.getElementById('overview-video');
+  if(ov&&!ov.hidden){
+    ov.play().catch(()=>{});
+  }
   const c=document.querySelector('#overview-modal .modal-close');
   if(c)c.focus();
 }
@@ -3056,7 +3338,11 @@ function pubSearchLive(v){}
 function pubDoSearch(){const q=document.getElementById('pub-search-inp').value.trim();if(q)showToast('🔍 Searching: "'+q+'"');}
 
 let bubbleOpen=false;
-function toggleAIBubble(){bubbleOpen=!bubbleOpen;document.getElementById('ai-bubble-panel').classList.toggle('open',bubbleOpen);}
+function toggleAIBubble(){
+  bubbleOpen=!bubbleOpen;
+  document.getElementById('ai-bubble-panel').classList.toggle('open',bubbleOpen);
+  if(bubbleOpen)resetBubbleAIExampleSuggestions();
+}
 function bubbleSend(){
   const inp=document.getElementById('bubble-inp');const msg=inp.value.trim();if(!msg)return;
   const msgs=document.getElementById('bubble-msgs');
@@ -3114,6 +3400,8 @@ function applyRole(role){
 // ════════════ NAVIGATION ════════════
 function showPage(id,navEl){
   const page=id;
+  clearInterval(networksSlideTimer);
+  networksSlideTimer=null;
   // Hide all pages, deactivate all nav items
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.sb-nav-item').forEach(n=>n.classList.remove('active'));
@@ -3150,11 +3438,12 @@ function showPage(id,navEl){
   }
   // Trigger page-specific renders
   if(page==='analytics')setTimeout(renderAnalytics,60);
-  if(page==='networks')setTimeout(()=>{/* networks is static */},10);
+  if(page==='networks')setTimeout(initNetworksPageSlider,60);
+  if(page==='ai')resetAppAIExampleSuggestions();
 }
 
 // ════════════ RENDER FUNCTIONS ════════════
-function clearResourceFilters(){['rf-theme','rf-type','rf-macro','rf-region','rf-lang','rf-year-min','rf-year-max','rf-author','rf-publisher','rf-province','rf-access','rf-group'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});const si=document.getElementById('res-search-inp');if(si)si.value='';setResourceFilterBarMobileDefault();renderResources();}
+function clearResourceFilters(){['rf-theme','rf-type','rf-macro','rf-region','rf-lang','rf-year-min','rf-year-max','rf-author','rf-publisher','rf-province','rf-access','rf-group'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});document.querySelectorAll('#resource-keyterm-filters input[type=checkbox]').forEach(cb=>{cb.checked=false;const lb=cb.closest('label');if(lb)lb.classList.remove('is-kt-on');});const si=document.getElementById('res-search-inp');if(si)si.value='';setResourceFilterBarMobileDefault();renderResources();}
 function getResourceCardKind(r){
   const t=(r.type||'').toLowerCase();
   if(t==='study' || t==='official publication') return {icon:'📘',label:'Book'};
@@ -3178,11 +3467,12 @@ function renderResources(){
   const fPublisher=(document.getElementById('rf-publisher')||{}).value||'';
   const fAccess=(document.getElementById('rf-access')||{}).value||'';
   const fGroup=(document.getElementById('rf-group')||{}).value||'';
+  const selKeyTerms=getSelectedKeyTermsFilter();
   const filtered=RESOURCES.filter(r=>{
     const y=parseInt(r.year,10);
     if(fYMin&&(!isNaN(y)&&y<parseInt(fYMin,10)))return false;
     if(fYMax&&(!isNaN(y)&&y>parseInt(fYMax,10)))return false;
-    if(q&&!r.title.toLowerCase().includes(q)&&!r.author.toLowerCase().includes(q)&&!r.tags.some(t=>t.toLowerCase().includes(q))&&!(r.province&&r.province.toLowerCase().includes(q))&&!(r.desc&&r.desc.toLowerCase().includes(q))&&!resourcePublisher(r).toLowerCase().includes(q))return false;
+    if(q&&!r.title.toLowerCase().includes(q)&&!r.author.toLowerCase().includes(q)&&!resourceKeyTerms(r).some(t=>t.toLowerCase().includes(q))&&!(r.province&&r.province.toLowerCase().includes(q))&&!(r.desc&&r.desc.toLowerCase().includes(q))&&!resourcePublisher(r).toLowerCase().includes(q))return false;
     if(fTheme&&r.area!==fTheme)return false;
     if(fType&&r.type!==fType)return false;
     if(fMacro&&resourceMacroRegion(r)!==fMacro)return false;
@@ -3193,6 +3483,10 @@ function renderResources(){
     if(fPublisher&&resourcePublisher(r)!==fPublisher)return false;
     if(fAccess==='open'&&r.access!=='open')return false;
     if(fGroup&&r.group!==fGroup)return false;
+    if(selKeyTerms.length){
+      const termsLower=resourceKeyTerms(r).map(t=>t.toLowerCase());
+      if(!selKeyTerms.some(sk=>termsLower.includes(sk.toLowerCase())))return false;
+    }
     return true;
   });
   const grid=document.getElementById('resource-grid');
@@ -3205,11 +3499,15 @@ function renderResources(){
   grid.innerHTML=filtered.map(r=>{
     const macro=resourceMacroRegion(r);
     const pub=resourcePublisher(r);
-    const terms=resourceKeyTerms(r).slice(0,5);
+    const terms=resourceKeyTerms(r);
+    const termsHtml=terms.map(t=>`<span class="res-keyterm-pill">${escHtml(t)}</span>`).join('');
+    const thumbInner=r.cover
+      ?`<img src="${escAttr(r.cover)}" alt="${escAttr('Cover thumbnail: '+r.title)}" loading="lazy" width="100" height="128">`
+      :`<span class="resource-thumb-fallback" aria-hidden="true">${r.icon||'📄'}</span>`;
     return `
     <div class="resource-card" onclick="openModal('${r.id}')">
       <div class="resource-card-inner">
-        <div class="resource-card-thumb" aria-hidden="true">${r.icon||'📄'}</div>
+        <div class="resource-card-thumb">${thumbInner}</div>
         <div class="resource-card-main">
           <div class="resource-card-top">
             <div style="display:flex;align-items:center;gap:5px;margin-bottom:7px;flex-wrap:wrap;">
@@ -3219,14 +3517,14 @@ function renderResources(){
             </div>
             <div class="resource-title"><span class="resource-field-label">Title:</span> ${r.title}</div>
             <div class="resource-author"><span class="resource-field-label">Author:</span> ${r.author}</div>
-            <div class="resource-meta"><span class="resource-field-label">Year:</span> ${r.year}</div>
-            <div class="resource-meta"><span class="resource-field-label">Category:</span> ${r.area}</div>
+            <div class="resource-meta"><span class="resource-field-label">Publication year:</span> ${r.year}</div>
+            <div class="resource-meta"><span class="resource-field-label">Thematic category:</span> ${r.area}</div>
             <div class="resource-meta"><span class="resource-field-label">Publisher:</span> ${pub}</div>
             <div class="resource-meta"><span class="resource-field-label">Macro-region:</span> ${macro}</div>
-            <div class="resource-meta"><span class="resource-field-label">Key terms:</span> ${terms.join(' · ')}</div>
+            <div class="resource-meta" style="line-height:1.5;"><span class="resource-field-label" style="display:block;margin-bottom:4px;">Key terms:</span>${termsHtml}</div>
           </div>
           <div class="resource-card-bottom">
-            ${r.tags.slice(0,3).map(t=>`<span class="res-tag">${t}</span>`).join('')}
+            ${terms.slice(0,6).map(t=>`<span class="res-tag">${escHtml(t)}</span>`).join('')}
             <div class="res-actions">
               <button class="res-action-btn btn-view" onclick="event.stopPropagation();openModal('${r.id}')">View</button>
               <button class="res-action-btn btn-ai" onclick="event.stopPropagation();openAIRes('${r.id}')">✦ Ask</button>
@@ -3339,9 +3637,31 @@ function renderPersons(){
     </div>`).join('');
 }
 
+function resetAppAIExampleSuggestions(){
+  ['ai-main-example-suggestions','ai-sidebar-suggested-card'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el){el.style.display='';el.removeAttribute('aria-hidden');}
+  });
+}
+function dismissAppAIExampleSuggestions(){
+  ['ai-main-example-suggestions','ai-sidebar-suggested-card'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el){el.style.display='none';el.setAttribute('aria-hidden','true');}
+  });
+}
+function resetBubbleAIExampleSuggestions(){
+  const el=document.getElementById('bubble-example-suggestions');
+  if(el){el.style.display='';el.removeAttribute('aria-hidden');}
+}
+function dismissBubbleAIExampleSuggestions(){
+  const el=document.getElementById('bubble-example-suggestions');
+  if(el){el.style.display='none';el.setAttribute('aria-hidden','true');}
+}
 function renderAI(){
-  document.getElementById('chat-messages').innerHTML=`<div class="chat-msg"><div class="chat-avatar ai">✦</div><div class="chat-bubble ai">Hello! I help you <strong>explore</strong> the catalogue: smart search (by meaning), summaries, and translation across EN · IT · ES · FR · PT. The library stays authoritative — I suggest and connect you to real documents.<br><br>What are you looking for?</div></div>`;
-  document.getElementById('suggested-queries').innerHTML=['Drug addiction resources in South Asia','Summarize Youth Ministry Report 2025','Translate to Spanish: Formation guidelines','Show similar to Preventive System'].map(q=>`<div onclick="triggerQ('${q}')" style="padding:7px 10px;background:var(--off-white);border-radius:var(--radius);font-size:12px;color:var(--slate);cursor:pointer;border:1px solid var(--border);transition:border-color .15s;" onmouseover="this.style.borderColor='var(--sdb-blue)'" onmouseout="this.style.borderColor='var(--border)'">${q}</div>`).join('');
+  resetAppAIExampleSuggestions();
+  document.getElementById('chat-messages').innerHTML=`<div class="chat-msg"><div class="chat-avatar ai">✦</div><div class="chat-bubble ai">Hello! I help you <strong>explore</strong> the catalogue: smart search (by meaning), summaries, and translation across EN · IT · ES · FR · PT. The library stays authoritative — I suggest and connect you to real documents.<br><br><strong>Provide example queries</strong> below the chat (scroll if needed) — or type your own question.</div></div>`;
+  renderAIExampleQueryButtons();
+  document.getElementById('suggested-queries').innerHTML=AI_EXAMPLE_QUERIES.map(q=>`<div onclick='triggerQ(${JSON.stringify(q)})' style="padding:7px 10px;background:var(--off-white);border-radius:var(--radius);font-size:12px;color:var(--slate);cursor:pointer;border:1px solid var(--border);transition:border-color .15s;" onmouseover="this.style.borderColor='var(--sdb-blue)'" onmouseout="this.style.borderColor='var(--border)'">${q}</div>`).join('');
 }
 
 // renderAnalytics defined above (PROVINCE_DATA version)
@@ -3388,16 +3708,20 @@ function openModal(id){
   const r=RESOURCES.find(x=>x.id===id);if(!r)return;
   const macro=resourceMacroRegion(r);
   const pub=resourcePublisher(r);
-  const kterms=resourceKeyTerms(r).join(' · ');
+  const terms=resourceKeyTerms(r);
+  const termsHtml=terms.map(t=>`<span class="res-keyterm-pill">${escHtml(t)}</span>`).join('');
+  const coverBlock=r.cover?`<div style="margin-bottom:14px;border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);max-height:200px;background:var(--off-white);"><img src="${escAttr(r.cover)}" alt="${escAttr('Cover: '+r.title)}" style="width:100%;height:auto;max-height:200px;object-fit:cover;display:block;"></div>`:'';
   document.getElementById('modal-content').innerHTML=`
     <span class="resource-type-badge ${r.badge}" style="margin-bottom:10px">${r.icon} ${r.type}</span>
     <div class="modal-title">${r.title}</div>
-    <div class="modal-sub">${r.author} · ${r.year} · ${r.region}</div>
-    <div style="display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap">${r.tags.map(t=>`<span class="res-tag">${t}</span>`).join('')}<span class="res-tag">🌐 ${r.lang}</span></div>
-    <div style="font-size:12px;color:var(--slate);margin-bottom:12px;line-height:1.65"><strong>Publisher:</strong> ${pub}<br><strong>Macro-region:</strong> ${macro}<br><strong>Key terms:</strong> ${kterms}</div>
+    <div class="modal-sub">${r.author} · <strong>Publication year</strong> ${r.year} · ${r.region}</div>
+    ${coverBlock}
+    <div style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap;align-items:center;"><span style="font-size:11px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.06em;margin-right:4px;">Key terms</span>${termsHtml}</div>
+    <div style="display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap"><span class="res-tag">🌐 ${r.lang}</span></div>
+    <div style="font-size:12px;color:var(--slate);margin-bottom:12px;line-height:1.65"><strong>Publisher:</strong> ${pub}<br><strong>Macro-region:</strong> ${macro}<br><strong>Thematic category:</strong> ${r.area}</div>
     <div style="background:var(--sdb-blue-pale);border-radius:var(--radius);padding:12px;margin-bottom:14px">
       <div style="font-size:11px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px">Taxonomy Classification</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px;"><div><strong>Area:</strong> ${r.area}</div><div><strong>Language:</strong> ${r.lang}</div><div><strong>Sub-region:</strong> ${r.region}</div><div><strong>ID:</strong> ${r.id}</div></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px;"><div><strong>Thematic category:</strong> ${r.area}</div><div><strong>Language:</strong> ${r.lang}</div><div><strong>Sub-region:</strong> ${r.region}</div><div><strong>ID:</strong> ${r.id}</div></div>
     </div>
     <div style="font-size:12px;color:var(--mid);margin-bottom:14px;padding:10px;background:var(--warm-cream);border-radius:var(--radius);border:1px dashed var(--border);">📑 <strong>Structured works:</strong> when the source has parts, open chapters or articles from the reader — no restrictive viewer (prototype: full PDF + outline).</div>
     <div style="display:flex;gap:10px;flex-wrap:wrap">
@@ -3434,8 +3758,77 @@ function sendChat(){
     msgs.scrollTop=msgs.scrollHeight;
   },700);
 }
-function triggerAITool(t){const p={search:'Find resources on Youth Ministry in South Asia',summarize:'Summarize the top 3 formation documents from 2025',translate:'Translate to Spanish: "Salesian Preventive System guidelines"',recommend:'Recommend resources similar to: Drug Addiction Prevention'};document.getElementById('chat-input').value=p[t]||'';sendChat();}
-function triggerQ(q){document.getElementById('chat-input').value=q;sendChat();}
+const AI_EXAMPLE_QUERIES=[
+  'Find resources on Preventive System in Latin America (1950–1970)',
+  'Find formation materials for young people in difficult contexts',
+  'Summarize Youth Ministry reports from South Asia (2023–2025)',
+  'Translate to Italian: Don Bosco Preventive System — key principles',
+  'Recommend resources on vocation and discernment in Salesian formation',
+  'Find documents on substance abuse prevention and pastoral accompaniment',
+  'What resources discuss Strenna themes and annual pastoral priorities?',
+  'Find good practices on oratories and youth centres in Africa',
+  'Compare Young at Risk (YaR) approaches in India and Latin America',
+  'Find official publications on missiology and evangelisation in Asia',
+  'Drug addiction prevention resources across South Asia',
+  'Summarize the top 3 formation documents from 2025',
+  'Find resources linking oratory pastoral work to technical education in South Asia',
+  'Multimedia or introductory materials on Don Bosco’s life for young people',
+  'What does the corpus include on General Chapter (GC) themes and follow-up documents?',
+  'Translate to French: a short welcome message for a youth retreat',
+  'Find studies on social entrepreneurship, work, and DB Tech–style vocational training',
+  'Resources on interreligious dialogue in Salesian schools and youth centres',
+  'Pastoral guidelines for migrants, refugees, and internally displaced youth',
+  'Find FMA–SDB collaboration and Mamma Margherita in formation resources',
+  'Explain in simple terms: Reason, Religion, and Loving-Kindness in the Preventive System',
+  'Find child safeguarding, protection of minors, and safe-environment policies',
+  'Resources connecting Laudato Si’ and ecological education in oratories and schools',
+  'Find letters or messages from the Rector Major on youth and vocation (1990–2010)',
+  'How does the platform taxonomy help filter documents by province, language, and theme?',
+  'Find materials on Mary Help of Christians, feasts, and youth devotion',
+  'Resources on Salesian Cooperators formation and spirituality',
+  'Compare vocational training and job-placement documents: Europe vs Southeast Asia',
+  'Find workshop guides for peer mentoring, leadership, and animators',
+  'What resources cover HIV/AIDS awareness and pastoral accompaniment in Africa?',
+  'Find documents on school planning, timetables, and pastoral integration',
+  'Summarize fundraising, partnerships, and sustainability ideas for oratory projects',
+  'Find anti-bullying, restorative practice, and positive discipline in Salesian schools',
+  'Find post-pandemic pastoral resources for restarting oratory and school programmes',
+  'Resources on digital media literacy, ethics, and safe use for youth ministers',
+  'Find manuals on hospitality, community life, and daily rhythm in Salesian houses',
+  'What documents support implementing Don Bosco’s Peace Proposal in local contexts?',
+  'Find templates for province-level youth ministry reporting and basic statistics',
+  'Resources on marriage preparation, family ministry, and young couples',
+  'Find evaluation tools for spiritual retreats, camps, and vocational experiences',
+  'Policies and training on data privacy and safeguarding in online youth spaces',
+];
+function renderAIExampleQueryButtons(){
+  const el=document.getElementById('ai-example-queries');
+  if(!el)return;
+  el.innerHTML=AI_EXAMPLE_QUERIES.map(q=>`<button type="button" class="ai-example-query" onclick='triggerQ(${JSON.stringify(q)})'>${q}</button>`).join('');
+}
+function bubbleRunQuery(q){
+  dismissBubbleAIExampleSuggestions();
+  const i=document.getElementById('bubble-inp');
+  if(!i)return;
+  i.value=q;
+  bubbleSend();
+}
+function renderBubbleExampleQueries(){
+  const el=document.getElementById('bubble-example-queries');
+  if(!el)return;
+  el.innerHTML=AI_EXAMPLE_QUERIES.map(q=>`<button type="button" class="bubble-example-btn" onclick='bubbleRunQuery(${JSON.stringify(q)})'>${q}</button>`).join('');
+}
+function triggerAITool(t){
+  dismissAppAIExampleSuggestions();
+  const p={search:AI_EXAMPLE_QUERIES[0],summarize:'Summarize the top 3 formation documents from 2025',translate:'Translate to Spanish: "Salesian Preventive System guidelines"',recommend:'Recommend resources similar to: Drug Addiction Prevention'};
+  document.getElementById('chat-input').value=p[t]||'';
+  sendChat();
+}
+function triggerQ(q){
+  dismissAppAIExampleSuggestions();
+  document.getElementById('chat-input').value=q;
+  sendChat();
+}
 
 // ════════════ GLOBAL SEARCH ════════════
 let gsIdx=-1;
@@ -3443,7 +3836,7 @@ function hl(txt,q){if(!q)return txt;return txt.replace(new RegExp('('+q.replace(
 function globalSearch(q){
   const dd=document.getElementById('gs-dropdown');q=q.trim();if(!q){dd.style.display='none';return;}
   const ql=q.toLowerCase();let secs=[];
-  const rh=RESOURCES.filter(r=>(r.title+r.author+r.tags.join(' ')+r.area+r.region).toLowerCase().includes(ql)).slice(0,4);
+  const rh=RESOURCES.filter(r=>(r.title+r.author+resourceKeyTerms(r).join(' ')+r.area+r.region).toLowerCase().includes(ql)).slice(0,4);
   if(rh.length)secs.push({l:'📚 Resources',items:rh.map(r=>({ic:'📄',t:r.title,m:r.author+' · '+r.region+' · '+r.year,b:r.type,p:'resources'}))});
   const ih=INSTITUTIONS.filter(i=>(i.name+i.type+i.region+i.country).toLowerCase().includes(ql)).slice(0,3);
   if(ih.length)secs.push({l:'🏛 Pastoral Works',items:ih.map(i=>({ic:'🏫',t:i.name,m:i.type+' · '+i.region+' · '+i.country,b:i.status,p:'institutions'}))});
@@ -3570,6 +3963,7 @@ function initPlatformPulse(){
   }
 }
 initPlatformPulse();
+renderBubbleExampleQueries();
 
 // ════════════ TOAST ════════════
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(window._tt);window._tt=setTimeout(()=>t.classList.remove('show'),3000);}

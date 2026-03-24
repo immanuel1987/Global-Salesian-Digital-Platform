@@ -211,6 +211,8 @@ body{font-family:'Noto Sans',sans-serif;background:var(--off-white);color:var(--
 .btn-gold:hover{filter:brightness(1.08);}
 .btn-outline-dark{background:transparent;border:1px solid var(--border);color:var(--text);}
 .btn-outline-dark:hover{border-color:var(--gold);color:var(--gold);}
+.btn-blue{background:var(--sdb-blue);color:#fff;border:none;}
+.btn-blue:hover{filter:brightness(1.08);}
 .notif-btn{
   width:36px;height:36px;border-radius:9px;border:1px solid var(--border);
   background:var(--white);display:flex;align-items:center;justify-content:center;
@@ -245,6 +247,7 @@ body{font-family:'Noto Sans',sans-serif;background:var(--off-white);color:var(--
 .stat-card-trend{font-size:11px;font-weight:600;padding:3px 8px;border-radius:100px;}
 .trend-up{background:#D1FAE5;color:#065F46;}
 .trend-warn{background:#FEF3C7;color:#92400E;}
+.stat-card.orange-top{border-top:3px solid var(--sdb-orange);}
 .stat-card-value{font-family:'Merriweather',serif;font-size:30px;font-weight:800;color:var(--deep);line-height:1;}
 .stat-card-label{font-size:12px;color:var(--muted);margin-top:4px;}
 
@@ -688,7 +691,7 @@ body{font-family:'Noto Sans',sans-serif;background:var(--off-white);color:var(--
 .floating-ai-window{
   position:fixed;right:22px;bottom:86px;
   width:340px;max-width:calc(100vw - 44px);
-  height:460px;max-height:calc(100vh - 130px);
+  height:500px;max-height:calc(100vh - 130px);
   background:var(--white);
   border:1px solid var(--border);
   border-radius:16px;
@@ -730,15 +733,106 @@ body{font-family:'Noto Sans',sans-serif;background:var(--off-white);color:var(--
 .chat-input{flex:1;padding:10px 14px;border-radius:10px;border:1px solid var(--border);font-size:13px;font-family:'Noto Sans',sans-serif;outline:none;background:var(--cream);}
 .chat-input:focus{border-color:var(--gold);}
 .chat-send-btn{padding:10px 20px;background:linear-gradient(135deg,var(--sdb-orange),var(--sdb-orange-dark));color:#fff;border:none;border-radius:10px;font-weight:800;font-size:13px;cursor:pointer;font-family:'Noto Sans',sans-serif;}
+.floating-ai-example-hint{padding:8px 12px 0;font-size:11px;color:var(--muted);line-height:1.45;border-top:1px solid var(--border);background:var(--cream);flex-shrink:0;}
+.floating-ai-example-label{display:block;font-weight:700;color:var(--deep);margin-bottom:6px;font-size:11px;}
+.floating-ai-example-queries{display:flex;flex-direction:column;gap:5px;max-height:160px;overflow-y:auto;padding:0 2px 8px 0;}
+.floating-ai-example-q{
+  display:block;width:100%;margin:0;padding:6px 8px;border:1px solid var(--border);border-radius:8px;background:var(--white);
+  color:var(--text);font-size:10px;font-family:'Noto Sans',sans-serif;text-align:left;cursor:pointer;line-height:1.35;
+}
+.floating-ai-example-q:hover{background:var(--sdb-blue-pale);border-color:var(--sdb-blue);}
 
 /* ══════════════ ADMIN ANALYTICS PAGE ══════════════ */
-.analytics-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.analytics-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+#page-analytics .bar-label{min-width:118px;width:auto;max-width:42%;}
 .bar-chart{margin-top:12px;}
 .bar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
 .bar-label{font-size:12px;color:var(--text);width:100px;flex-shrink:0;font-weight:500;}
 .bar-track{flex:1;height:8px;background:var(--cream);border-radius:100px;overflow:hidden;}
 .bar-fill{height:100%;border-radius:100px;background:linear-gradient(90deg,var(--gold),var(--sdb-orange-dark));}
-.bar-value{font-size:11px;font-weight:600;color:var(--muted);width:40px;text-align:right;}
+.bar-value{font-size:11px;font-weight:600;color:var(--muted);width:48px;text-align:right;flex-shrink:0;}
+.an-ai-banner{display:flex;align-items:center;gap:16px;padding:16px 20px;background:linear-gradient(135deg,#002240,#003A75);border-radius:var(--radius-lg);border:1px solid rgba(0,87,168,.3);margin-bottom:20px;box-shadow:0 4px 20px rgba(0,57,117,.12);}
+.an-ai-banner-icon{width:42px;height:42px;border-radius:50%;background:var(--sdb-orange);display:flex;align-items:center;justify-content:center;font-size:18px;color:#fff;flex-shrink:0;}
+.an-ai-banner-body{flex:1;min-width:0;}
+.an-ai-banner-title{font-size:13px;font-weight:700;color:#fff;margin-bottom:3px;}
+.an-ai-banner-text{font-size:12px;color:rgba(255,255,255,.7);line-height:1.5;}
+.an-ai-banner-btn{padding:8px 18px;border-radius:var(--radius);background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;transition:background .15s;font-family:'Noto Sans',sans-serif;}
+.an-ai-banner-btn:hover{background:rgba(255,255,255,.22);}
+.an-insight-item{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--border);}
+.an-insight-item:last-child{border-bottom:none;padding-bottom:0;}
+.an-insight-item.an-urgent{background:rgba(254,226,226,.4);border-radius:var(--radius);padding:10px;margin:0 -4px;border-bottom:none;}
+.an-insight-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:5px;}
+.an-insight-title{font-size:13px;font-weight:600;color:var(--deep);margin-bottom:3px;}
+.an-insight-sub{font-size:12px;color:var(--muted);line-height:1.5;}
+.an-forecast-row{display:flex;align-items:center;gap:10px;padding:4px 0;}
+.an-forecast-label{font-size:12px;color:var(--muted);width:150px;flex-shrink:0;}
+.an-forecast-track{flex:1;height:6px;background:var(--cream);border-radius:100px;overflow:hidden;}
+.an-forecast-bar{height:100%;border-radius:100px;transition:width .6s ease;}
+.an-forecast-vals{display:flex;align-items:center;gap:5px;font-size:11px;flex-shrink:0;min-width:100px;}
+.an-current{color:var(--muted);}
+.an-arrow{color:var(--border);}
+.an-forecast{color:var(--sdb-blue-deep);font-weight:700;}
+@media(max-width:1200px){
+  #an-insights-row{grid-template-columns:1fr!important;}
+  #page-analytics .an-kpi-row{grid-template-columns:repeat(3,1fr)!important;}
+}
+@media(max-width:720px){
+  #page-analytics .an-kpi-row{grid-template-columns:repeat(2,1fr)!important;}
+}
+
+/* ══════════════ NETWORKS PAGE (Salesian Networks + overview slider) ══════════════ */
+.networks-hero-slider{
+  position:relative;min-height:158px;border-radius:var(--radius-lg);overflow:hidden;margin-bottom:22px;
+  background:linear-gradient(135deg,#001f3d 0%,var(--sdb-blue-deep) 45%,#0a5a9e 100%);
+  border:1px solid rgba(0,87,168,.25);box-shadow:0 6px 24px rgba(0,57,117,.1);
+}
+.networks-hero-slide{
+  position:absolute;inset:0;padding:22px 26px 48px;
+  opacity:0;transition:opacity .65s ease;pointer-events:none;
+}
+.networks-hero-slide.active{opacity:1;pointer-events:auto;z-index:1;}
+.networks-hero-kicker{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#FFB380;margin-bottom:8px;}
+.networks-hero-title{font-family:'Merriweather',serif;font-size:20px;font-weight:800;color:#fff;line-height:1.25;margin-bottom:8px;max-width:560px;}
+.networks-hero-text{font-size:13px;color:rgba(255,255,255,.82);line-height:1.6;max-width:540px;}
+.networks-hero-controls{
+  position:absolute;bottom:14px;left:22px;right:22px;z-index:2;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+}
+.networks-hero-nav{display:flex;align-items:center;gap:7px;}
+.networks-hero-dot{
+  width:9px;height:9px;border-radius:50%;border:none;padding:0;cursor:pointer;
+  background:rgba(255,255,255,.35);transition:transform .15s,background .15s;
+}
+.networks-hero-dot:hover{background:rgba(255,255,255,.55);}
+.networks-hero-dot.active{background:var(--sdb-orange);transform:scale(1.2);}
+.networks-slider-pause{
+  width:32px;height:32px;border-radius:var(--radius);border:1px solid rgba(255,255,255,.25);
+  background:rgba(255,255,255,.1);color:#fff;font-size:14px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;font-family:'Noto Sans',sans-serif;
+  transition:background .15s;
+}
+.networks-slider-pause:hover{background:rgba(255,255,255,.2);}
+.network-link-row{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:var(--radius);cursor:pointer;transition:background .15s;font-size:13px;color:var(--text);text-decoration:none;}
+.network-link-row:hover{background:var(--sdb-blue-pale);}
+.network-province-code{font-size:11px;font-weight:700;color:#fff;background:var(--sdb-blue);padding:2px 7px;border-radius:4px;min-width:36px;text-align:center;flex-shrink:0;}
+.network-icon-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+.network-link-arrow{margin-left:auto;font-size:13px;color:var(--muted);}
+.salesian-way-pill{
+  padding:9px 10px;border-radius:var(--radius);background:var(--sdb-blue-pale);border:1px solid var(--sdb-blue-light);
+  font-size:12px;font-weight:600;color:var(--sdb-blue-deep);cursor:pointer;transition:background .15s,border-color .15s;text-align:center;
+}
+.salesian-way-pill:hover{background:var(--sdb-blue);color:#fff;border-color:var(--sdb-blue);}
+#page-networks .networks-kpi-row{display:grid;}
+@media(max-width:960px){
+  #page-networks .networks-kpi-row{
+    display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;padding-bottom:6px;
+    margin-bottom:20px;-webkit-overflow-scrolling:touch;
+  }
+  #page-networks .networks-kpi-row .stat-card{flex:0 0 min(220px,82vw);scroll-snap-align:start;}
+}
+@media(max-width:1100px){
+  #page-networks .networks-three-col{grid-template-columns:1fr!important;}
+}
 
 /* ══════════════ VALIDATION PAGE (Provincial Liaison) ══════════════ */
 .validation-queue{display:flex;flex-direction:column;gap:12px;}
@@ -991,6 +1085,9 @@ body{font-family:'Noto Sans',sans-serif;background:var(--off-white);color:var(--
       <div class="sb-nav-item" onclick="showPage('persons',this)" data-page="persons">
         <span class="nav-icon">👥</span> Persons
       </div>
+      <div class="sb-nav-item" id="networks-nav" onclick="showPage('networks',this)" data-page="networks">
+        <span class="nav-icon">🔗</span> Networks
+      </div>
 
       <div class="sidebar-section-label" id="contrib-section">Ontology</div>
       <div class="sb-nav-item owl-trigger-nav" id="owl-trigger-nav" onclick="showPage('upload',this)" data-page="upload">
@@ -1185,6 +1282,116 @@ body{font-family:'Noto Sans',sans-serif;background:var(--off-white);color:var(--
           <div class="persons-grid" id="persons-grid"></div>
         </div>
 
+        <!-- NETWORKS & WHAT WE DO -->
+        <div class="page" id="page-networks">
+          <div class="section-header"><div><h3>Salesian Networks</h3><p>Provincial, regional, and global network directory — South Asia</p></div></div>
+
+          <div class="networks-hero-slider" id="networks-hero-slider" role="region" aria-label="Salesian networks overview">
+            <div class="networks-hero-slide active" id="ns-slide-0" aria-hidden="false">
+              <div class="networks-hero-kicker">South Asia provinces</div>
+              <h4 class="networks-hero-title">12 provinces · one platform</h4>
+              <p class="networks-hero-text">From Bangalore to Sri Lanka — provincial codes, focus areas, and a direct path to meet provincials in the Persons directory.</p>
+            </div>
+            <div class="networks-hero-slide" id="ns-slide-1" aria-hidden="true">
+              <div class="networks-hero-kicker">Regional networks</div>
+              <h4 class="networks-hero-title">DBYA · DB Tech · Bosconet · YaR</h4>
+              <p class="networks-hero-text">Schools, higher education, job placement, indigenous cultures, and social communication — coordinated networks across South Asia.</p>
+            </div>
+            <div class="networks-hero-slide" id="ns-slide-2" aria-hidden="true">
+              <div class="networks-hero-kicker">Global Salesian family</div>
+              <h4 class="networks-hero-title">Worldwide links &amp; the Preventive System</h4>
+              <p class="networks-hero-text">sdb.org, ANS, Green Alliance, IUS, and the Salesian Family — plus the eight “We …” dimensions of the Salesian Way below.</p>
+            </div>
+            <div class="networks-hero-controls">
+              <div class="networks-hero-nav" role="group" aria-label="Slide indicators">
+                <button type="button" class="networks-hero-dot active" onclick="networksDotClick(0)" aria-label="Slide 1: Provinces" aria-current="true"></button>
+                <button type="button" class="networks-hero-dot" onclick="networksDotClick(1)" aria-label="Slide 2: Regional networks"></button>
+                <button type="button" class="networks-hero-dot" onclick="networksDotClick(2)" aria-label="Slide 3: Global"></button>
+              </div>
+              <button type="button" class="networks-slider-pause" id="networks-slider-pause" onclick="toggleNetworksSlider()" aria-label="Pause slideshow" title="Pause or resume">⏸</button>
+            </div>
+          </div>
+
+          <div class="networks-kpi-row" style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:24px;">
+            <div class="stat-card orange-top"><div class="stat-card-top"><div class="stat-card-icon" style="background:#FEF3C7;">🏫</div></div><div class="stat-card-value">261</div><div class="stat-card-label">Schools</div></div>
+            <div class="stat-card"><div class="stat-card-top"><div class="stat-card-icon" style="background:#D1FAE5;">🎓</div></div><div class="stat-card-value">51</div><div class="stat-card-label">Colleges</div></div>
+            <div class="stat-card"><div class="stat-card-top"><div class="stat-card-icon" style="background:var(--sdb-blue-pale);">🔧</div></div><div class="stat-card-value">138</div><div class="stat-card-label">Technical Institutes</div></div>
+            <div class="stat-card orange-top"><div class="stat-card-top"><div class="stat-card-icon" style="background:#FEF3C7;">🛡</div></div><div class="stat-card-value">174</div><div class="stat-card-label">YaR Centres</div></div>
+            <div class="stat-card"><div class="stat-card-top"><div class="stat-card-icon" style="background:#D1FAE5;">🏠</div></div><div class="stat-card-value">192</div><div class="stat-card-label">Hostels</div></div>
+          </div>
+
+          <div class="networks-three-col" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;">
+            <div class="card">
+              <div class="card-header"><span class="card-title">🗺 South Asia Provinces</span><span class="card-action" onclick="showPage('persons',document.querySelector('[data-page=persons]'))">Meet Provincials →</span></div>
+              <div class="card-body" style="padding:12px;">
+                <div style="display:flex;flex-direction:column;gap:4px;">
+                  <div class="network-link-row" onclick="showToast('Bangalore (INK) — Fr. Jose Koyickal · Education &amp; Culture')"><span class="network-province-code">INK</span><span>Bangalore Province</span><span class="network-link-arrow">→</span></div>
+                  <div class="network-link-row" onclick="showToast('Chennai (INM) — Fr. Don Bosco Lourdusamy · DBYA')"><span class="network-province-code">INM</span><span>Chennai Province</span><span class="network-link-arrow">→</span></div>
+                  <div class="network-link-row" onclick="showToast('Dimapur (IND) — Fr. Joseph Pampackal · Missions')"><span class="network-province-code">IND</span><span>Dimapur Province</span><span class="network-link-arrow">→</span></div>
+                  <div class="network-link-row" onclick="showToast('Guwahati (ING) — Fr. Sebastian Kuricheal · Schools')"><span class="network-province-code">ING</span><span>Guwahati Province</span><span class="network-link-arrow">→</span></div>
+                  <div class="network-link-row" onclick="showToast('Hyderabad (INH) — Fr. Thomas Santhiagu · YaR')"><span class="network-province-code">INH</span><span>Hyderabad Province</span><span class="network-link-arrow">→</span></div>
+                  <div class="network-link-row" onclick="showToast('Kolkata (INC) — Fr. Sunil Kerketta · Salesian Family')"><span class="network-province-code">INC</span><span>Kolkata Province</span><span class="network-link-arrow">→</span></div>
+                  <div class="network-link-row" onclick="showToast('Mumbai (INB) — Fr. Ashley Miranda · BOSCOM')"><span class="network-province-code">INB</span><span>Mumbai Province</span><span class="network-link-arrow">→</span></div>
+                  <div class="network-link-row" onclick="showToast('New Delhi (INN) — Fr. Davis Maniparamben · DB Tech')"><span class="network-province-code">INN</span><span>New Delhi Province</span><span class="network-link-arrow">→</span></div>
+                  <div class="network-link-row" onclick="showToast('Panjim (INP) — Fr. Clive Justin Telles · Bosconet')"><span class="network-province-code">INP</span><span>Panjim Province</span><span class="network-link-arrow">→</span></div>
+                  <div class="network-link-row" onclick="showToast('Shillong (INS) — Fr. John Zosiama · Formation')"><span class="network-province-code">INS</span><span>Shillong Province</span><span class="network-link-arrow">→</span></div>
+                  <div class="network-link-row" onclick="showToast('Tiruchy (INT) — Fr. Doss Kennedy · Vocational')"><span class="network-province-code">INT</span><span>Tiruchy Province</span><span class="network-link-arrow">→</span></div>
+                  <div class="network-link-row" onclick="showToast('Sri Lanka (LKC) — Fr. Roshan Miranda')"><span class="network-province-code">LKC</span><span>Sri Lanka Vice Province</span><span class="network-link-arrow">→</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header"><span class="card-title">🔗 Regional Networks</span></div>
+              <div class="card-body" style="padding:12px;">
+                <div style="display:flex;flex-direction:column;gap:4px;">
+                  <div class="network-link-row" onclick="showToast('Don Bosco Youth Animation (DBYA) · coordinated by INM')"><span class="network-icon-dot" style="background:#0057A8;"></span><span>Don Bosco Youth Animation (DBYA)</span><span class="network-link-arrow">→</span></div>
+                  <div class="network-link-row" onclick="showToast('Don Bosco Schools / AIDBES · 261 schools · INK')"><span class="network-icon-dot" style="background:#0057A8;"></span><span>Don Bosco Schools (AIDBES)</span><span class="network-link-arrow">→</span></div>
+                  <div class="network-link-row" onclick="showToast('DB Higher Education India (DBHEI) · 51 colleges · INK')"><span class="network-icon-dot" style="background:#2272C3;"></span><span>DB Higher Education India (DBHEI)</span><span class="network-link-arrow">→</span></div>
+                  <div class="network-link-row" onclick="showToast('Child Friendly Cities Initiative (CFCI)')"><span class="network-icon-dot" style="background:#1A6B3C;"></span><span>Child Friendly Cities (CFCI)</span><span class="network-link-arrow">→</span></div>
+                  <div class="network-link-row" onclick="showToast('Young at Risk Forum India (DB YaR) · 174 centres · INH')"><span class="network-icon-dot" style="background:#B84D00;"></span><span>Young at Risk Forum (DB YaR)</span><span class="network-link-arrow">→</span></div>
+                  <div class="network-link-row" onclick="showToast('Don Bosco Job Placement Network (JPN) · donboscojobs.org')"><span class="network-icon-dot" style="background:#7A5000;"></span><span>DB Job Placement Network (JPN)</span><span class="network-link-arrow">→</span></div>
+                  <div class="network-link-row" onclick="showToast('Don Bosco Tech (DB Tech) · 138 institutes · INN · dbtech.in')"><span class="network-icon-dot" style="background:#0057A8;"></span><span>Don Bosco Tech (DB Tech)</span><span class="network-link-arrow">→</span></div>
+                  <div class="network-link-row" onclick="showToast('DB Centre for Indigenous Cultures (DBCIC) · dbcic.org')"><span class="network-icon-dot" style="background:#2D6A4F;"></span><span>DB Indigenous Cultures (DBCIC)</span><span class="network-link-arrow">→</span></div>
+                  <div class="network-link-row" onclick="showToast('Don Bosco Renewal Centre (DBYP)')"><span class="network-icon-dot" style="background:#5B21B6;"></span><span>Don Bosco Renewal Centre (DBYP)</span><span class="network-link-arrow">→</span></div>
+                  <div class="network-link-row" onclick="showToast('Don Bosco Network (Bosconet) · bosconet.in · INP')"><span class="network-icon-dot" style="background:#003A75;"></span><span>Don Bosco Network (Bosconet)</span><span class="network-link-arrow">→</span></div>
+                  <div class="network-link-row" onclick="showToast('Don Bosco Communications (BOSCOM) · South Asia · INB')"><span class="network-icon-dot" style="background:#003A75;"></span><span>DB Communications (BOSCOM)</span><span class="network-link-arrow">→</span></div>
+                </div>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:16px;">
+              <div class="card">
+                <div class="card-header"><span class="card-title">🌐 Global Links</span></div>
+                <div class="card-body" style="padding:12px;">
+                  <div style="display:flex;flex-direction:column;gap:4px;">
+                    <a href="https://www.sdb.org/en" target="_blank" rel="noopener noreferrer" class="network-link-row"><span class="network-icon-dot" style="background:#0057A8;"></span><span>Salesian Worldwide (sdb.org)</span><span class="network-link-arrow">↗</span></a>
+                    <a href="https://infoans.org/en/" target="_blank" rel="noopener noreferrer" class="network-link-row"><span class="network-icon-dot" style="background:#B84D00;"></span><span>Info ANS (News Agency)</span><span class="network-link-arrow">↗</span></a>
+                    <a href="https://www.donboscogreen.org/" target="_blank" rel="noopener noreferrer" class="network-link-row"><span class="network-icon-dot" style="background:#1A6B3C;"></span><span>Don Bosco Green Alliance</span><span class="network-link-arrow">↗</span></a>
+                    <a href="https://famigliasalesiana.org/en" target="_blank" rel="noopener noreferrer" class="network-link-row"><span class="network-icon-dot" style="background:#5B21B6;"></span><span>Salesian Family (32 groups)</span><span class="network-link-arrow">↗</span></a>
+                    <a href="https://ius-sdb.com/" target="_blank" rel="noopener noreferrer" class="network-link-row"><span class="network-icon-dot" style="background:#2272C3;"></span><span>IUS — Salesian Universities</span><span class="network-link-arrow">↗</span></a>
+                    <a href="https://www.donboscosouthasia.org" target="_blank" rel="noopener noreferrer" class="network-link-row"><span class="network-icon-dot" style="background:#003A75;"></span><span>Don Bosco South Asia Portal</span><span class="network-link-arrow">↗</span></a>
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header"><span class="card-title">⚡ The Salesian Way</span></div>
+                <div class="card-body" style="padding:14px;">
+                  <div style="font-size:13px;color:var(--slate);line-height:1.7;margin-bottom:12px;">"Education is a matter of the heart." — Don Bosco. The Preventive System is based on <strong>Reason, Religion, and Loving-Kindness</strong>.</div>
+                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                    <div class="salesian-way-pill" onclick="showToast('We Form — 57 Formation Centres')">🎓 We Form</div>
+                    <div class="salesian-way-pill" onclick="showToast('We Educate — 261 Schools')">🏫 We Educate</div>
+                    <div class="salesian-way-pill" onclick="showToast('We Skill — 138 Technical Institutes')">🔧 We Skill</div>
+                    <div class="salesian-way-pill" onclick="showToast('We Care — 174 YaR Centres')">🛡 We Care</div>
+                    <div class="salesian-way-pill" onclick="showToast('We Develop — 13 PDO Centres')">🌱 We Develop</div>
+                    <div class="salesian-way-pill" onclick="showToast('We Communicate — 18 BOSCOM Centres')">📡 We Communicate</div>
+                    <div class="salesian-way-pill" onclick="showToast('We Host — 192 Hostels')">🏠 We Host</div>
+                    <div class="salesian-way-pill" onclick="showToast('We Shepherd — 174 Parishes')">⛪ We Shepherd</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- ══ AI ASSISTANT PAGE ══ -->
         <div class="page" id="page-ai">
           <div class="section-header">
@@ -1345,43 +1552,203 @@ body{font-family:'Noto Sans',sans-serif;background:var(--off-white);color:var(--
           </div>
         </div>
 
-        <!-- ══ ANALYTICS PAGE ══ -->
+        <!-- ANALYTICS -->
         <div class="page" id="page-analytics">
+
+          <!-- Header + filters -->
           <div class="section-header">
-            <div><h3>Analytics & Dashboards</h3></div>
-          </div>
-          <!-- Analytics Filters -->
-          <div class="filter-bar" style="margin-bottom:20px;">
-            <select class="filter-select" id="af-province"><option>All Provinces</option><option>INS – South Asia</option><option>ITP – Italy</option><option>INK – Kolkata</option><option>ESP – Spain</option><option>BRA – Brazil</option><option>INM – Chennai</option></select>
-            <select class="filter-select" id="af-group"><option>All Salesian Groups</option><option>SDB</option><option>FMA</option><option>Cooperators</option><option>ADMA</option><option>Past Pupils</option></select>
-            <select class="filter-select" id="af-region"><option>All Regions</option><option>South Asia</option><option>Europe</option><option>Africa</option><option>Latin America</option><option>East Asia</option></select>
-            <select class="filter-select" id="af-year"><option>All Years</option><option>2026</option><option>2025</option><option>2024</option><option>2023</option></select>
-            <span class="filter-clear" onclick="resetAnalyticsFilters()">Clear filters</span>
-          </div>
-          <div class="stats-row">
-            <div class="stat-card"><div class="stat-card-top"><div class="stat-card-icon" style="background:#FEF3C7;">📚</div><span class="stat-card-trend trend-up">+12%</span></div><div class="stat-card-value">12,847</div><div class="stat-card-label">Total Resources</div></div>
-            <div class="stat-card"><div class="stat-card-top"><div class="stat-card-icon" style="background:#D1FAE5;">🏛</div><span class="stat-card-trend trend-up">+3%</span></div><div class="stat-card-value">7,240</div><div class="stat-card-label">Institutions</div></div>
-            <div class="stat-card"><div class="stat-card-top"><div class="stat-card-icon" style="background:#DBEAFE;">📅</div><span class="stat-card-trend trend-up">+28%</span></div><div class="stat-card-value">10,523</div><div class="stat-card-label">Events Indexed</div></div>
-            <div class="stat-card"><div class="stat-card-top"><div class="stat-card-icon" style="background:#EDE9FE;">✨</div><span class="stat-card-trend trend-up">+41%</span></div><div class="stat-card-value">3,891</div><div class="stat-card-label">AI Queries / Month</div></div>
-          </div>
-          <div class="analytics-grid">
-            <div class="card">
-              <div class="card-header"><span class="card-title">Publications by Province</span></div>
-              <div class="card-body" id="analytics-provinces"></div>
+            <div>
+              <h3>Analytics & Platform Insights</h3>
+              <p>AI-powered intelligence · 12 SA provinces · 23 Mar 2026 · Updated every 6 hours</p>
             </div>
-            <div class="card">
-              <div class="card-header"><span class="card-title">Resources by Knowledge Area</span></div>
-              <div class="card-body" id="analytics-areas"></div>
-            </div>
-            <div class="card">
-              <div class="card-header"><span class="card-title">Document Types Distribution</span></div>
-              <div class="card-body" id="analytics-doctypes"></div>
-            </div>
-            <div class="card">
-              <div class="card-header"><span class="card-title">AI Feature Usage</span></div>
-              <div class="card-body" id="analytics-ai"></div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <select class="filter-select" id="an-year-filter" onchange="renderAnalyticsCharts()"><option value="2026">2026 YTD</option><option value="2025" selected>2025</option><option value="2024">2024</option><option value="all">All time</option></select>
+              <select class="filter-select" id="an-province-filter" onchange="renderAnalyticsCharts()"><option value="all">All Provinces</option><option value="INK">INK Bangalore</option><option value="INM">INM Chennai</option><option value="IND">IND Dimapur</option><option value="ING">ING Guwahati</option><option value="INH">INH Hyderabad</option><option value="INC">INC Kolkata</option><option value="INB">INB Mumbai</option><option value="INN">INN New Delhi</option><option value="INP">INP Panjim</option><option value="INS">INS Shillong</option><option value="INT">INT Tiruchy</option><option value="LKC">LKC Sri Lanka</option></select>
+              <select class="filter-select" id="an-area-filter" onchange="renderAnalyticsCharts()"><option value="all">All Areas</option><option>Education</option><option>Youth Ministry</option><option>Formation</option><option>Social Development</option><option>Spirituality</option><option>Pedagogy</option></select>
+              <button class="topbar-btn btn-blue" onclick="showToast('Generating AI report…')">✦ AI Report</button>
             </div>
           </div>
+
+          <!-- ① KPI Row -->
+          <div class="stats-row an-kpi-row" style="grid-template-columns:repeat(6,1fr);margin-bottom:20px;">
+            <div class="stat-card orange-top"><div class="stat-card-top"><div class="stat-card-icon" style="background:#FEF3C7;">📚</div><span class="stat-card-trend trend-up">+12%</span></div><div class="stat-card-value">12,847</div><div class="stat-card-label">Total Resources</div></div>
+            <div class="stat-card"><div class="stat-card-top"><div class="stat-card-icon" style="background:#D1FAE5;">🏫</div><span class="stat-card-trend trend-up">+2%</span></div><div class="stat-card-value">261</div><div class="stat-card-label">DB Schools</div></div>
+            <div class="stat-card"><div class="stat-card-top"><div class="stat-card-icon" style="background:var(--sdb-blue-pale);">🔧</div><span class="stat-card-trend trend-up">+5%</span></div><div class="stat-card-value">138</div><div class="stat-card-label">Tech Institutes</div></div>
+            <div class="stat-card orange-top"><div class="stat-card-top"><div class="stat-card-icon" style="background:#FEF3C7;">🛡</div><span class="stat-card-trend trend-up">+8%</span></div><div class="stat-card-value">174</div><div class="stat-card-label">YaR Centres</div></div>
+            <div class="stat-card"><div class="stat-card-top"><div class="stat-card-icon" style="background:#D1FAE5;">✦</div><span class="stat-card-trend trend-up">+41%</span></div><div class="stat-card-value">3,891</div><div class="stat-card-label">AI Queries/Mo</div></div>
+            <div class="stat-card"><div class="stat-card-top"><div class="stat-card-icon" style="background:var(--sdb-blue-pale);">🌐</div><span class="stat-card-trend trend-up">1.75M</span></div><div class="stat-card-value">28</div><div class="stat-card-label">States Reached</div></div>
+          </div>
+
+          <!-- ② AI Insights Banner -->
+          <div class="an-ai-banner">
+            <div class="an-ai-banner-icon">✦</div>
+            <div class="an-ai-banner-body">
+              <div class="an-ai-banner-title">AI Platform Intelligence — Live Analysis · 23 Mar 2026</div>
+              <div class="an-ai-banner-text">Based on resource upload patterns, AI query trends, and provincial contribution data, the platform has identified <strong>3 priority actions</strong> and <strong>4 growth opportunities</strong> for Q2 2026.</div>
+            </div>
+            <button class="an-ai-banner-btn" onclick="showToast('Opening full AI insights report…')">View full report →</button>
+          </div>
+
+          <!-- ③ AI Recommendations + Alerts row -->
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:20px;" id="an-insights-row">
+
+            <!-- Priority Actions -->
+            <div class="card">
+              <div class="card-header" style="border-left:3px solid #B02020;padding-left:13px;">
+                <span class="card-title">⚠ Priority Actions</span>
+                <span style="font-size:11px;padding:2px 8px;background:#FEE2E2;color:#9B2020;border-radius:100px;font-weight:700;">3 urgent</span>
+              </div>
+              <div class="card-body" style="display:flex;flex-direction:column;gap:10px;">
+                <div class="an-insight-item an-urgent">
+                  <div class="an-insight-dot" style="background:#B02020;"></div>
+                  <div><div class="an-insight-title">IND Province — 0 uploads in 47 days</div><div class="an-insight-sub">Dimapur Province has not submitted resources since Feb 4. AI predicts continued gap without intervention. <strong>Action:</strong> Contact Fr. Joseph Pampackal.</div></div>
+                </div>
+                <div class="an-insight-item an-urgent">
+                  <div class="an-insight-dot" style="background:#B02020;"></div>
+                  <div><div class="an-insight-title">LKC metadata compliance: 61%</div><div class="an-insight-sub">Sri Lanka Vice Province below 80% threshold. 24 resources missing taxonomy classification. <strong>Action:</strong> Run AI auto-tag on LKC collection.</div></div>
+                </div>
+                <div class="an-insight-item">
+                  <div class="an-insight-dot" style="background:#C07A00;"></div>
+                  <div><div class="an-insight-title">OWL version 90 days overdue</div><div class="an-insight-sub">Last ontology update: 2026-03-01. 3 new Salesian Family groups not yet mapped. <strong>Action:</strong> Schedule OWL update this week.</div></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Growth Opportunities -->
+            <div class="card">
+              <div class="card-header" style="border-left:3px solid #1A8A5A;padding-left:13px;">
+                <span class="card-title">✦ AI Opportunities</span>
+                <span style="font-size:11px;padding:2px 8px;background:#D1FAE5;color:#065F46;border-radius:100px;font-weight:700;">4 identified</span>
+              </div>
+              <div class="card-body" style="display:flex;flex-direction:column;gap:10px;">
+                <div class="an-insight-item">
+                  <div class="an-insight-dot" style="background:#1A8A5A;"></div>
+                  <div><div class="an-insight-title">Tamil-language gap: 847 resources unindexed</div><div class="an-insight-sub">INM and INT provinces have Tamil-language materials not yet in the corpus. AI can auto-translate abstracts. Estimated reach: +2,400 users.</div></div>
+                </div>
+                <div class="an-insight-item">
+                  <div class="an-insight-dot" style="background:#1A8A5A;"></div>
+                  <div><div class="an-insight-title">YaR collections under-linked</div><div class="an-insight-sub">174 YaR centre reports exist but only 12 are cross-linked to the YaR Collection. AI recommends batch-tagging to increase discovery by 340%.</div></div>
+                </div>
+                <div class="an-insight-item">
+                  <div class="an-insight-dot" style="background:#2272C3;"></div>
+                  <div><div class="an-insight-title">DB Tech × Education overlap untapped</div><div class="an-insight-sub">138 vocational institute reports and 261 school directories share no cross-references. AI can generate 400+ semantic links automatically.</div></div>
+                </div>
+                <div class="an-insight-item">
+                  <div class="an-insight-dot" style="background:#6A3BAA;"></div>
+                  <div><div class="an-insight-title">Spirituality area: lowest AI query rate</div><div class="an-insight-sub">Only 3.2% of AI queries target Spirituality. Suggested: Add 5 curated query templates to AI Assistant homepage to surface this content.</div></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Forecasts -->
+            <div class="card">
+              <div class="card-header" style="border-left:3px solid #0057A8;padding-left:13px;">
+                <span class="card-title">📈 AI Forecast — Q2 2026</span>
+                <span style="font-size:11px;padding:2px 8px;background:var(--sdb-blue-pale);color:var(--sdb-blue-deep);border-radius:100px;font-weight:700;">93% confidence</span>
+              </div>
+              <div class="card-body">
+                <div style="display:flex;flex-direction:column;gap:12px;">
+                  <div class="an-forecast-row">
+                    <div class="an-forecast-label">Resources uploaded</div>
+                    <div class="an-forecast-track"><div class="an-forecast-bar" style="width:78%;background:var(--sdb-blue);"></div></div>
+                    <div class="an-forecast-vals"><span class="an-current">12,847</span><span class="an-arrow">→</span><span class="an-forecast">14,200</span></div>
+                  </div>
+                  <div class="an-forecast-row">
+                    <div class="an-forecast-label">AI queries/month</div>
+                    <div class="an-forecast-track"><div class="an-forecast-bar" style="width:65%;background:#1A8A5A;"></div></div>
+                    <div class="an-forecast-vals"><span class="an-current">3,891</span><span class="an-arrow">→</span><span class="an-forecast">5,800</span></div>
+                  </div>
+                  <div class="an-forecast-row">
+                    <div class="an-forecast-label">New provinces onboarded</div>
+                    <div class="an-forecast-track"><div class="an-forecast-bar" style="width:40%;background:#C07A00;"></div></div>
+                    <div class="an-forecast-vals"><span class="an-current">12</span><span class="an-arrow">→</span><span class="an-forecast">15</span></div>
+                  </div>
+                  <div class="an-forecast-row">
+                    <div class="an-forecast-label">Collections created</div>
+                    <div class="an-forecast-track"><div class="an-forecast-bar" style="width:55%;background:#6A3BAA;"></div></div>
+                    <div class="an-forecast-vals"><span class="an-current">11</span><span class="an-arrow">→</span><span class="an-forecast">18</span></div>
+                  </div>
+                  <div class="an-forecast-row">
+                    <div class="an-forecast-label">Metadata compliance avg</div>
+                    <div class="an-forecast-track"><div class="an-forecast-bar" style="width:88%;background:#0F8A8A;"></div></div>
+                    <div class="an-forecast-vals"><span class="an-current">84%</span><span class="an-arrow">→</span><span class="an-forecast">91%</span></div>
+                  </div>
+                  <div class="an-forecast-row">
+                    <div class="an-forecast-label">Beneficiaries (Bosconet)</div>
+                    <div class="an-forecast-track"><div class="an-forecast-bar" style="width:72%;background:#B02020;"></div></div>
+                    <div class="an-forecast-vals"><span class="an-current">1.75M</span><span class="an-arrow">→</span><span class="an-forecast">2.1M</span></div>
+                  </div>
+                </div>
+                <div style="margin-top:12px;font-size:11px;color:var(--muted);border-top:1px solid var(--border);padding-top:10px;">Model: GSDP-Forecast v2.1 · Based on 3-year trend analysis · Seasonal correction applied for Q2</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ④ Charts row -->
+          <div class="analytics-grid" style="margin-bottom:20px;">
+            <div class="card"><div class="card-header"><span class="card-title">Resources by Province</span><span class="card-action" onclick="showToast('Export province data')">Export ↓</span></div>
+              <div class="card-body"><div class="bar-chart" id="an-provinces"></div></div></div>
+            <div class="card"><div class="card-header"><span class="card-title">Knowledge Areas</span><span class="card-action" onclick="showToast('Export area data')">Export ↓</span></div>
+              <div class="card-body"><div class="bar-chart" id="an-areas"></div></div></div>
+            <div class="card"><div class="card-header"><span class="card-title">Document Types</span></div>
+              <div class="card-body"><div class="bar-chart" id="an-types"></div></div></div>
+            <div class="card"><div class="card-header"><span class="card-title">AI Feature Usage</span></div>
+              <div class="card-body"><div class="bar-chart" id="an-ai"></div></div></div>
+          </div>
+
+          <!-- ⑤ Trend Analysis row -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;">
+
+            <!-- Monthly upload trend -->
+            <div class="card">
+              <div class="card-header"><span class="card-title">📅 Monthly Upload Trend — 2025</span><span style="font-size:11px;color:var(--muted);">Actual + AI forecast</span></div>
+              <div class="card-body">
+                <div style="display:flex;flex-direction:column;gap:8px;" id="an-monthly-trend">
+                  <!-- Rendered by JS -->
+                </div>
+                <div style="margin-top:12px;display:flex;gap:16px;">
+                  <span style="font-size:12px;color:var(--muted);display:flex;align-items:center;gap:5px;"><span style="width:12px;height:3px;background:var(--sdb-blue);display:inline-block;border-radius:2px;"></span>Actual uploads</span>
+                  <span style="font-size:12px;color:var(--muted);display:flex;align-items:center;gap:5px;"><span style="width:12px;height:3px;background:#C07A00;display:inline-block;border-radius:2px;border:1px dashed #C07A00;"></span>AI forecast</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Province compliance heatmap -->
+            <div class="card">
+              <div class="card-header"><span class="card-title">🗺 Province Metadata Compliance</span><span style="font-size:11px;color:var(--muted);">Target: 80% · AI monitored</span></div>
+              <div class="card-body">
+                <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;" id="an-compliance-grid">
+                  <!-- Rendered by JS -->
+                </div>
+                <div style="margin-top:12px;font-size:12px;color:var(--muted);">Provinces below 80% flagged for AI-assisted metadata enrichment. Click a cell for details.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ⑥ Province Strength table + Network reach -->
+          <div style="display:grid;grid-template-columns:1.4fr 1fr;gap:14px;margin-bottom:20px;">
+            <div class="card">
+              <div class="card-header"><span class="card-title">Province Strength — Members, Houses & Resources</span><span class="card-action" onclick="showPage('persons',document.querySelector('[data-page=persons]'))">View all →</span></div>
+              <div class="card-body"><div id="an-province-table"></div></div>
+            </div>
+            <div class="card">
+              <div class="card-header"><span class="card-title">Network Reach — Bosconet & DB Tech</span></div>
+              <div class="card-body">
+                <div class="bar-chart" id="an-network"></div>
+                <div style="margin-top:14px;padding:12px;background:var(--sdb-blue-pale);border-radius:var(--radius-lg);border-left:3px solid var(--sdb-blue);">
+                  <div style="font-size:13px;font-weight:700;color:var(--sdb-blue-deep);margin-bottom:4px;">Bosconet — 1.75 Million Lives / Year</div>
+                  <div style="font-size:12px;color:var(--muted);">350+ NGOs · 11 regional offices · 28 Indian states · Source: bosconet.in</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ⑦ Province Deep Dive -->
+          <div style="margin-top:4px;">
+            <div style="font-family:'Merriweather',serif;font-size:17px;font-weight:700;color:var(--sdb-blue-deep);margin-bottom:16px;">Province Deep Dive <span style="font-size:14px;font-weight:400;color:var(--muted);">— sourced from official provincial websites</span></div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;" id="province-cards-grid"></div>
+          </div>
+
         </div>
 
         <!-- ══ GOVERNANCE PAGE ══ -->
@@ -1451,11 +1818,15 @@ body{font-family:'Noto Sans',sans-serif;background:var(--off-white);color:var(--
     <button class="floating-ai-close" onclick="toggleFloatingAI()" aria-label="Close">✕</button>
   </div>
   <div id="chat-messages"></div>
+  <div class="floating-ai-example-hint">
+    <span class="floating-ai-example-label">Provide example queries:</span>
+    <div class="floating-ai-example-queries" id="dashboard-floating-example-queries"></div>
+  </div>
   <div class="chat-input-bar">
     <input
       class="chat-input"
       id="chat-input"
-      placeholder="Ask about what you found... (e.g., Summarize, Translate, Related)"
+      placeholder="Type a question or tap an example below…"
       onkeypress="if(event.key==='Enter')sendChat()"
       autocomplete="off"
     >
@@ -1476,7 +1847,7 @@ const ROLES = {
   public: {
     name:'Public User', label:'👤 Public Viewer', avatar:'P',
     email:'visitor@salesian.org',
-    pages:['dashboard','resources','institutions','events','ai'],
+    pages:['dashboard','resources','institutions','events','networks','ai'],
     canUpload:false, canValidate:false, canAdmin:false,
     stats:[
       {icon:'📚',bg:'#FEF3C7',value:'10,000+',label:'Public Resources',trend:'+5%',tClass:'trend-up'},
@@ -1499,7 +1870,7 @@ const ROLES = {
   registered: {
     name:'Fr. Thomas Antony', label:'🎓 Registered User', avatar:'T',
     email:'thomas.antony@salesian.in',
-    pages:['dashboard','resources','institutions','events','persons','ai'],
+    pages:['dashboard','resources','institutions','events','persons','networks','ai'],
     canUpload:false, canValidate:false, canAdmin:false,
     stats:[
       {icon:'📚',bg:'#FEF3C7',value:'12,847',label:'Resources Available',trend:'+12%',tClass:'trend-up'},
@@ -1522,7 +1893,7 @@ const ROLES = {
   liaison: {
     name:'Bro. James Rodrigues', label:'🌐 Provincial Digital Liaison', avatar:'J',
     email:'james.rodrigues@ins.salesian.org',
-    pages:['dashboard','resources','institutions','events','persons','ai','upload'],
+    pages:['dashboard','resources','institutions','events','persons','networks','ai','upload'],
     canUpload:true, canValidate:true, canAdmin:false,
     stats:[
       {icon:'⬆️',bg:'#FEF3C7',value:'18',label:'In Library This Month',trend:'+6',tClass:'trend-up'},
@@ -1545,7 +1916,7 @@ const ROLES = {
   editor: {
     name:'Sr. Lucia Ferraro', label:'✏️ Department Editor', avatar:'L',
     email:'lucia.ferraro@youthministry.salesian.org',
-    pages:['dashboard','resources','institutions','events','persons','ai','upload','analytics'],
+    pages:['dashboard','resources','institutions','events','persons','networks','ai','upload','analytics'],
     canUpload:true, canValidate:true, canAdmin:false,
     stats:[
       {icon:'📝',bg:'#FEF3C7',value:'234',label:'Resources Curated',trend:'+28 this month',tClass:'trend-up'},
@@ -1569,7 +1940,7 @@ const ROLES = {
   admin: {
     name:'Rev. Fr. Paul D\'Souza', label:'🛡 Generalate Administrator', avatar:'P',
     email:'paul.dsouza@sdb-generalate.org',
-    pages:['dashboard','resources','institutions','events','persons','ai','upload','analytics','governance','access'],
+    pages:['dashboard','resources','institutions','events','persons','networks','ai','upload','analytics','governance','access'],
     canUpload:true, canValidate:true, canAdmin:true,
     stats:[
       {icon:'🌍',bg:'#FEF3C7',value:'92',label:'Provinces Active',trend:'Full coverage',tClass:'trend-up'},
@@ -1802,8 +2173,10 @@ function applyRole(role) {
   const adminSection = document.getElementById('admin-section');
   const owlNav = document.getElementById('owl-trigger-nav');
   const accessNav = document.getElementById('access-nav');
+  const networksNav = document.getElementById('networks-nav');
 
   if(validateNav) validateNav.style.display = r.canValidate ? 'flex' : 'none';
+  if(networksNav) networksNav.style.display = r.pages.includes('networks') ? 'flex' : 'none';
   analyticsNav.style.display = r.canAdmin || role==='editor' ? 'flex' : 'none';
   governanceNav.style.display = r.canAdmin ? 'flex' : 'none';
   if(accessNav) accessNav.style.display = r.canAdmin ? 'flex' : 'none';
@@ -1838,6 +2211,8 @@ function applyRole(role) {
 // PAGE NAVIGATION
 // ══════════════════════════════════════════
 function showPage(pageId, navEl) {
+  clearInterval(networksSlideTimer);
+  networksSlideTimer=null;
   const r = ROLES[currentRole];
   if(!r.pages.includes(pageId)) {
     // Show access denied inline
@@ -1858,6 +2233,8 @@ function showPage(pageId, navEl) {
         pastoralWorksMap.invalidateSize();
     }, 150));
   }
+  if(pageId==='analytics') renderAnalyticsCharts();
+  if(pageId==='networks') setTimeout(initNetworksPageSlider,60);
   currentPage = pageId;
   updateNavActive(navEl);
   updateTopbarTitle(pageId);
@@ -1879,9 +2256,10 @@ function updateTopbarTitle(pageId) {
     institutions:'Pastoral Works',
     events:'Events Calendar',
     persons:'Persons Directory',
+    networks:'Salesian Networks',
     ai:'Collections',
     upload:'Submit Resource',
-    analytics:'Analytics & Dashboards',
+    analytics:'Analytics & Platform Insights',
     governance:'Governance & Policy',
     access:'Access Control'
   };
@@ -2314,61 +2692,78 @@ function renderCalendar() {
   document.getElementById('cal-grid').innerHTML = html;
 }
 
-// ── ANALYTICS FILTERS ──
-const analyticsFilters = { province:'All Provinces', group:'All Salesian Groups', region:'All Regions', year:'All Years' };
+// ── ANALYTICS (South Asia provinces — demo data aligned with GSDP) ──
+const PROVINCE_DATA=[
+  {code:'INK',name:'Bangalore',fullName:'Sacred Heart Province',state:'Karnataka & Kerala',members:349,priests:273,brothers:6,clerics:100,novices:11,houses:44,schools:28,colleges:5,techInst:8,parishes:12,url:'dbbangalore.org',resources:1847,color:'#0057A8'},
+  {code:'INM',name:'Chennai',fullName:'Province of St. Thomas',state:'Tamil Nadu, Andaman & Nicobar, Puducherry',members:312,priests:248,brothers:8,clerics:54,novices:18,houses:52,schools:34,colleges:6,techInst:7,parishes:14,url:'donboscochennai.org',resources:1624,color:'#2272C3'},
+  {code:'IND',name:'Dimapur',fullName:'Province of North East India',state:'Nagaland, Manipur, Arunachal Pradesh',members:198,priests:156,brothers:12,clerics:28,novices:8,houses:31,schools:22,colleges:3,techInst:5,parishes:18,url:'donboscodimapur.org',resources:892,color:'#E8600A'},
+  {code:'ING',name:'Guwahati',fullName:'Province of St. Francis de Sales',state:'Assam, Meghalaya, W. Bengal',members:224,priests:178,brothers:10,clerics:35,novices:14,houses:38,schools:28,colleges:4,techInst:6,parishes:16,url:'donboscoguwahati.org',resources:1043,color:'#1A6B3C'},
+  {code:'INH',name:'Hyderabad',fullName:'Province of St. Joseph',state:'Telangana & Andhra Pradesh',members:267,priests:211,brothers:9,clerics:45,novices:12,houses:42,schools:31,colleges:5,techInst:9,parishes:20,url:'donboscohyderabad.org',resources:1389,color:'#5B21B6'},
+  {code:'INC',name:'Kolkata',fullName:'Province of St. Teresa',state:'West Bengal, Bihar, Jharkhand, Odisha',members:231,priests:184,brothers:7,clerics:38,novices:10,houses:35,schools:26,colleges:4,techInst:7,parishes:15,url:'donboscosouthasia.org',resources:978,color:'#003A75'},
+  {code:'INB',name:'Mumbai',fullName:'Province of Mary Help of Christians',state:'Maharashtra, Gujarat, Rajasthan, MP',members:289,priests:229,brothers:11,clerics:47,novices:16,houses:46,schools:33,colleges:6,techInst:10,parishes:22,url:'sdbinb.in',resources:1567,color:'#B84D00'},
+  {code:'INN',name:'New Delhi',fullName:'Province of St. Thomas Apostle',state:'Delhi, UP, Haryana, Punjab, HP',members:245,priests:196,brothers:8,clerics:39,novices:11,houses:40,schools:29,colleges:5,techInst:12,parishes:19,url:'donboscosouthasia.org',resources:1234,color:'#7A3000'},
+  {code:'INP',name:'Panjim',fullName:'Province of St. Francis Xavier',state:'Goa, Karnataka (North), Daman',members:187,priests:148,brothers:6,clerics:31,novices:9,houses:28,schools:18,colleges:3,techInst:4,parishes:13,url:'sdbpanjim.org',resources:743,color:'#2D6A4F'},
+  {code:'INS',name:'Shillong',fullName:'Province of St. John Paul II',state:'Meghalaya, Mizoram, Tripura',members:219,priests:174,brothers:9,clerics:34,novices:12,houses:33,schools:24,colleges:4,techInst:5,parishes:17,url:'donboscoshillong.org',resources:867,color:'#4B1528'},
+  {code:'INT',name:'Tiruchy',fullName:'Province of Annai Velankanni',state:'Tamil Nadu (Central & South)',members:256,priests:203,brothers:7,clerics:44,novices:13,houses:39,schools:28,colleges:5,techInst:8,parishes:16,url:'donboscotiruchy.org',resources:1198,color:'#003A75'},
+  {code:'LKC',name:'Sri Lanka',fullName:'Sri Lanka Vice Province',state:'Sri Lanka',members:124,priests:98,brothers:5,clerics:19,novices:7,houses:21,schools:14,colleges:2,techInst:3,parishes:11,url:'donbosco.lk',resources:456,color:'#065F46'},
+];
 
-const ALL_ANALYTICS_DATA = {
-  provinces: [['INS – South Asia',87],['ITP – Italy',73],['INK – Kolkata',61],['ESP – Spain',54],['BRA – Brazil',48],['INM – Chennai',42]],
-  areas:     [['Youth Ministry',82],['Catechesis',68],['Pedagogy',55],['Spirituality',47],['Missiology',39],['Formation',35]],
-  doctypes:  [['Official Publication',75],['Study',61],['Good Practice',53],['Multimedia',47],['MARC21',38]],
-  ai:        [['Smart Search',88],['Summarize',72],['Translate',64],['Q&A help',51],['Related resources',43]],
-};
-
-function resetAnalyticsFilters() {
-  analyticsFilters.province='All Provinces';
-  analyticsFilters.group='All Salesian Groups';
-  analyticsFilters.region='All Regions';
-  analyticsFilters.year='All Years';
-  ['af-province','af-group','af-region','af-year'].forEach(id=>{
-    const el=document.getElementById(id); if(el) el.selectedIndex=0;
-  });
-  refreshAnalyticsCharts();
-}
-
-function refreshAnalyticsCharts() {
-  // Apply a scale factor based on active filters (demo simulation)
-  const isFiltered = analyticsFilters.province!=='All Provinces' || analyticsFilters.group!=='All Salesian Groups' || analyticsFilters.region!=='All Regions' || analyticsFilters.year!=='All Years';
-  const scale = isFiltered ? 0.55 + Math.random()*0.3 : 1;
-
-  const makeBar = (data, scl=1) => data.map(([label,val])=>{
-    const v = Math.round(val*scl);
-    return `<div class="bar-row">
-      <div class="bar-label">${label}</div>
-      <div class="bar-track"><div class="bar-fill" style="width:${v}%;transition:width 0.5s ease;"></div></div>
-      <div class="bar-value">${v}%</div>
-    </div>`;
-  }).join('');
-
-  // Filter province bar if a specific province is selected
-  let provinces = ALL_ANALYTICS_DATA.provinces;
-  if(analyticsFilters.province !== 'All Provinces') {
-    provinces = provinces.filter(([label])=>label.includes(analyticsFilters.province.split(' ')[0]));
-    if(!provinces.length) provinces = [[ analyticsFilters.province, Math.round(50+Math.random()*40) ]];
+function renderAnalyticsCharts(){
+  const pvEl=document.getElementById('an-provinces');
+  if(!pvEl)return;
+  const filter=document.getElementById('an-province-filter')?.value||'all';
+  const data=filter==='all'?PROVINCE_DATA:PROVINCE_DATA.filter(p=>p.code===filter);
+  const max=Math.max(...data.map(p=>p.resources),1);
+  pvEl.innerHTML=data.map(p=>`<div class="bar-row"><div class="bar-label" title="${p.fullName}">${p.code} ${p.name}</div><div class="bar-track"><div class="bar-fill" style="width:${Math.round(p.resources/max*100)}%;background:${p.color}"></div></div><div class="bar-value">${p.resources.toLocaleString()}</div></div>`).join('');
+  const arEl=document.getElementById('an-areas');
+  if(arEl){const areas=[['Education',3240],['Youth Ministry',2890],['Formation',1980],['Social Development',1654],['Spirituality',1247],['Pedagogy',986],['Missiology',850]];const am=areas[0][1];arEl.innerHTML=areas.map(([a,v])=>`<div class="bar-row"><div class="bar-label">${a}</div><div class="bar-track"><div class="bar-fill" style="width:${Math.round(v/am*100)}%"></div></div><div class="bar-value">${v.toLocaleString()}</div></div>`).join('');}
+  const nEl=document.getElementById('an-network');
+  if(nEl){const nets=[['Bosconet NGOs',350,350,'#0057A8'],['DB Tech Institutes',138,350,'#E8600A'],['DB Schools',261,350,'#1A6B3C'],['DB Colleges',51,350,'#5B21B6'],['YaR Centres',174,350,'#B84D00'],['Parishes',174,350,'#2D6A4F']];nEl.innerHTML=nets.map(([n,v,m,c])=>`<div class="bar-row"><div class="bar-label">${n}</div><div class="bar-track"><div class="bar-fill" style="width:${Math.round(v/m*100)}%;background:${c}"></div></div><div class="bar-value">${v}</div></div>`).join('');}
+  const tEl=document.getElementById('an-types');
+  if(tEl){const types=[['Official Publication',4892],['Study',3241],['Good Practice',2187],['Multimedia',1432],['MARC21',1095]];const tm=types[0][1];tEl.innerHTML=types.map(([t,v])=>`<div class="bar-row"><div class="bar-label">${t}</div><div class="bar-track"><div class="bar-fill" style="width:${Math.round(v/tm*100)}%"></div></div><div class="bar-value">${v.toLocaleString()}</div></div>`).join('');}
+  const aiEl=document.getElementById('an-ai');
+  if(aiEl){const ai=[['Smart search',1842],['Summarize',1124],['Translate',678],['Recommend',247]];const am2=ai[0][1];aiEl.innerHTML=ai.map(([f,v])=>`<div class="bar-row"><div class="bar-label">${f}</div><div class="bar-track"><div class="bar-fill" style="width:${Math.round(v/am2*100)}%;background:var(--sdb-orange)"></div></div><div class="bar-value">${v}</div></div>`).join('');}
+  const ptEl=document.getElementById('an-province-table');
+  if(ptEl){ptEl.innerHTML='<table style="width:100%;border-collapse:collapse;font-size:12px;"><thead><tr style="border-bottom:2px solid var(--sdb-blue-light);"><th style="padding:6px 8px;text-align:left;color:var(--sdb-blue-deep);font-size:11px;">Province</th><th style="padding:6px 8px;text-align:right;color:var(--sdb-blue-deep);font-size:11px;">Members</th><th style="padding:6px 8px;text-align:right;color:var(--sdb-blue-deep);font-size:11px;">Houses</th><th style="padding:6px 8px;text-align:right;color:var(--sdb-blue-deep);font-size:11px;">Schools</th><th style="padding:6px 8px;text-align:right;color:var(--sdb-blue-deep);font-size:11px;">Colleges</th></tr></thead><tbody>'+PROVINCE_DATA.map((p,i)=>`<tr style="border-bottom:1px solid var(--border);${i%2===0?'background:var(--cream)':''}"><td style="padding:6px 8px;font-weight:600;color:var(--deep);">${p.code} <span style="font-weight:400;color:var(--muted);">${p.name}</span></td><td style="padding:6px 8px;text-align:right;">${p.members}</td><td style="padding:6px 8px;text-align:right;">${p.houses}</td><td style="padding:6px 8px;text-align:right;">${p.schools}</td><td style="padding:6px 8px;text-align:right;">${p.colleges}</td></tr>`).join('')+'</tbody></table>';}
+  const pcEl=document.getElementById('province-cards-grid');
+  if(pcEl){const shown=filter==='all'?PROVINCE_DATA.slice(0,6):PROVINCE_DATA.filter(p=>p.code===filter);pcEl.innerHTML=shown.map(p=>`<div class="card" style="cursor:pointer;" onclick="showToast('Opening: ${p.fullName} — ${p.url}')"><div class="card-header" style="border-left:4px solid ${p.color};padding-left:14px;"><span class="card-title">${p.code} · ${p.fullName}</span><a href="https://${p.url}" target="_blank" rel="noopener noreferrer" style="font-size:11px;color:var(--gold);text-decoration:none;">${p.url} ↗</a></div><div class="card-body" style="padding:12px 16px;"><div style="font-size:12px;color:var(--muted);margin-bottom:10px;">${p.state}</div><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center;">${[['Members',p.members],['Houses',p.houses],['Schools',p.schools],['Colleges',p.colleges]].map(([l,v])=>`<div><div style="font-size:16px;font-weight:700;color:var(--sdb-blue-deep);">${v}</div><div style="font-size:11px;color:var(--muted);">${l}</div></div>`).join('')}</div></div></div>`).join('');}
+  const mtEl=document.getElementById('an-monthly-trend');
+  if(mtEl){
+    const months=[['Jan',820,null],['Feb',940,null],['Mar',1080,null],['Apr',1020,null],['May',1190,null],['Jun',1340,null],['Jul',1210,null],['Aug',1380,null],['Sep',1450,null],['Oct',1620,null],['Nov',1580,null],['Dec',1760,null],['Jan\'26',null,1820],['Feb\'26',null,1940],['Mar\'26',null,2100]];
+    const maxM=2100;
+    mtEl.innerHTML=months.map(([m,actual,forecast])=>{
+      const v=actual||forecast;const pct=Math.round(v/maxM*100);
+      const isForecast=forecast!==null&&forecast!==undefined;
+      return `<div style="display:flex;align-items:center;gap:8px;">
+        <div style="width:52px;font-size:11px;color:var(--muted);text-align:right;flex-shrink:0;">${m}</div>
+        <div style="flex:1;height:8px;background:var(--cream);border-radius:100px;overflow:hidden;">
+          <div style="width:${pct}%;height:100%;border-radius:100px;background:${isForecast?'#C07A00':'var(--sdb-blue)'};${isForecast?'opacity:.7':''}"></div>
+        </div>
+        <div style="font-size:11px;font-weight:600;color:${isForecast?'#C07A00':'var(--sdb-blue-deep)'};width:36px;text-align:right;${isForecast?'font-style:italic':''}">${v}</div>
+        ${isForecast?'<span style="font-size:9px;color:#C07A00;font-weight:700;">fcst</span>':'<span style="font-size:9px;color:transparent;">----</span>'}
+      </div>`;
+    }).join('');
   }
-
-  document.getElementById('analytics-provinces').innerHTML = `<div class="bar-chart">${makeBar(provinces, isFiltered&&analyticsFilters.province==='All Provinces'?scale:1)}</div>`;
-  document.getElementById('analytics-areas').innerHTML    = `<div class="bar-chart">${makeBar(ALL_ANALYTICS_DATA.areas, scale)}</div>`;
-  document.getElementById('analytics-doctypes').innerHTML = `<div class="bar-chart">${makeBar(ALL_ANALYTICS_DATA.doctypes, scale)}</div>`;
-  document.getElementById('analytics-ai').innerHTML       = `<div class="bar-chart">${makeBar(ALL_ANALYTICS_DATA.ai, scale)}</div>`;
-}
-
-function initAnalyticsFilters() {
-  ['af-province','af-group','af-region','af-year'].forEach((id,i)=>{
-    const el = document.getElementById(id);
-    if(!el) return;
-    const keys = ['province','group','region','year'];
-    el.addEventListener('change', e=>{ analyticsFilters[keys[i]]=e.target.value; refreshAnalyticsCharts(); });
-  });
+  const compEl=document.getElementById('an-compliance-grid');
+  if(compEl){
+    const compliance=[
+      {code:'INK',score:94,color:'#1A8A5A'},{code:'INM',score:88,color:'#1A8A5A'},
+      {code:'IND',score:71,color:'#B02020'},{code:'ING',score:82,color:'#1A8A5A'},
+      {code:'INH',score:79,color:'#C07A00'},{code:'INC',score:86,color:'#1A8A5A'},
+      {code:'INB',score:91,color:'#1A8A5A'},{code:'INN',score:84,color:'#1A8A5A'},
+      {code:'INP',score:78,color:'#C07A00'},{code:'INS',score:90,color:'#1A8A5A'},
+      {code:'INT',score:87,color:'#1A8A5A'},{code:'LKC',score:61,color:'#B02020'}
+    ];
+    compEl.innerHTML=compliance.map(p=>{
+      const bg=p.score>=90?'#D1FAE5':p.score>=80?'#FEF3C7':'#FEE2E2';
+      const border=p.score>=90?'#86EFAC':p.score>=80?'#FCD34D':'#FCA5A5';
+      return `<div onclick="showToast('${p.code}: ${p.score}% metadata compliance')" style="padding:10px 8px;border-radius:var(--radius-lg);background:${bg};border:1px solid ${border};cursor:pointer;text-align:center;transition:transform .15s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
+        <div style="font-size:11px;font-weight:700;color:#1A1A1A;">${p.code}</div>
+        <div style="font-size:16px;font-weight:700;color:${p.color};margin:2px 0;">${p.score}%</div>
+        <div style="width:100%;height:3px;background:rgba(0,0,0,.08);border-radius:2px;"><div style="width:${p.score}%;height:100%;background:${p.color};border-radius:2px;"></div></div>
+      </div>`;
+    }).join('');
+  }
 }
 
 function renderPersons(role) {
@@ -2411,13 +2806,14 @@ function renderAI(role) {
     messages.innerHTML = `
       <div class="chat-msg">
         <div class="chat-avatar ai">🤖</div>
-        <div class="chat-bubble ai">Hi, I can help you explore resources. Ask me anything.</div>
+        <div class="chat-bubble ai">Hi — I can help you explore resources. <strong>Provide example queries:</strong> scroll the list below and tap one, or type your own question.</div>
       </div>`;
     messages.dataset.greetingSet = '1';
   }
 
   renderExploreTopics();
   renderDiscoveryResults();
+  renderDashboardFloatingExamples();
 }
 
 // Discovery state
@@ -2591,7 +2987,58 @@ function toggleFloatingAI(forceOpen){
 
 function renderAnalytics(role) {
   if(!ROLES[role].canAdmin && role!=='editor') return;
-  refreshAnalyticsCharts();
+  renderAnalyticsCharts();
+}
+
+// ── Networks page overview slider (dashboard) ──
+let networksSlideIdx=0,networksSlideTimer=null,networksSliderPaused=false;
+function goNetworksSlide(n){
+  const slides=document.querySelectorAll('#networks-hero-slider .networks-hero-slide');
+  const dots=document.querySelectorAll('#networks-hero-slider .networks-hero-dot');
+  if(!slides.length)return;
+  networksSlideIdx=(n+slides.length)%slides.length;
+  slides.forEach((s,i)=>{
+    const on=i===networksSlideIdx;
+    s.classList.toggle('active',on);
+    s.setAttribute('aria-hidden',on?'false':'true');
+  });
+  dots.forEach((d,i)=>{
+    d.classList.toggle('active',i===networksSlideIdx);
+    if(i===networksSlideIdx)d.setAttribute('aria-current','true');else d.removeAttribute('aria-current');
+  });
+}
+function startNetworksSlideTimer(){
+  clearInterval(networksSlideTimer);
+  networksSlideTimer=null;
+  if(networksSliderPaused)return;
+  networksSlideTimer=setInterval(()=>goNetworksSlide(networksSlideIdx+1),6500);
+}
+function networksDotClick(i){
+  networksSliderPaused=false;
+  const btn=document.getElementById('networks-slider-pause');
+  if(btn){btn.textContent='⏸';btn.setAttribute('aria-label','Pause slideshow');btn.setAttribute('title','Pause');}
+  goNetworksSlide(i);
+  startNetworksSlideTimer();
+}
+function toggleNetworksSlider(){
+  networksSliderPaused=!networksSliderPaused;
+  const btn=document.getElementById('networks-slider-pause');
+  if(networksSliderPaused){
+    clearInterval(networksSlideTimer);
+    networksSlideTimer=null;
+    if(btn){btn.textContent='▶';btn.setAttribute('aria-label','Resume slideshow');btn.setAttribute('title','Resume');}
+  }else{
+    if(btn){btn.textContent='⏸';btn.setAttribute('aria-label','Pause slideshow');btn.setAttribute('title','Pause');}
+    startNetworksSlideTimer();
+  }
+}
+function initNetworksPageSlider(){
+  if(!document.getElementById('networks-hero-slider'))return;
+  networksSliderPaused=false;
+  const btn=document.getElementById('networks-slider-pause');
+  if(btn){btn.textContent='⏸';btn.setAttribute('aria-label','Pause slideshow');btn.setAttribute('title','Pause');}
+  goNetworksSlide(0);
+  startNetworksSlideTimer();
 }
 
 function renderGovernance(role) {
@@ -2658,6 +3105,7 @@ function renderAccessControl(role) {
     {id:'institutions',label:'Pastoral Works'},
     {id:'events',label:'Events'},
     {id:'persons',label:'Persons'},
+    {id:'networks',label:'Networks'},
     {id:'ai',label:'Collections'},
     {id:'upload',label:'OWL / Upload'},
     {id:'analytics',label:'Analytics'},
@@ -3097,6 +3545,62 @@ const AI_RESPONSES = {
   },
 };
 
+const DASHBOARD_AI_EXAMPLE_QUERIES=[
+  'Find resources on Preventive System in Latin America (1950–1970)',
+  'Find formation materials for young people in difficult contexts',
+  'Summarize Youth Ministry reports from South Asia (2023–2025)',
+  'Translate to Italian: Don Bosco Preventive System — key principles',
+  'Recommend resources on vocation and discernment in Salesian formation',
+  'Find documents on substance abuse prevention and pastoral accompaniment',
+  'What resources discuss Strenna themes and annual pastoral priorities?',
+  'Find good practices on oratories and youth centres in Africa',
+  'Compare Young at Risk (YaR) approaches in India and Latin America',
+  'Find official publications on missiology and evangelisation in Asia',
+  'Drug addiction prevention resources across South Asia',
+  'Summarize the top 3 formation documents from 2025',
+  'Find resources linking oratory pastoral work to technical education in South Asia',
+  'Multimedia or introductory materials on Don Bosco’s life for young people',
+  'What does the corpus include on General Chapter (GC) themes and follow-up documents?',
+  'Translate to French: a short welcome message for a youth retreat',
+  'Find studies on social entrepreneurship, work, and DB Tech–style vocational training',
+  'Resources on interreligious dialogue in Salesian schools and youth centres',
+  'Pastoral guidelines for migrants, refugees, and internally displaced youth',
+  'Find FMA–SDB collaboration and Mamma Margherita in formation resources',
+  'Explain in simple terms: Reason, Religion, and Loving-Kindness in the Preventive System',
+  'Find child safeguarding, protection of minors, and safe-environment policies',
+  'Resources connecting Laudato Si’ and ecological education in oratories and schools',
+  'Find letters or messages from the Rector Major on youth and vocation (1990–2010)',
+  'How does the platform taxonomy help filter documents by province, language, and theme?',
+  'Find materials on Mary Help of Christians, feasts, and youth devotion',
+  'Resources on Salesian Cooperators formation and spirituality',
+  'Compare vocational training and job-placement documents: Europe vs Southeast Asia',
+  'Find workshop guides for peer mentoring, leadership, and animators',
+  'What resources cover HIV/AIDS awareness and pastoral accompaniment in Africa?',
+  'Find documents on school planning, timetables, and pastoral integration',
+  'Summarize fundraising, partnerships, and sustainability ideas for oratory projects',
+  'Find anti-bullying, restorative practice, and positive discipline in Salesian schools',
+  'Find post-pandemic pastoral resources for restarting oratory and school programmes',
+  'Resources on digital media literacy, ethics, and safe use for youth ministers',
+  'Find manuals on hospitality, community life, and daily rhythm in Salesian houses',
+  'What documents support implementing Don Bosco’s Peace Proposal in local contexts?',
+  'Find templates for province-level youth ministry reporting and basic statistics',
+  'Resources on marriage preparation, family ministry, and young couples',
+  'Find evaluation tools for spiritual retreats, camps, and vocational experiences',
+  'Policies and training on data privacy and safeguarding in online youth spaces',
+];
+
+function renderDashboardFloatingExamples(){
+  const el=document.getElementById('dashboard-floating-example-queries');
+  if(!el)return;
+  el.innerHTML=DASHBOARD_AI_EXAMPLE_QUERIES.map(q=>`<button type="button" class="floating-ai-example-q" onclick='dashboardRunExampleQuery(${JSON.stringify(q)})'>${q}</button>`).join('');
+}
+function dashboardRunExampleQuery(q){
+  const input=document.getElementById('chat-input');
+  if(!input)return;
+  input.value=q;
+  sendChat();
+}
+
 function sendChat() {
   const input = document.getElementById('chat-input');
   const msg = input.value.trim();
@@ -3302,7 +3806,6 @@ document.getElementById('institution-modal').addEventListener('click', function(
 
 // Initialise filters only — login screen shown first
 initFilters();
-initAnalyticsFilters();
 initOWLSteps();
 </script>
 </body>

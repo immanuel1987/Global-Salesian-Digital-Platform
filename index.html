@@ -30,7 +30,8 @@
   --slate:#3D4A58;
   --mid:#525E6B;
   --paper:#FFFFFF;
-  --off-white:#F7F7F5;
+  --off-white:#FAF8F5;
+  --warm-cream:#FFF9F3;
   --border:#D8E3EE;
   --border-subtle:#EAF0F8;
   --success:#1A6B3C;
@@ -83,38 +84,85 @@ input:focus-visible,select:focus-visible{outline:2px solid var(--sdb-blue);outli
 
 /* ── Public top nav ── */
 .pub-topbar{
-  background:var(--sdb-blue-deep);
-  display:flex;align-items:center;padding:0 var(--page-x);height:40px;gap:20px;
-  font-size:12px;color:rgba(255,255,255,.85);
-  border-bottom:1px solid rgba(255,255,255,.08);
+  background:linear-gradient(180deg,var(--sdb-blue-deep) 0%,#052848 100%);
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;
+  row-gap:8px;
+  padding:8px var(--page-x);min-height:40px;
+  font-size:12px;color:rgba(255,255,255,.88);
+  border-bottom:1px solid rgba(255,255,255,.1);
 }
-.pub-topbar a{color:rgba(255,255,255,.85);cursor:pointer;transition:color .15s;}
-.pub-topbar a:hover{color:#fff;}
-.pub-topbar-right{margin-left:auto;display:flex;gap:20px;align-items:center;}
-.pub-lang-btn{padding:4px 10px;border-radius:4px;border:1px solid rgba(255,255,255,.25);font-size:12px;color:rgba(255,255,255,.85);cursor:pointer;transition:color .15s,border-color .15s;font-family:'Noto Sans',sans-serif;}
-.pub-lang-btn:hover{border-color:var(--sdb-orange);color:#fff;background:rgba(232,96,10,.15);}
+.pub-topbar-left{display:flex;align-items:center;flex-wrap:wrap;gap:6px 22px;}
+.pub-topbar a,.pub-topbar button.linkish{
+  color:rgba(255,255,255,.82);cursor:pointer;transition:color .15s,opacity .15s;
+  font-family:'Noto Sans',sans-serif;font-size:12px;background:none;border:none;padding:0;
+  text-decoration:none;text-underline-offset:3px;
+}
+.pub-topbar a:hover,.pub-topbar button.linkish:hover{color:#fff;opacity:1;}
+.pub-topbar-right{display:flex;flex-wrap:wrap;align-items:center;gap:8px;}
+.pub-topbar-lang-label{
+  font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:rgba(255,255,255,.45);margin-right:2px;
+}
+.pub-lang-group{display:inline-flex;align-items:center;gap:4px;flex-wrap:wrap;}
+.pub-lang-btn{
+  padding:4px 9px;border-radius:6px;border:1px solid rgba(255,255,255,.22);
+  font-size:11px;font-weight:600;color:rgba(255,255,255,.9);cursor:pointer;
+  transition:color .15s,border-color .15s,background .15s;font-family:'Noto Sans',sans-serif;background:rgba(255,255,255,.04);
+}
+.pub-lang-btn:hover,.pub-lang-btn:focus-visible{
+  border-color:var(--sdb-orange);color:#fff;background:rgba(232,96,10,.18);outline:none;
+}
 
+/* Main header: grid so logo / links / CTAs stay aligned (no fragile margin:auto hack) */
 .pub-nav{
   position:sticky;top:0;z-index:100;
   background:var(--paper);
-  border-bottom:3px solid var(--sdb-orange);
-  display:flex;align-items:center;padding:0 var(--page-x);height:68px;gap:0;
-  box-shadow:0 2px 12px rgba(0,57,117,.08);
+  border-bottom:1px solid var(--border);
+  box-shadow:0 4px 24px rgba(0,57,117,.07),inset 0 -3px 0 var(--sdb-orange);
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr) auto;
+  align-items:center;
+  gap:12px 20px;
+  padding:10px var(--page-x) 13px;
+  min-height:72px;
 }
-.pub-nav-links{display:flex;gap:0;margin:0 auto 0 40px;}
+.pub-nav .sdb-logotype{
+  text-decoration:none;color:inherit;gap:12px;min-width:0;cursor:pointer;border-radius:var(--radius);
+  transition:background .15s;
+}
+.pub-nav .sdb-logotype:hover{background:var(--sdb-blue-pale);}
+.pub-nav .sdb-logotype:focus-visible{outline:2px solid var(--sdb-blue);outline-offset:3px;}
+.pub-nav-links{
+  display:flex;align-items:center;justify-content:center;flex-wrap:wrap;
+  gap:0;min-width:0;margin:0;
+}
 .pub-nav-link{
-  padding:0 18px;height:68px;display:flex;align-items:center;
-  font-size:14px;font-weight:600;color:var(--slate);cursor:pointer;
-  border-bottom:3px solid transparent;margin-bottom:-3px;
-  transition:color .15s,border-color .15s;letter-spacing:.01em;
+  padding:10px 14px;min-height:44px;display:inline-flex;align-items:center;
+  font-size:13px;font-weight:600;color:var(--slate);cursor:pointer;
+  border-radius:var(--radius);
+  border:1px solid transparent;
+  transition:color .15s,background .15s,border-color .15s;letter-spacing:.01em;
+  white-space:nowrap;
 }
-.pub-nav-link:hover{color:var(--sdb-blue);border-bottom-color:var(--sdb-blue-light);}
-.pub-nav-link.active{color:var(--sdb-blue-deep);border-bottom-color:var(--sdb-orange);}
-.pub-nav-actions{display:flex;gap:10px;align-items:center;margin-left:auto;}
-.btn-sdb-outline{padding:8px 18px;border-radius:var(--radius);font-size:13px;font-weight:600;color:var(--sdb-blue);border:1px solid var(--sdb-blue);cursor:pointer;background:transparent;font-family:'Noto Sans',sans-serif;transition:all .15s;}
-.btn-sdb-outline:hover{background:var(--sdb-blue-pale);}
-.btn-sdb-primary{padding:8px 20px;border-radius:var(--radius);font-size:13px;font-weight:600;color:#fff;border:none;cursor:pointer;background:var(--sdb-orange);font-family:'Noto Sans',sans-serif;transition:filter .15s;}
-.btn-sdb-primary:hover{filter:brightness(1.08);}
+.pub-nav-link:hover{color:var(--sdb-blue);background:var(--sdb-blue-pale);border-color:var(--sdb-blue-light);}
+.pub-nav-link.active{color:var(--sdb-blue-deep);background:rgba(232,96,10,.08);border-color:rgba(232,96,10,.28);}
+.pub-nav-actions{
+  display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:flex-end;
+}
+.btn-sdb-outline{
+  padding:9px 16px;border-radius:999px;font-size:12px;font-weight:700;
+  color:var(--sdb-blue-deep);border:1px solid var(--sdb-blue);cursor:pointer;
+  background:var(--paper);font-family:'Noto Sans',sans-serif;letter-spacing:.02em;
+  transition:background .15s,border-color .15s,box-shadow .15s;
+}
+.btn-sdb-outline:hover{background:var(--sdb-blue-pale);box-shadow:0 2px 10px rgba(0,57,117,.1);}
+.btn-sdb-primary{
+  padding:9px 18px;border-radius:999px;font-size:12px;font-weight:700;color:#fff;border:none;cursor:pointer;
+  background:linear-gradient(135deg,var(--sdb-orange),#D55508);font-family:'Noto Sans',sans-serif;
+  letter-spacing:.02em;transition:filter .15s,box-shadow .15s;
+  box-shadow:0 2px 12px rgba(232,96,10,.35);
+}
+.btn-sdb-primary:hover{filter:brightness(1.06);box-shadow:0 4px 16px rgba(232,96,10,.4);}
 .btn-sdb-blue{padding:8px 20px;border-radius:var(--radius);font-size:13px;font-weight:600;color:#fff;border:none;cursor:pointer;background:var(--sdb-blue);font-family:'Noto Sans',sans-serif;transition:filter .15s;}
 .btn-sdb-blue:hover{filter:brightness(1.1);}
 
@@ -123,7 +171,7 @@ input:focus-visible,select:focus-visible{outline:2px solid var(--sdb-blue);outli
 .hero-slide{position:absolute;inset:0;display:flex;align-items:flex-end;opacity:0;transition:opacity .9s ease;}
 .hero-slide.active{opacity:1;}
 .hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;}
-.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(0,30,80,.92) 0%,rgba(0,30,80,.55) 45%,rgba(0,30,80,.25) 100%);}
+.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(15,45,92,.88) 0%,rgba(0,74,120,.5) 48%,rgba(34,114,195,.22) 100%);}
 .slide-a .hero-bg{background-image:url("https://archive.sdb.org/images/headers/cabeceraInterior3.jpg");background-size:cover;background-position:center 30%;}
 .slide-b .hero-bg{background-image:url("https://www.donboscosouthasia.org/websites/donboscosouthasia.org/themes/default/homelayout/img/education.jpg");background-size:cover;background-position:center center;}
 .slide-c .hero-bg{background-image:url("https://www.donboscosouthasia.org/websites/donboscosouthasia.org/themes/default/homelayout/img/youth_focus.jpg");background-size:cover;background-position:center top;}
@@ -169,7 +217,7 @@ input:focus-visible,select:focus-visible{outline:2px solid var(--sdb-blue);outli
 /* ── Rector Major ribbon ── */
 /* ── Rector Major Ribbon ── */
 .rm-ribbon{
-  background:linear-gradient(135deg,#001428 0%,#002850 40%,#003A75 70%,#004B96 100%);
+  background:linear-gradient(135deg,#0A2848 0%,#0C3768 35%,#004A8C 70%,#1A5FAA 100%);
   display:flex;align-items:center;padding:28px var(--page-x);gap:36px;
   border-top:1px solid rgba(255,255,255,.06);
   border-bottom:4px solid var(--sdb-orange);
@@ -246,6 +294,25 @@ input:focus-visible,select:focus-visible{outline:2px solid var(--sdb-blue);outli
 .rm-link-btn.primary:hover{filter:brightness(1.1);}
 
 /* ── Search bar ── */
+.how-it-works-section{
+  padding:var(--section-y) var(--page-x);
+  background:linear-gradient(180deg,var(--warm-cream) 0%,var(--paper) 100%);
+  border-top:1px solid var(--border-subtle);
+  border-bottom:1px solid var(--border-subtle);
+}
+.hiw-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start;}
+.hiw-card{background:var(--paper);border-radius:var(--radius-lg);padding:22px 24px;border:1px solid var(--border);box-shadow:0 4px 20px rgba(0,57,117,.06);}
+.hiw-card h3{font-family:'Merriweather',serif;font-size:17px;color:var(--sdb-blue-deep);margin-bottom:10px;}
+.hiw-card p{font-size:14px;color:var(--slate);line-height:1.75;margin-bottom:10px;}
+.hiw-list{margin:12px 0 0;padding-left:18px;color:var(--mid);font-size:13px;line-height:1.7;}
+.events-pub-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+.event-pub-card{background:var(--paper);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px;cursor:pointer;transition:box-shadow .2s,border-color .2s;}
+.event-pub-card:hover{box-shadow:0 8px 28px rgba(0,57,117,.1);border-color:var(--sdb-blue-light);}
+.event-pub-date{font-size:12px;font-weight:700;color:var(--sdb-orange);margin-bottom:6px;}
+.event-pub-title{font-family:'Merriweather',serif;font-size:15px;font-weight:700;color:var(--ink);line-height:1.35;margin-bottom:8px;}
+.event-pub-meta{font-size:12px;color:var(--mid);}
+@media(max-width:900px){.hiw-grid{grid-template-columns:1fr;}.events-pub-grid{grid-template-columns:1fr;}}
+
 .pub-search-strip{background:var(--paper);padding:24px var(--page-x);border-bottom:1px solid var(--border);}
 .pub-search-inner{max-width:760px;}
 .pub-search-label{font-family:'Merriweather',serif;font-size:16px;font-weight:700;color:var(--sdb-blue-deep);margin-bottom:12px;}
@@ -259,13 +326,63 @@ input:focus-visible,select:focus-visible{outline:2px solid var(--sdb-blue);outli
 .example-chip{font-size:12px;color:var(--sdb-blue);cursor:pointer;padding:5px 12px;border-radius:100px;border:1px solid var(--sdb-blue-light);background:var(--sdb-blue-pale);transition:background .15s,color .15s;}
 .example-chip:hover{background:var(--sdb-blue);color:#fff;}
 
-/* ── Platform stats bar ── */
-.stats-ribbon{background:var(--sdb-blue);padding:18px var(--page-x);display:flex;gap:0;align-items:stretch;}
-.sr-item{flex:1;text-align:center;padding:0 24px;border-right:1px solid rgba(255,255,255,.12);}
-.sr-item:last-child{border-right:none;}
-.sr-val{font-family:'Merriweather',serif;font-size:26px;font-weight:700;color:#fff;line-height:1;}
-.sr-lbl{font-size:12px;color:rgba(255,255,255,.75);text-transform:uppercase;letter-spacing:.06em;margin-top:4px;}
-.sr-ts{margin-left:auto;display:flex;align-items:center;font-size:12px;color:rgba(255,255,255,.6);padding-left:24px;border-left:1px solid rgba(255,255,255,.15);}
+/* ── Platform pulse (homepage: “alive” metrics) ── */
+.platform-pulse{
+  background:linear-gradient(180deg,var(--paper) 0%,var(--sdb-blue-pale) 100%);
+  border-top:1px solid var(--border-subtle);
+  border-bottom:1px solid var(--border);
+  padding:22px var(--page-x) 26px;
+}
+.platform-pulse-inner{max-width:1100px;margin:0 auto;}
+.pp-head{display:flex;align-items:flex-start;gap:14px;margin-bottom:20px;}
+.pp-live{flex-shrink:0;padding-top:4px;}
+.pp-dot{
+  display:inline-block;width:12px;height:12px;border-radius:50%;
+  background:#22C55E;box-shadow:0 0 0 0 rgba(34,197,94,.5);
+  animation:ppPulse 2s ease-in-out infinite;
+}
+@keyframes ppPulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,.45);}
+  50%{box-shadow:0 0 0 8px rgba(34,197,94,0);}
+}
+.pp-kicker{font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--sdb-orange);margin-bottom:4px;}
+.pp-title{font-family:'Merriweather',serif;font-size:18px;font-weight:800;color:var(--sdb-blue-deep);line-height:1.35;max-width:640px;}
+.pp-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:16px;
+}
+.pp-stat{
+  background:var(--paper);border:1px solid var(--border);border-radius:var(--radius-lg);
+  padding:18px 16px;text-align:center;box-shadow:0 4px 18px rgba(0,57,117,.06);
+}
+.pp-stat--accent{
+  border-color:var(--sdb-orange);background:linear-gradient(165deg,#fff 0%,var(--warm-cream) 100%);
+  box-shadow:0 6px 22px rgba(232,96,10,.12);
+}
+.pp-val{font-family:'Merriweather',serif;font-size:28px;font-weight:900;color:var(--sdb-blue-deep);line-height:1.1;}
+.pp-stat--accent .pp-val{color:var(--sdb-orange);font-size:22px;}
+.pp-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--mid);margin-top:8px;}
+.pp-sub{font-size:12px;color:var(--slate);margin-top:8px;line-height:1.45;}
+.pp-footnote{font-size:12px;color:var(--mid);margin-top:16px;text-align:center;max-width:720px;margin-left:auto;margin-right:auto;line-height:1.55;}
+@media(max-width:900px){
+  .pp-grid{grid-template-columns:1fr 1fr;}
+  .pp-val{font-size:24px;}
+}
+@media(max-width:520px){
+  .pp-grid{grid-template-columns:1fr;}
+}
+
+/* ── Platform stats bar (network / footprint) ── */
+.stats-ribbon{background:linear-gradient(90deg,var(--sdb-blue-mid) 0%,var(--sdb-blue) 50%,#004A8C 100%);padding:14px var(--page-x) 16px;display:flex;gap:0;align-items:stretch;flex-wrap:wrap;}
+.stats-ribbon-hdr{
+  width:100%;text-align:center;padding-bottom:10px;margin-bottom:8px;
+  border-bottom:1px solid rgba(255,255,255,.15);
+  font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.72);
+}
+.sr-item{flex:1;min-width:100px;text-align:center;padding:8px 16px;border-right:1px solid rgba(255,255,255,.12);}
+.sr-item:last-of-type{border-right:none;}
+.sr-val{font-family:'Merriweather',serif;font-size:22px;font-weight:700;color:#fff;line-height:1;}
+.sr-lbl{font-size:11px;color:rgba(255,255,255,.78);text-transform:uppercase;letter-spacing:.06em;margin-top:4px;}
+.sr-ts{width:100%;text-align:center;padding-top:12px;margin-top:4px;border-top:1px solid rgba(255,255,255,.12);font-size:12px;color:rgba(255,255,255,.72);line-height:1.4;}
 
 /* ── Collections ── */
 .pub-section{padding:var(--section-y) var(--page-x);}
@@ -539,6 +656,45 @@ input:focus-visible,select:focus-visible{outline:2px solid var(--sdb-blue);outli
 
 /* ── Filter bar ── */
 .filter-bar{background:var(--paper);border-radius:var(--radius-lg);padding:12px 16px;border:1px solid var(--border);margin-bottom:16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.filter-toggle-mobile{display:none;width:100%;padding:10px 14px;border-radius:var(--radius);border:1px solid var(--border);background:var(--warm-cream);font-weight:600;color:var(--sdb-blue-deep);cursor:pointer;font-family:'Noto Sans',sans-serif;font-size:13px;}
+.filter-toggle-mobile::before{content:'▾ ';opacity:.7;}
+#page-resources .filter-bar.is-collapsible{transition:max-height .35s ease,padding .2s ease,margin .2s ease,opacity .2s ease;overflow:hidden;}
+.resource-card-inner{display:flex;gap:0;align-items:stretch;}
+.resource-card-thumb{width:86px;min-height:100px;flex-shrink:0;background:linear-gradient(160deg,var(--sdb-blue-light),var(--warm-cream));display:flex;align-items:center;justify-content:center;font-size:26px;border-right:1px solid var(--border-soft);}
+.resource-card-main{flex:1;min-width:0;}
+@media(max-width:960px){
+  .filter-toggle-mobile{display:block;}
+  #page-resources .filter-bar.is-collapsible:not(.expanded){max-height:0!important;padding-top:0;padding-bottom:0;margin-bottom:0;border-color:transparent;opacity:0;pointer-events:none;}
+}
+@media(max-width:720px){
+  .hero{height:500px;}
+  .hero-title{font-size:28px;}
+  .pub-nav{grid-template-columns:1fr auto;grid-template-rows:auto auto;column-gap:16px;row-gap:10px;}
+  .pub-nav .sdb-logotype{grid-column:1;grid-row:1;align-self:center;}
+  .pub-nav-actions{grid-column:2;grid-row:1;align-self:center;}
+  .pub-nav-links{grid-column:1/-1;grid-row:2;justify-content:flex-start;gap:4px;}
+  .resource-card-inner{flex-direction:column;}
+  .resource-card-thumb{width:100%;min-height:64px;border-right:0;border-bottom:1px solid var(--border-soft);}
+  .about-section{grid-template-columns:1fr;gap:36px;}
+}
+@media(max-width:520px){
+  :root{--page-x:20px;}
+  .pub-topbar{padding-top:10px;padding-bottom:10px;}
+  .pub-nav{
+    grid-template-columns:1fr;
+    padding-bottom:14px;
+  }
+  .pub-nav .sdb-logotype{grid-column:1;grid-row:1;}
+  .pub-nav-links{grid-column:1;grid-row:2;margin:0;}
+  .pub-nav-actions{
+    grid-column:1;
+    grid-row:3;
+    width:100%;
+    justify-content:stretch;
+  }
+  .pub-nav-actions .btn-sdb-outline,.pub-nav-actions .btn-sdb-primary{flex:1;text-align:center;}
+  .pub-nav-links{width:100%;}
+}
 .filter-select{padding:6px 10px;border-radius:var(--radius);border:1px solid var(--border);font-size:12px;font-family:'Noto Sans',sans-serif;color:var(--ink);background:var(--off-white);outline:none;cursor:pointer;}
 .filter-select:focus{border-color:var(--sdb-blue);}
 .filter-search{flex:1;min-width:180px;padding:6px 12px;border-radius:var(--radius);border:1px solid var(--border);font-size:13px;font-family:'Noto Sans',sans-serif;background:var(--paper);outline:none;}
@@ -560,6 +716,7 @@ input:focus-visible,select:focus-visible{outline:2px solid var(--sdb-blue);outli
 .resource-title{font-size:14px;font-weight:700;color:var(--ink);line-height:1.4;margin-bottom:5px;}
 .resource-author{font-size:13px;color:var(--mid);}
 .resource-meta{font-size:12px;color:var(--mid);margin-top:2px;}
+.resource-field-label{font-size:10px;font-weight:900;color:var(--mid);text-transform:uppercase;letter-spacing:.08em;margin-right:6px;display:inline-block;}
 .resource-card-bottom{padding:10px 16px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
 .res-tag{padding:3px 8px;background:var(--off-white);border-radius:4px;font-size:12px;color:var(--slate);}
 .res-actions{margin-left:auto;display:flex;gap:6px;}
@@ -745,6 +902,116 @@ input:focus-visible,select:focus-visible{outline:2px solid var(--sdb-blue);outli
 .modal-title{font-family:'Merriweather',serif;font-size:17px;font-weight:700;color:var(--sdb-blue-deep);margin-bottom:4px;}
 .modal-sub{font-size:13px;color:var(--mid);margin-bottom:14px;}
 
+/* ── Platform overview video (public hero) — above #public-home (z-index 9999) ── */
+#overview-modal.modal-overlay{z-index:10050;}
+.modal-box--overview{
+  max-width:min(900px,96vw);width:96%;padding:0;overflow:hidden;
+  max-height:min(92vh,880px);display:flex;flex-direction:column;
+}
+.overview-modal-head{
+  padding:22px 52px 16px 22px;border-bottom:1px solid var(--border-subtle);
+  position:relative;background:linear-gradient(180deg,var(--paper) 0%,var(--off-white) 100%);
+}
+.modal-box--overview .modal-close{top:16px;right:16px;z-index:2;}
+.overview-modal-body{padding:18px 22px 22px;overflow-y:auto;flex:1;min-height:0;}
+.overview-lead{
+  font-size:14px;color:var(--slate);line-height:1.65;margin:0 0 16px;max-width:52em;
+}
+#overview-video-wrap{
+  position:relative;width:100%;aspect-ratio:16/9;background:linear-gradient(145deg,#062038,#0D3A66 55%,#0A2848);
+  border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--border);
+}
+#overview-video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0;z-index:4;}
+#overview-video{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;background:#000;z-index:3;
+}
+/* In-frame “video”: auto slide tour (what / how / lower barrier) */
+.overview-slide-deck{
+  position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;justify-content:stretch;
+  color:#fff;font-family:'Noto Sans',sans-serif;
+}
+.overview-slide-deck[hidden]{display:none!important;}
+.overview-slide{
+  position:absolute;inset:0;padding:clamp(16px,4vw,36px) clamp(18px,5vw,44px) 52px;
+  display:flex;flex-direction:column;justify-content:center;opacity:0;pointer-events:none;
+  transition:opacity .45s ease;
+  background:radial-gradient(120% 80% at 10% 20%,rgba(232,96,10,.12),transparent 50%),
+    linear-gradient(165deg,rgba(0,58,117,.35) 0%,transparent 45%);
+}
+.overview-slide.active{opacity:1;pointer-events:auto;}
+.overview-slide-kicker{
+  font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#FFB380;margin-bottom:10px;
+}
+.overview-slide h3{
+  font-family:'Merriweather',serif;font-size:clamp(20px,3.2vw,28px);font-weight:800;line-height:1.2;margin:0 0 14px;
+  text-shadow:0 2px 24px rgba(0,0,0,.35);
+}
+.overview-slide ul{margin:0;padding:0 0 0 1.15em;list-style:none;}
+.overview-slide li{
+  font-size:clamp(13px,1.9vw,15px);line-height:1.55;color:rgba(255,255,255,.88);margin-bottom:10px;position:relative;
+}
+.overview-slide li::before{
+  content:'';position:absolute;left:-1em;top:.55em;width:5px;height:5px;border-radius:50%;background:var(--sdb-orange);
+}
+.overview-slide-cta{
+  margin-top:16px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;
+}
+.overview-slide-cta button{
+  padding:10px 18px;border-radius:999px;font-size:13px;font-weight:700;border:none;cursor:pointer;
+  font-family:'Noto Sans',sans-serif;background:var(--sdb-orange);color:#fff;
+  box-shadow:0 4px 16px rgba(232,96,10,.35);transition:filter .15s;
+}
+.overview-slide-cta button:hover{filter:brightness(1.08);}
+.overview-slide-cta button.secondary{
+  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.35);color:#fff;box-shadow:none;
+}
+.overview-slide-bar{
+  position:absolute;bottom:44px;left:clamp(18px,5vw,44px);right:clamp(18px,5vw,44px);height:3px;
+  background:rgba(255,255,255,.15);border-radius:2px;overflow:hidden;
+}
+.overview-slide-progress{
+  height:100%;width:0;background:linear-gradient(90deg,var(--sdb-orange),#FFB380);border-radius:2px;
+}
+.overview-slide-deck.is-playing .overview-slide-progress{
+  animation:overviewSlideProgress var(--overview-slide-ms,10000ms) linear forwards;
+}
+@keyframes overviewSlideProgress{from{width:0;}to{width:100%;}}
+.overview-slide-nav{
+  position:absolute;bottom:10px;left:clamp(14px,4vw,36px);right:clamp(14px,4vw,36px);
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+}
+.overview-slide-nav button{
+  width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,.3);background:rgba(0,0,0,.2);
+  color:#fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:background .15s,border-color .15s;font-family:'Noto Sans',sans-serif;
+}
+.overview-slide-nav button:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.5);}
+.overview-slide-dots{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;flex:1;}
+.overview-slide-dot{
+  width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.28);border:none;padding:0;cursor:pointer;
+  transition:transform .2s,background .2s;
+}
+.overview-slide-dot.active{background:var(--sdb-orange);transform:scale(1.15);}
+.overview-slide-hint{
+  position:absolute;top:12px;right:clamp(18px,5vw,44px);font-size:10px;font-weight:600;
+  letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.45);
+}
+.overview-video-fallback{
+  position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:10px;padding:24px;text-align:center;background:var(--sdb-blue-deep);color:rgba(255,255,255,.88);
+  font-size:13px;line-height:1.55;z-index:1;
+}
+.overview-video-fallback code{font-size:11px;background:rgba(0,0,0,.25);padding:2px 8px;border-radius:4px;color:#FFB380;}
+.overview-video-fallback[hidden]{display:none!important;}
+.overview-modal-foot{
+  font-size:11px;color:var(--mid);margin-top:14px;line-height:1.5;border-top:1px solid var(--border-subtle);
+  padding-top:12px;
+}
+.overview-modal-foot code{font-size:10px;background:var(--off-white);padding:1px 6px;border-radius:4px;}
+@media(max-width:720px){
+  .overview-modal-head{padding-right:48px;}
+}
+
 /* ── Global search ── */
 .gs-item{display:flex;align-items:center;gap:10px;padding:9px 13px;cursor:pointer;transition:background .1s;}
 .gs-item:hover,.gs-item.gs-active{background:var(--sdb-blue-pale);}
@@ -843,19 +1110,28 @@ mark.gs-mark{background:rgba(184,77,0,.12);color:var(--orange-text);border-radiu
 <div id="public-home">
 
   <!-- Mini topbar (SDB.ORG style) -->
-  <div class="pub-topbar">
-    <a onclick="showToast('ANS — Agenzia news salesiana')">ANS News</a>
-    <a onclick="showToast('29th General Chapter 2025')">GC 29</a>
-    <a onclick="showToast('Provinces directory')">Provinces</a>
-    <a onclick="showToast('Salesian Family')">Salesian Family</a>
+  <div class="pub-topbar" role="navigation" aria-label="Quick links and language">
+    <div class="pub-topbar-left">
+      <a href="#" onclick="event.preventDefault();showToast('ANS — Agenzia news salesiana')">ANS News</a>
+      <a href="#" onclick="event.preventDefault();showToast('29th General Chapter 2025')">GC 29</a>
+      <a href="#" onclick="event.preventDefault();showToast('Provinces directory')">Provinces</a>
+      <a href="#" onclick="event.preventDefault();showToast('Salesian Family')">Salesian Family</a>
+    </div>
     <div class="pub-topbar-right">
-      <span class="pub-lang-btn">EN</span><span class="pub-lang-btn">IT</span><span class="pub-lang-btn">ES</span><span class="pub-lang-btn">FR</span><span class="pub-lang-btn">PT</span>
+      <span class="pub-topbar-lang-label" id="pub-lang-label">Language</span>
+      <div class="pub-lang-group" role="group" aria-labelledby="pub-lang-label">
+        <button type="button" class="pub-lang-btn" onclick="showToast('Interface: English')">EN</button>
+        <button type="button" class="pub-lang-btn" onclick="showToast('Interface: Italiano')">IT</button>
+        <button type="button" class="pub-lang-btn" onclick="showToast('Interface: Español')">ES</button>
+        <button type="button" class="pub-lang-btn" onclick="showToast('Interface: Français')">FR</button>
+        <button type="button" class="pub-lang-btn" onclick="showToast('Interface: Português')">PT</button>
+      </div>
     </div>
   </div>
 
   <!-- Main nav -->
-  <nav class="pub-nav">
-    <div class="sdb-logotype">
+  <nav class="pub-nav" aria-label="Primary">
+    <div class="sdb-logotype" role="link" tabindex="0" onclick="pubScrollTo('pub-section-home')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();pubScrollTo('pub-section-home');}" title="Back to top" aria-label="GSDP home — scroll to top">
       <!-- SDB Globe logo (SVG) -->
       <svg class="sdb-logo-svg" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
         <circle cx="18" cy="18" r="17" fill="#0057A8" stroke="#003A75" stroke-width="1"/>
@@ -877,18 +1153,19 @@ mark.gs-mark{background:rgba(184,77,0,.12);color:var(--orange-text);border-radiu
         <polyline points="18,8 15,13 18,11 21,13 18,8" fill="white" stroke="none"/>
       </svg>
       <div class="sdb-logo-words">
-        <strong>Global Salesian Digital Platform</strong>
-        <span>GSDP · sdb.org · South Asia</span>
+        <strong>Global Salesian Digital Platform</strong>        
       </div>
     </div>
     <div class="pub-nav-links">
-      <span class="pub-nav-link active" role="button" tabindex="0">Home</span>
+      <span class="pub-nav-link" role="button" tabindex="0">Home</span>
+      <span class="pub-nav-link " onclick="pubScrollTo('institutions-pub')" role="button" tabindex="0">Pastoral Works</span>
       <span class="pub-nav-link" onclick="pubScrollTo('resources-pub')" role="button" tabindex="0">Resources</span>
+      <span class="pub-nav-link" onclick="pubScrollTo('events-pub')" role="button" tabindex="0">Events</span>
       <span class="pub-nav-link" onclick="pubScrollTo('coll-pub')" role="button" tabindex="0">Collections</span>
-      <span class="pub-nav-link" onclick="pubScrollTo('institutions-pub')" role="button" tabindex="0">Pastoral Works</span>
+      <span class="pub-nav-link" onclick="pubScrollTo('how-it-works-pub')" role="button" tabindex="0">How it works</span>
       <span class="pub-nav-link" onclick="pubScrollTo('council-pub')" role="button" tabindex="0">Organization</span>
       <span class="pub-nav-link" onclick="pubScrollTo('networks-strip')" role="button" tabindex="0">Networks</span>
-      <span class="pub-nav-link" onclick="pubScrollTo('about-pub')" role="button" tabindex="0">About Us</span>
+      <span class="pub-nav-link" onclick="pubScrollTo('about-pub')" role="button" tabindex="0">About</span>
     </div>
     <div class="pub-nav-actions">
       <button class="btn-sdb-outline" onclick="doLogin()">Sign In</button>
@@ -897,7 +1174,7 @@ mark.gs-mark{background:rgba(184,77,0,.12);color:var(--orange-text);border-radiu
   </nav>
 
   <!-- HERO CAROUSEL -->
-  <section class="hero">
+  <section class="hero" id="pub-section-home">
     <div class="hero-slide active slide-a" id="slide-0">
       <div class="hero-bg"></div>
       <div class="hero-globe-deco"></div>
@@ -907,7 +1184,7 @@ mark.gs-mark{background:rgba(184,77,0,.12);color:var(--orange-text);border-radiu
         <p class="hero-sub">12,000+ resources across 136 nations. 261 schools. 138 technical institutes. 174 Young-at-Risk centres. The knowledge of the Salesian Family — open, searchable, and alive.</p>
         <div class="hero-cta">
           <button class="hero-btn-orange" onclick="pubScrollTo('resources-pub')">Browse Resources</button>
-          <button class="hero-btn-ghost" onclick="toggleAIBubble()">✦ Ask the AI Assistant</button>
+          <button class="hero-btn-ghost" onclick="toggleAIBubble()">✦ Ask the assistant</button>
         </div>
       </div>
     </div>
@@ -943,8 +1220,8 @@ mark.gs-mark{background:rgba(184,77,0,.12);color:var(--orange-text);border-radiu
       <button class="hero-nav-dot" onclick="goSlide(2)" aria-label="Slide 3"></button>
       <button class="hero-pause-btn" id="carousel-pause" onclick="toggleCarousel()" aria-label="Pause slideshow" title="Pause/resume">⏸</button>
     </div>
-    <div class="hero-watch" onclick="showToast('▶ Opening platform overview — 2 min')">
-      <div class="play-circle">▶</div>
+    <div class="hero-watch" role="button" tabindex="0" onclick="openOverviewModal()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openOverviewModal();}" aria-label="Open platform overview: visual tour (what GSDP is, how to use it, getting started)">
+      <div class="play-circle" aria-hidden="true">▶</div>
       <span>Watch overview</span>
     </div>
   </section>
@@ -990,7 +1267,7 @@ mark.gs-mark{background:rgba(184,77,0,.12);color:var(--orange-text);border-radiu
   <!-- SEARCH BAR -->
   <section class="pub-search-strip">
     <div class="pub-search-inner">
-      <div class="pub-search-label">Search the Salesian knowledge corpus</div>
+      <div class="pub-search-label">Search the knowledge hub — structured catalogue + smart exploration</div>
       <div class="pub-search-bar">
         <input id="pub-search-inp" placeholder="Search resources, institutions, persons, events…" oninput="pubSearchLive(this.value)">
         <button class="pub-search-btn" onclick="pubDoSearch()">Search</button>
@@ -1005,16 +1282,84 @@ mark.gs-mark{background:rgba(184,77,0,.12);color:var(--orange-text);border-radiu
     </div>
   </section>
 
-  <!-- STATS RIBBON -->
-  <div class="stats-ribbon">
-    <div class="sr-item"><div class="sr-val">12,847</div><div class="sr-lbl">Resources</div></div>
+  <!-- HOW IT WORKS: structured search vs assistant -->
+  <section class="how-it-works-section" id="how-it-works-pub">
+    <div class="pub-section-hdr" style="margin-bottom:24px;">
+      <div>
+        <div class="pub-section-title">How the portal works</div>
+        <div class="pub-section-divider"></div>
+        <div class="pub-section-sub">Two ways in: precise search (like a library) and gentle exploration (collections + optional assistant) — serious, human, never “commercial AI”.</div>
+      </div>
+    </div>
+    <div class="hiw-grid">
+      <div class="hiw-card">
+        <h3>📚 Structured search</h3>
+        <p>Use filters and the search bar to query the catalogue the way archivists organise it: theme, document type, language, macro-region, year, author, and publisher.</p>
+        <ul class="hiw-list">
+          <li>Each record shows type, author, year, category, and thematic tags.</li>
+          <li>Open access by default: thumbnails, full PDFs, and (when available) chapters or sections.</li>
+          <li>Complex queries can be saved and shared via the URL — bookmark or send a link.</li>
+        </ul>
+      </div>
+      <div class="hiw-card">
+        <h3>✦ Smart search & assistant</h3>
+        <p><strong>“Smart search”</strong> means the system can follow <em>meaning</em> (topics, related phrases, context) — not only exact keywords. It complements the catalogue; it does not replace it.</p>
+        <p>The assistant stays in the corner: ask questions, get suggestions, then open real documents. Sign in later if you need advanced features.</p>
+        <ul class="hiw-list">
+          <li>Try: “Preventive System in Latin America (1950–1970)” or browse <a href="#" onclick="pubScrollTo('coll-pub');return false;" style="color:var(--sdb-blue);font-weight:600;">Collections</a> when you don’t have exact words.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLATFORM PULSE — scale + freshness (shows the hub is alive) -->
+  <section class="platform-pulse" id="platform-pulse-pub" aria-label="Platform activity and scale">
+    <div class="platform-pulse-inner">
+      <div class="pp-head">
+        <span class="pp-live" aria-hidden="true"><span class="pp-dot"></span></span>
+        <div>
+          <div class="pp-kicker">Live · indexed · growing</div>
+          <div class="pp-title">Public metrics so visitors see the platform is active — not an empty shell</div>
+        </div>
+      </div>
+      <div class="pp-grid">
+        <div class="pp-stat">
+          <div class="pp-val">12,847</div>
+          <div class="pp-lbl">Resources</div>
+          <div class="pp-sub">Books, reports, guides, media — open access where policy allows</div>
+        </div>
+        <div class="pp-stat">
+          <div class="pp-val">7,240</div>
+          <div class="pp-lbl">Institutions</div>
+          <div class="pp-sub">Schools, oratories, social works — CristO–Religio footprint</div>
+        </div>
+        <div class="pp-stat pp-stat--accent">
+          <div class="pp-val" id="pp-updated-label">Updated yesterday</div>
+          <div class="pp-lbl">Last catalogue sync</div>
+          <div class="pp-sub" id="pp-sync-detail">—</div>
+        </div>
+        <div class="pp-stat">
+          <div class="pp-val">+124</div>
+          <div class="pp-lbl">This week</div>
+          <div class="pp-sub">New &amp; revised records (resources + institutions + events)</div>
+        </div>
+      </div>
+      <p class="pp-footnote">Figures are representative of the production target; wireframe uses static demo values. Production would bind to your analytics API and CristO–Religio sync logs.</p>
+    </div>
+  </section>
+
+  <!-- NETWORK FOOTPRINT (secondary strip — still reads “big & active”) -->
+  <div class="stats-ribbon" aria-label="Salesian network scale">
+    <div class="stats-ribbon-hdr">Global Salesian footprint</div>
+    <div class="sr-item"><div class="sr-val">~1.75M</div><div class="sr-lbl">Lives reached / yr</div></div>
     <div class="sr-item"><div class="sr-val">261</div><div class="sr-lbl">DB Schools</div></div>
-    <div class="sr-item"><div class="sr-val">138</div><div class="sr-lbl">Technical Institutes</div></div>
-    <div class="sr-item"><div class="sr-val">174</div><div class="sr-lbl">YaR Centres</div></div>
-    <div class="sr-item"><div class="sr-val">57</div><div class="sr-lbl">Formation Centres</div></div>
-    <div class="sr-item"><div class="sr-val">174</div><div class="sr-lbl">Parishes</div></div>
-    <div class="sr-item"><div class="sr-val">51</div><div class="sr-lbl">Colleges</div></div>
-    <div class="sr-ts">South Asia Region · Updated 23 Mar 2026</div>
+    <div class="sr-item"><div class="sr-val">138</div><div class="sr-lbl">Tech institutes</div></div>
+    <div class="sr-item"><div class="sr-val">174</div><div class="sr-lbl">YaR centres</div></div>
+    <div class="sr-item"><div class="sr-val">57</div><div class="sr-lbl">Formation</div></div>
+    <div class="sr-item"><div class="sr-val">136</div><div class="sr-lbl">Nations</div></div>
+    <div class="sr-item"><div class="sr-val">11</div><div class="sr-lbl">Curated collections</div></div>
+    <div class="sr-item"><div class="sr-val">10,523</div><div class="sr-lbl">Events indexed</div></div>
+    <div class="sr-ts" id="pp-activity-line">Weekly activity: <strong>3,891</strong> assistant queries · <strong>47</strong> province uploads · ANS feed refreshed hourly</div>
   </div>
 
   <!-- ANS NEWS FEED -->
@@ -1051,6 +1396,35 @@ mark.gs-mark{background:rgba(184,77,0,.12);color:var(--orange-text);border-radiu
       <div class="coll-card cc-prev" onclick="doLogin()"><div class="coll-card-top"><span class="coll-chip">Pedagogy</span></div><div class="coll-card-body"><div class="coll-title">The Preventive System Today</div><div class="coll-desc">Contemporary applications of Don Bosco's method in digital contexts, vulnerable youth, and global education.</div><div class="coll-footer"><span class="coll-count">63 resources</span><span class="coll-arrow">→</span></div></div></div>
       <div class="coll-card cc-wyd" onclick="doLogin()"><div class="coll-card-top"><span class="coll-chip">Youth Ministry</span></div><div class="coll-card-body"><div class="coll-title">World Youth Day — Salesian Presence</div><div class="coll-desc">Documentation and testimonies from every WYD since 1987, with Salesian participation and formation materials.</div><div class="coll-footer"><span class="coll-count">38 resources</span><span class="coll-arrow">→</span></div></div></div>
       <div class="coll-card cc-form" onclick="doLogin()"><div class="coll-card-top"><span class="coll-chip">Formation</span></div><div class="coll-card-body"><div class="coll-title">Initial Formation — Global Standards</div><div class="coll-desc">Official documents and guidelines for Salesian initial formation programmes — Ratio Fundamentalis and regional guides.</div><div class="coll-footer"><span class="coll-count">72 resources</span><span class="coll-arrow">→</span></div></div></div>
+    </div>
+  </section>
+
+  <!-- EVENTS (complementary — not duplicating AMS) -->
+  <section class="pub-section" id="events-pub" style="background:var(--off-white);">
+    <div class="pub-section-hdr">
+      <div>
+        <div class="pub-section-title">Events & gatherings</div>
+        <div class="pub-section-divider"></div>
+        <div class="pub-section-sub">Highlighted here when they add context to resources and collections — full province calendars may remain on AMS and other official tools.</div>
+      </div>
+      <span class="pub-section-more" onclick="doLogin()">Platform calendar →</span>
+    </div>
+    <div class="events-pub-grid">
+      <div class="event-pub-card" onclick="showToast('Opening: World Youth Day 2026 — Salesian hub')">
+        <div class="event-pub-date">15 Mar 2026 · Youth</div>
+        <div class="event-pub-title">World Youth Day 2026 — Salesian participation</div>
+        <div class="event-pub-meta">📍 Rome · 🏢 SDB Generalate · 👥 12,000+</div>
+      </div>
+      <div class="event-pub-card" onclick="showToast('Opening: South Asia Youth Ministry Congress')">
+        <div class="event-pub-date">22 Mar 2026 · Congress</div>
+        <div class="event-pub-title">South Asia Youth Ministry Congress</div>
+        <div class="event-pub-meta">📍 Chennai · 🏢 INM Province · 👥 800</div>
+      </div>
+      <div class="event-pub-card" onclick="showToast('Opening: Onakkoot Job Fair — INK')">
+        <div class="event-pub-date">23 Mar 2026 · Youth</div>
+        <div class="event-pub-title">Onakkoot Job Fair — DB Job Placement &amp; BREADS</div>
+        <div class="event-pub-meta">📍 Bangalore · 🏢 INK · 👥 680</div>
+      </div>
     </div>
   </section>
 
@@ -1189,15 +1563,16 @@ mark.gs-mark{background:rgba(184,77,0,.12);color:var(--orange-text);border-radiu
       <div style="font-size:12px;font-weight:700;color:var(--orange-text);letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px;">About Us</div>
       <p>GSDP is the official digital knowledge platform of the Salesians of Don Bosco — built to make the vast Salesian intellectual heritage freely explorable by scholars, educators, ministers, and the curious, worldwide.</p>
       <p style="margin-top:14px;">In South Asia alone, Don Bosco runs <strong>261 schools</strong>, <strong>138 technical institutes</strong>, <strong>174 Young-at-Risk centres</strong>, and <strong>192 hostels</strong> — serving millions of the poorest young people across India, Sri Lanka, Bangladesh, Nepal, and beyond.</p>
-      <p style="margin-top:14px;">Built on semantic AI — it understands <em>meaning</em>, not just keywords.</p>
+      <p style="margin-top:14px;"><strong>Smart search</strong> follows meaning as well as keywords; the assistant stays optional and visible in the corner — institutional, human, never a “commercial chatbot”.</p>
+      <p style="margin-top:14px;padding:14px;background:var(--sdb-blue-pale);border-radius:var(--radius);border-left:3px solid var(--sdb-orange);font-size:13px;"><strong>Project transparency:</strong> GSDP is developed as an open-knowledge layer (ontology-backed catalogue, curated collections, role-based access). Roadmap, tech stack, and phases are documented for partners — <span class="about-link" onclick="showToast('Technology brief: OWL/RDF ontology · catalogue API · optional AI layer (Azure OpenAI) · CristO–Religio sync')">request the tech note →</span></p>
       <div style="margin-top:22px;display:flex;gap:12px;flex-wrap:wrap;">
-        <button class="btn-sdb-blue" onclick="showToast('Opening: Technology and Development')" style="font-family:'Noto Sans',sans-serif;padding:10px 22px;">Our Technology →</button>
+        <button class="btn-sdb-blue" onclick="pubScrollTo('how-it-works-pub')" style="font-family:'Noto Sans',sans-serif;padding:10px 22px;">How it works →</button>
         <button class="btn-sdb-outline" onclick="doLogin()" style="font-family:'Noto Sans',sans-serif;padding:10px 22px;">Enter Platform</button>
       </div>
     </div>
     <div class="about-pillars">
-      <div class="about-pillar"><div class="pillar-icon">🔓</div><div class="pillar-text"><strong>Open access by default</strong><span>Every public resource is freely downloadable as PDF. No paywalls, no registration required.</span></div></div>
-      <div class="about-pillar"><div class="pillar-icon">✦</div><div class="pillar-text"><strong>Semantic AI search</strong><span>Ask in natural language. Summarize, translate, and explore across 5 languages — AI assists, Salesians curate.</span></div></div>
+      <div class="about-pillar"><div class="pillar-icon">🔓</div><div class="pillar-text"><strong>Open access by default</strong><span>Public resources: cover preview, full PDF, and chapter-level access when structured. Freedom to read and reuse comes before restriction.</span></div></div>
+      <div class="about-pillar"><div class="pillar-icon">✦</div><div class="pillar-text"><strong>Smart search &amp; assistant</strong><span>Natural questions and thematic exploration across languages — the catalogue leads; AI suggests and explains.</span></div></div>
       <div class="about-pillar"><div class="pillar-icon">🏫</div><div class="pillar-text"><strong>South Asia network</strong><span>261 schools, 138 technical institutes, 174 YaR centres, 57 formation houses — all indexed and discoverable.</span></div></div>
       <div class="about-pillar"><div class="pillar-icon">📡</div><div class="pillar-text"><strong>Live ANS &amp; SPCSA feeds</strong><span>Real-time news, events, and reports from Agenzia News Salesiana and all South Asia province offices.</span></div></div>
     </div>
@@ -1295,7 +1670,7 @@ mark.gs-mark{background:rgba(184,77,0,.12);color:var(--orange-text);border-radiu
         </svg>
         <div style="margin-top:14px;">
           <div style="font-family:'Merriweather',serif;font-size:16px;font-weight:700;color:#fff;line-height:1.2;">Global Salesian<br>Digital Platform</div>
-          <div style="font-size:11px;color:rgba(255,255,255,.45);margin-top:5px;letter-spacing:.05em;text-transform:uppercase;">GSDP · sdb.org</div>
+          
         </div>
         <p style="margin-top:16px;font-size:13px;color:rgba(255,255,255,.55);line-height:1.7;">Open-access knowledge platform of the Salesians of Don Bosco — 136 nations, 12,847 resources, 5 languages.</p>
         <div style="margin-top:18px;padding:14px;background:rgba(255,255,255,.05);border-radius:var(--radius);border:1px solid rgba(255,255,255,.1);">
@@ -1487,7 +1862,7 @@ mark.gs-mark{background:rgba(184,77,0,.12);color:var(--orange-text);border-radiu
         <span class="footer-bottom-link" onclick="showToast('Privacy Policy — GSDP')">Privacy</span>
         <span class="footer-bottom-link" onclick="showToast('Terms of Use — GSDP')">Terms</span>
         <span class="footer-bottom-link" onclick="showToast('Accessibility Statement — WCAG 2.1 AA')">Accessibility</span>
-        <span class="footer-bottom-link" onclick="showToast('Technology: OWL Ontology · Semantic AI · Azure OpenAI · CristO-Religio')">Technology</span>
+        <span class="footer-bottom-link" onclick="showToast('Technology: OWL/RDF ontology · Smart search layer · Azure OpenAI · CristO–Religio')">Technology</span>
         <span class="footer-bottom-link" onclick="doLogin()">Sign In</span>
       </div>
     </div>
@@ -1500,18 +1875,18 @@ mark.gs-mark{background:rgba(184,77,0,.12);color:var(--orange-text);border-radiu
   <div id="ai-bubble-panel">
     <div class="bubble-head">
       <div class="bubble-head-av">✦</div>
-      <div class="bubble-head-text"><strong>GSDP AI Assistant</strong><span>Semantic · Summarize · Translate</span></div>
+      <div class="bubble-head-text"><strong>Exploration assistant</strong><span>Smart search · Summarize · Translate</span></div>
       <button class="bubble-close" onclick="toggleAIBubble()">✕</button>
     </div>
     <div class="bubble-msgs" id="bubble-msgs">
-      <div class="bubble-msg ai">Hello! Ask me anything about Salesian resources — e.g. "Find documents on Don Bosco's Preventive System in Africa"</div>
+      <div class="bubble-msg ai">Hello — I’m here to help you explore, not to replace the library. Try: “Find resources on the Preventive System in Latin America (1950–1970)” or open a collection if you’re not sure what to search.</div>
     </div>
     <div class="bubble-bar">
       <input class="bubble-inp" id="bubble-inp" placeholder="Ask anything…" onkeypress="if(event.key==='Enter')bubbleSend()">
       <button class="bubble-send" onclick="bubbleSend()">Send</button>
     </div>
   </div>
-  <button id="ai-bubble-btn" onclick="toggleAIBubble()" aria-label="Open AI Assistant chat" title="AI Assistant">✦</button>
+  <button id="ai-bubble-btn" onclick="toggleAIBubble()" aria-label="Open exploration assistant" title="Assistant (corner)">✦</button>
 </div>
 
 <!-- ════════════════════════════════
@@ -1539,14 +1914,14 @@ mark.gs-mark{background:rgba(184,77,0,.12);color:var(--orange-text);border-radiu
         <div class="user-info"><strong id="user-name">Administrator</strong><span id="user-role-label">Admin</span></div>
       </div>
       <div class="sidebar-section-label">Discover</div>
-      <div class="sb-nav-item active" onclick="showPage('dashboard',this)" data-page="dashboard" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')showPage('dashboard',this)"><span class="nav-icon">📊</span>Dashboard</div>
-      <div class="sb-nav-item" onclick="showPage('resources',this)" data-page="resources" role="button" tabindex="0" title="12,847 resources across 12 provinces"><span class="nav-icon">📚</span>Resources<span class="nav-badge" style="background:var(--sdb-blue-pale);color:var(--sdb-blue-deep);">15</span></div>
-      <div class="sb-nav-item" onclick="showPage('collections',this)" data-page="collections" role="button" tabindex="0" title="11 curated knowledge collections"><span class="nav-icon">🗂</span>Collections<span class="nav-badge" style="background:var(--sdb-blue-pale);color:var(--sdb-blue-deep);">11</span></div>
+      <div class="sb-nav-item active" onclick="showPage('dashboard',this)" data-page="dashboard" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')showPage('dashboard',this)"><span class="nav-icon">📊</span>Overview</div>
       <div class="sb-nav-item" onclick="showPage('institutions',this)" data-page="institutions"><span class="nav-icon">🏛</span>Pastoral Works</div>
-      <div class="sb-nav-item" onclick="showPage('networks',this)" data-page="networks" role="button" tabindex="0"><span class="nav-icon">🔗</span>Networks</div>
+      <div class="sb-nav-item" onclick="showPage('resources',this)" data-page="resources" role="button" tabindex="0" title="12,847 resources across 12 provinces"><span class="nav-icon">📚</span>Resources<span class="nav-badge" style="background:var(--sdb-blue-pale);color:var(--sdb-blue-deep);">15</span></div>
       <div class="sb-nav-item" onclick="showPage('events',this)" data-page="events"><span class="nav-icon">📅</span>Events<span class="nav-badge" id="events-badge">3</span></div>
-      <div class="sb-nav-item" onclick="showPage('persons',this)" data-page="persons" role="button" tabindex="0" title="16 Salesian scholars and provincials"><span class="nav-icon">👥</span>Persons<span class="nav-badge" style="background:var(--sdb-blue-pale);color:var(--sdb-blue-deep);">16</span></div>
-      <div class="sb-nav-item" onclick="showPage('ai',this)" data-page="ai"><span class="nav-icon">✦</span>AI Assistant</div>
+      <div class="sb-nav-item" onclick="showPage('collections',this)" data-page="collections" role="button" tabindex="0" title="11 curated knowledge collections"><span class="nav-icon">🗂</span>Collections<span class="nav-badge" style="background:var(--sdb-blue-pale);color:var(--sdb-blue-deep);">11</span></div>
+      <div class="sb-nav-item" onclick="showPage('networks',this)" data-page="networks" role="button" tabindex="0"><span class="nav-icon">🔗</span>Networks</div>
+      <div class="sb-nav-item" onclick="showPage('persons',this)" data-page="persons" role="button" tabindex="0" title="Directory with public / internal visibility"><span class="nav-icon">👥</span>Persons<span class="nav-badge" style="background:var(--sdb-blue-pale);color:var(--sdb-blue-deep);">18</span></div>
+      <div class="sb-nav-item" onclick="showPage('ai',this)" data-page="ai"><span class="nav-icon">✦</span>Assistant</div>
       <div class="sidebar-section-label" id="ontology-sec">Ontology</div>
       <div class="sb-nav-item" id="owl-nav" onclick="showPage('owl',this)" data-page="owl"><span class="nav-icon">🦉</span>OWL Update<span class="nav-badge blue" id="owl-status-badge" style="display:none">●</span></div>
       <div class="sidebar-section-label" id="admin-sec">Administration</div>
@@ -1558,7 +1933,7 @@ mark.gs-mark{background:rgba(184,77,0,.12);color:var(--orange-text);border-radiu
 
     <div class="main-area">
       <div class="topbar">
-        <div class="topbar-title" id="page-title">Dashboard</div>
+        <div class="topbar-title" id="page-title">Overview</div>
         <div class="topbar-search" style="position:relative;flex:1;max-width:360px;">
           <span>🔍</span>
           <input id="gs-input" placeholder="Search across all modules…" autocomplete="off"
@@ -1589,7 +1964,7 @@ mark.gs-mark{background:rgba(184,77,0,.12);color:var(--orange-text);border-radiu
             <div class="stat-card orange-top"><div class="stat-card-top"><div class="stat-card-icon" style="background:#FEF3C7;">📚</div><span class="stat-card-trend trend-up">+12%</span></div><div class="stat-card-value">12,847</div><div class="stat-card-label">Total Resources</div></div>
             <div class="stat-card"><div class="stat-card-top"><div class="stat-card-icon" style="background:#D1FAE5;">🏛</div><span class="stat-card-trend trend-up">+3%</span></div><div class="stat-card-value">7,240</div><div class="stat-card-label">Institutions</div></div>
             <div class="stat-card"><div class="stat-card-top"><div class="stat-card-icon" style="background:var(--sdb-blue-pale);">📅</div><span class="stat-card-trend trend-up">+8%</span></div><div class="stat-card-value">174</div><div class="stat-card-label">YaR Centres</div></div>
-            <div class="stat-card orange-top"><div class="stat-card-top"><div class="stat-card-icon" style="background:#FEF3C7;">✦</div><span class="stat-card-trend trend-up">+41%</span></div><div class="stat-card-value">3,891</div><div class="stat-card-label">AI Queries/Mo</div></div>
+            <div class="stat-card orange-top"><div class="stat-card-top"><div class="stat-card-icon" style="background:#FEF3C7;">✦</div><span class="stat-card-trend trend-up">+41%</span></div><div class="stat-card-value">3,891</div><div class="stat-card-label">Assistant queries / mo</div></div>
           </div>
 
           <div class="stats-row" id="stats-row"></div>
@@ -1607,14 +1982,20 @@ mark.gs-mark{background:rgba(184,77,0,.12);color:var(--orange-text);border-radiu
 
         <!-- RESOURCES -->
         <div class="page" id="page-resources">
-          <div class="section-header"><div><h3>Resource Library</h3><p>Browse, search, and access the Salesian knowledge corpus</p></div></div>
-          <div class="filter-bar">
+          <div class="section-header"><div><h3>Resource Library</h3><p>Browse with epistemological filters (how knowledge is organised) — save and share any combination via the address bar</p></div>
+            <button type="button" class="topbar-btn btn-outline-app" onclick="copyResourceSearchLink()" title="Copy link to this search">🔗 Copy search link</button></div>
+          <button type="button" class="filter-toggle-mobile" id="resource-filter-toggle" aria-expanded="true" onclick="toggleResourceFilters()">Filters &amp; facets</button>
+          <div class="filter-bar is-collapsible expanded" id="resource-filter-bar">
             <select class="filter-select" id="rf-theme" onchange="renderResources()"><option value="">All themes</option><option>Youth Ministry</option><option>Education</option><option>Pedagogy</option><option>Spirituality</option><option>Social Development</option><option>Formation</option><option>Missiology</option></select>
             <select class="filter-select" id="rf-type" onchange="renderResources()"><option value="">All types</option><option>Official Publication</option><option>Study</option><option>Good Practice</option><option>Multimedia</option><option>MARC21</option></select>
-            <select class="filter-select" id="rf-province" onchange="renderResources()"><option value="">All Provinces</option><option value="INK">INK Bangalore</option><option value="INM">INM Chennai</option><option value="IND">IND Dimapur</option><option value="ING">ING Guwahati</option><option value="INH">INH Hyderabad</option><option value="INC">INC Kolkata</option><option value="INB">INB Mumbai</option><option value="INN">INN New Delhi</option><option value="INP">INP Panjim</option><option value="INS">INS Shillong</option><option value="INT">INT Tiruchy</option><option value="LKC">LKC Sri Lanka</option><option value="Global">Global</option></select>
-            <select class="filter-select" id="rf-region" onchange="renderResources()"><option value="">All Regions</option><option>South Asia</option><option>Europe</option><option>Latin America</option><option>Africa</option><option>East Asia</option></select>
+            <select class="filter-select" id="rf-macro" onchange="renderResources()"><option value="">All macro-regions</option><option>Europe</option><option>Latin America</option><option>Africa</option><option>Asia &amp; Oceania</option><option>Middle East</option><option>North America</option><option>Global</option></select>
+            <select class="filter-select" id="rf-region" onchange="renderResources()"><option value="">All sub-regions</option><option>South Asia</option><option>Europe</option><option>Latin America</option><option>Africa</option><option>East Asia</option></select>
             <select class="filter-select" id="rf-lang" onchange="renderResources()"><option value="">All Languages</option><option>English</option><option>Tamil</option><option>Telugu</option><option>Hindi</option><option>Italian</option><option>Spanish</option><option>French</option><option>Portuguese</option></select>
-            <select class="filter-select" id="rf-year" onchange="renderResources()"><option value="">All Years</option><option>2026</option><option>2025</option><option>2024</option><option>2023</option></select>
+            <select class="filter-select" id="rf-year-min" onchange="renderResources()"><option value="">Year from</option><option>2026</option><option>2025</option><option>2024</option><option>2023</option><option>2022</option><option>2021</option><option>2020</option></select>
+            <select class="filter-select" id="rf-year-max" onchange="renderResources()"><option value="">Year to</option><option>2026</option><option>2025</option><option>2024</option><option>2023</option><option>2022</option><option>2021</option><option>2020</option></select>
+            <select class="filter-select" id="rf-author" onchange="renderResources()"><option value="">All authors</option></select>
+            <select class="filter-select" id="rf-publisher" onchange="renderResources()"><option value="">All publishers</option></select>
+            <select class="filter-select" id="rf-province" onchange="renderResources()"><option value="">All Provinces</option><option value="INK">INK Bangalore</option><option value="INM">INM Chennai</option><option value="IND">IND Dimapur</option><option value="ING">ING Guwahati</option><option value="INH">INH Hyderabad</option><option value="INC">INC Kolkata</option><option value="INB">INB Mumbai</option><option value="INN">INN New Delhi</option><option value="INP">INP Panjim</option><option value="INS">INS Shillong</option><option value="INT">INT Tiruchy</option><option value="LKC">LKC Sri Lanka</option><option value="All SA">All SA</option><option value="Global">Global</option></select>
             <select class="filter-select" id="rf-access" onchange="renderResources()"><option value="">All Access</option><option value="open">Open Access</option></select>
             <select class="filter-select" id="rf-group" onchange="renderResources()"><option value="">All Groups</option><option>SDB</option><option>FMA</option><option>Cooperators</option><option>ADMA</option><option>Past Pupils</option></select>
             <label class="sr-only" for="res-search-inp">Search resources</label>
@@ -1783,7 +2164,7 @@ mark.gs-mark{background:rgba(184,77,0,.12);color:var(--orange-text);border-radiu
 
         <!-- AI ASSISTANT -->
         <div class="page" id="page-ai">
-          <div class="section-header"><div><h3>AI Assistant</h3><p>Semantic search · Summarization · Translation · Document chat</p></div></div>
+          <div class="section-header"><div><h3>Exploration assistant</h3><p>Smart search (by meaning) · Summaries · Translation · Chat grounded in documents</p></div></div>
           <div class="ai-layout">
             <div class="ai-chat-main">
               <div class="ai-messages" id="chat-messages"></div>
@@ -1795,7 +2176,7 @@ mark.gs-mark{background:rgba(184,77,0,.12);color:var(--orange-text);border-radiu
             <div class="ai-sidebar-col">
               <div class="ai-tools-card">
                 <div class="card-title" style="margin-bottom:10px;">AI Tools</div>
-                <div class="ai-tool-item" onclick="triggerAITool('search')"><span class="ai-tool-icon">🔍</span><div><div class="ai-tool-name">Semantic Search</div><div class="ai-tool-desc">Natural language queries</div></div></div>
+                <div class="ai-tool-item" onclick="triggerAITool('search')"><span class="ai-tool-icon">🔍</span><div><div class="ai-tool-name">Smart search</div><div class="ai-tool-desc">Natural language &amp; meaning</div></div></div>
                 <div class="ai-tool-item" onclick="triggerAITool('summarize')"><span class="ai-tool-icon">📝</span><div><div class="ai-tool-name">Summarize</div><div class="ai-tool-desc">Document summaries</div></div></div>
                 <div class="ai-tool-item" onclick="triggerAITool('translate')"><span class="ai-tool-icon">🌐</span><div><div class="ai-tool-name">Translate</div><div class="ai-tool-desc">EN · IT · ES · FR · PT</div></div></div>
                 <div class="ai-tool-item" onclick="triggerAITool('recommend')"><span class="ai-tool-icon">✨</span><div><div class="ai-tool-name">Recommend</div><div class="ai-tool-desc">Related resources</div></div></div>
@@ -2069,6 +2450,76 @@ mark.gs-mark{background:rgba(184,77,0,.12);color:var(--orange-text);border-radiu
     <div id="modal-content"></div>
   </div>
 </div>
+
+<!-- PLATFORM OVERVIEW VIDEO (public homepage) -->
+<div class="modal-overlay" id="overview-modal" aria-hidden="true">
+  <div class="modal-box modal-box--overview" role="dialog" aria-modal="true" aria-labelledby="overview-modal-title" tabindex="-1">
+    <button type="button" class="modal-close" onclick="closeOverviewModal()" aria-label="Close overview">✕</button>
+    <div class="overview-modal-head">
+      <h2 id="overview-modal-title" class="modal-title" style="margin:0;">Platform overview</h2>
+      <p class="modal-sub" style="margin-bottom:0;margin-top:8px;">A short visual tour in the frame below — same three ideas a narrated video would cover: what GSDP is, how to use it, and how we ease your first visit.</p>
+    </div>
+    <div class="overview-modal-body">
+      <p class="overview-lead" style="margin-bottom:14px;">Follow the slides (they advance automatically). Pause by hovering the frame, or use the arrows. For a recorded voice-over later, set <code>OVERVIEW_VIDEO.youtubeId</code> to your official clip.</p>
+      <div id="overview-video-wrap">
+        <span class="overview-slide-hint" id="overview-slide-hint">Visual tour</span>
+        <div id="overview-slide-deck" class="overview-slide-deck" role="region" aria-roledescription="carousel" aria-labelledby="overview-modal-title" aria-live="polite">
+          <div class="overview-slide active" role="group" aria-label="Slide 1 of 4">
+            <div class="overview-slide-kicker">Part 1 · What the platform is</div>
+            <h3>Global Salesian Digital Platform (GSDP)</h3>
+            <ul>
+              <li>One place for Salesian knowledge: documents, good practice, formation material, and media — organised with a shared ontology.</li>
+              <li>Linked to real life: pastoral works (institutions), provinces, events, and people, so context stays visible.</li>
+              <li>Built for the whole Salesian Family — public discovery first; deeper tools after sign-in.</li>
+            </ul>
+          </div>
+          <div class="overview-slide" role="group" aria-label="Slide 2 of 4" aria-hidden="true">
+            <div class="overview-slide-kicker">Part 2 · How to use it</div>
+            <h3>Find your way in a few moves</h3>
+            <ul>
+              <li>Use the <strong>top menu</strong> (Pastoral Works, Resources, Events, Collections…) or scroll the homepage sections in order.</li>
+              <li><strong>Search</strong> with ordinary words — filters narrow by area, province, language, and document type.</li>
+              <li><strong>Sign in</strong> with <strong>Enter Platform</strong> for the full library, exploration assistant, and role-based dashboards.</li>
+            </ul>
+          </div>
+          <div class="overview-slide" role="group" aria-label="Slide 3 of 4" aria-hidden="true">
+            <div class="overview-slide-kicker">Part 3 · Lowering the entry barrier</div>
+            <h3>You don’t need a manual to start</h3>
+            <ul>
+              <li><strong>No account</strong> is required to browse public content and understand what is available.</li>
+              <li>This tour + <strong>one search</strong> or one click on <strong>Enter Platform</strong> is enough to orient yourself.</li>
+              <li>The <strong>assistant</strong> (chat bubble) answers in plain language when you are unsure where to look.</li>
+            </ul>
+          </div>
+          <div class="overview-slide" role="group" aria-label="Slide 4 of 4" aria-hidden="true">
+            <div class="overview-slide-kicker">Next step</div>
+            <h3>You’re oriented — try it</h3>
+            <ul>
+              <li>Close this window and use the <strong>homepage search</strong>, or jump to a section from the menu.</li>
+              <li>Ready for more? Sign in to open saved items, uploads (if your role allows), and analytics.</li>
+            </ul>
+            <div class="overview-slide-cta">
+              <button type="button" onclick="closeOverviewModal();pubScrollTo('resources-pub')">Browse resources</button>
+              <button type="button" class="secondary" onclick="closeOverviewModal();doLogin()">Enter Platform</button>
+            </div>
+          </div>
+          <div class="overview-slide-bar" aria-hidden="true"><div class="overview-slide-progress" id="overview-slide-progress"></div></div>
+          <div class="overview-slide-nav">
+            <button type="button" id="overview-slide-prev" aria-label="Previous slide">◀</button>
+            <div class="overview-slide-dots" id="overview-slide-dots"></div>
+            <button type="button" id="overview-slide-next" aria-label="Next slide">▶</button>
+          </div>
+        </div>
+        <div id="overview-video-fallback" class="overview-video-fallback" hidden>
+          <span>Could not load the overview file.</span>
+          <span>Add <code>media/gsdp-overview.mp4</code> or set <code>OVERVIEW_VIDEO.youtubeId</code> in the page script.</span>
+        </div>
+        <video id="overview-video" controls playsinline preload="metadata" hidden poster="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%201920%201080%22%3E%3Crect%20fill%3D%22%23003A75%22%20width%3D%22100%25%22%20height%3D%22100%25%22%2F%3E%3C%2Fsvg%3E"></video>
+      </div>
+      <p class="overview-modal-foot">Default = in-frame slide tour with your three messages. Optional: set <code>OVERVIEW_VIDEO.useSlideTour</code> to <code>false</code> and use <code>media/gsdp-overview.mp4</code> or <code>youtubeId</code> for a single narrated video instead.</p>
+    </div>
+  </div>
+</div>
 <div class="toast" id="toast"></div>
 
 <script>
@@ -2094,8 +2545,88 @@ const RESOURCES=[
   {id:'RES-012',title:'The Preventive System in South Asia — Contemporary Applications',author:'Fr. Ivo Coelho, SDB · UPS Rome',type:'Study',badge:'badge-study',icon:'📖',area:'Pedagogy',lang:'English',region:'South Asia',year:'2024',province:'Global',tags:['Preventive System','Pedagogy','Don Bosco','South Asia'],group:'SDB',desc:'Academic study on application of Don Bosco\'s Reason-Religion-Loving Kindness pedagogy in digital contexts in South Asia.',access:'open'},
   {id:'RES-013',title:'Salesian Spirituality — Little Virtues in Daily Mission',author:'SPCSA Spirituality Commission',type:'Official Publication',badge:'badge-pdf',icon:'📄',area:'Spirituality',lang:'English, Hindi',region:'South Asia',year:'2025',province:'All SA',tags:['Spirituality','Salesian Way','Formation','SPCSA'],group:'SDB',desc:'Salesian spirituality guide rooted in St. Francis de Sales tradition — gentleness, patience, humility and trust in God.',access:'open'},
   {id:'RES-014',title:'DB Tech India — Vocational Training Impact Report 2024',author:'DB Tech National Office · dbtech.in',type:'Study',badge:'badge-study',icon:'📖',area:'Education',lang:'English',region:'South Asia',year:'2024',province:'INN',tags:['DB Tech','Vocational','Skills','INN'],group:'SDB',desc:'Impact assessment of 138 DB Tech institutes. Students trained, placement rates, industry partnerships, SDG alignment.',access:'open'},
-  {id:'RES-015',title:'INS Province Shillong — Formation Report & North East Mission 2025',author:'Fr. John Zosiama · donboscoshillong.org',type:'Official Publication',badge:'badge-pdf',icon:'📄',area:'Formation',lang:'English',region:'South Asia',year:'2025',province:'INS',tags:['Formation','Shillong','North East','INS'],group:'SDB',desc:'Formation network report for Province of St. John Paul II. Includes juniorate, philosophy and theology formation data.',access:'open'},
+  {id:'RES-015',title:'INS Province Shillong — Formation Report & North East Mission 2025',author:'Fr. John Zosiama · donboscoshillong.org',type:'Official Publication',badge:'badge-pdf',icon:'📄',area:'Formation',lang:'English',region:'South Asia',year:'2025',province:'INS',tags:['Formation','Shillong','North East','INS'],group:'SDB',publisher:'INS Province — donboscoshillong.org',desc:'Formation network report for Province of St. John Paul II. Includes juniorate, philosophy and theology formation data.',access:'open'},
 ];
+const RESOURCE_MACRO_MAP={'South Asia':'Asia & Oceania','East Asia':'Asia & Oceania','Europe':'Europe','Latin America':'Latin America','Africa':'Africa','Global':'Global'};
+function resourceMacroRegion(r){return r.macroRegion||RESOURCE_MACRO_MAP[r.region]||r.region||'Global';}
+function resourcePublisher(r){
+  if(r.publisher)return r.publisher;
+  if(r.province==='Global')return 'LAS / UPS — Global';
+  if(r.province==='All SA')return 'SPCSA — South Asia Conference';
+  return (r.province?r.province+' Province — communications':'Salesian network');
+}
+function resourceShortAuthor(r){return (r.author.split('·')[0]||r.author).trim();}
+function resourceKeyTerms(r){return (r.keyTerms&&r.keyTerms.length)?r.keyTerms:r.tags;}
+let resourceFilterOptionsDone=false;
+function initResourceFilterOptions(){
+  if(resourceFilterOptionsDone)return;
+  const authEl=document.getElementById('rf-author');
+  const pubEl=document.getElementById('rf-publisher');
+  if(!authEl||!pubEl)return;
+  const authors=[...new Set(RESOURCES.map(resourceShortAuthor))].sort((a,b)=>a.localeCompare(b));
+  const pubs=[...new Set(RESOURCES.map(resourcePublisher))].sort((a,b)=>a.localeCompare(b));
+  const esc=s=>s.replace(/&/g,'&amp;').replace(/"/g,'&quot;');
+  authEl.innerHTML='<option value="">All authors</option>'+authors.map(a=>`<option value="${esc(a)}">${esc(a)}</option>`).join('');
+  pubEl.innerHTML='<option value="">All publishers</option>'+pubs.map(p=>`<option value="${esc(p)}">${esc(p)}</option>`).join('');
+  resourceFilterOptionsDone=true;
+}
+function toggleResourceFilters(){
+  const bar=document.getElementById('resource-filter-bar');
+  const tog=document.getElementById('resource-filter-toggle');
+  if(!bar)return;
+  bar.classList.toggle('expanded');
+  const open=bar.classList.contains('expanded');
+  if(tog)tog.setAttribute('aria-expanded',open?'true':'false');
+}
+function setResourceFilterBarMobileDefault(){
+  const bar=document.getElementById('resource-filter-bar');
+  const tog=document.getElementById('resource-filter-toggle');
+  if(!bar||!tog)return;
+  if(window.matchMedia('(max-width:960px)').matches){
+    bar.classList.remove('expanded');
+    tog.setAttribute('aria-expanded','false');
+  }else{
+    bar.classList.add('expanded');
+    tog.setAttribute('aria-expanded','true');
+  }
+}
+function syncResourceFiltersToURL(){
+  try{
+    const p=new URLSearchParams();
+    const g=document.getElementById('res-search-inp')?.value?.trim();
+    if(g)p.set('q',g);
+    [['theme','rf-theme'],['type','rf-type'],['macro','rf-macro'],['region','rf-region'],['lang','rf-lang'],['ymin','rf-year-min'],['ymax','rf-year-max'],['author','rf-author'],['publisher','rf-publisher'],['province','rf-province'],['access','rf-access'],['group','rf-group']].forEach(([k,id])=>{
+      const v=document.getElementById(id)?.value;
+      if(v)p.set(k,v);
+    });
+    const qs=p.toString();
+    history.replaceState({},'',(location.pathname||'/')+(qs?'?'+qs:'')+(location.hash||''));
+  }catch(e){/* ignore file:// */ }
+}
+function loadResourceFiltersFromURL(){
+  try{
+    const p=new URLSearchParams(location.search);
+    const set=(id,val)=>{const el=document.getElementById(id);if(el&&val!==null&&val!=='')el.value=val;};
+    set('res-search-inp',p.get('q'));
+    set('rf-theme',p.get('theme'));
+    set('rf-type',p.get('type'));
+    set('rf-macro',p.get('macro'));
+    set('rf-region',p.get('region'));
+    set('rf-lang',p.get('lang'));
+    set('rf-year-min',p.get('ymin'));
+    set('rf-year-max',p.get('ymax'));
+    set('rf-author',p.get('author'));
+    set('rf-publisher',p.get('publisher'));
+    set('rf-province',p.get('province'));
+    set('rf-access',p.get('access'));
+    set('rf-group',p.get('group'));
+  }catch(e){}
+}
+function copyResourceSearchLink(){
+  syncResourceFiltersToURL();
+  const u=location.href.split('#')[0];
+  navigator.clipboard.writeText(u).then(()=>showToast('🔗 Link copied — share this search')).catch(()=>showToast(u));
+}
 const INSTITUTIONS=[
   // INK — Bangalore Province (Sacred Heart) — 44 centres
   {id:'I-01',name:'Kristu Jyoti College of Theology, Bangalore',type:'Higher Education',region:'South Asia',country:'India',students:380,status:'Active',group:'SDB',province:'INK',url:'dbbangalore.org',desc:'Premier theology faculty in South Asia. Also houses KJC Journal and Bosco Udayam publications.'},
@@ -2155,6 +2686,8 @@ const PERSONS=[
   {name:'Fr. Ivo Coelho',init:'IC',title:'Rector Major Emeritus · Theologian & Philosopher',region:'Europe',aff:'SDB',pubs:47,evts:23,vis:'public',province:'Global'},
   {name:'Sr. Maria Teresa FMA',init:'MF',title:'FMA General Councillor · Formation',region:'Europe',aff:'FMA',pubs:31,evts:18,vis:'public',province:'Global'},
   {name:'Dr. Ana Rodrigues',init:'AR',title:'UPS Research Scholar · Salesian Pedagogy',region:'Europe',aff:'Cooperators',pubs:64,evts:12,vis:'public',province:'Global'},
+  {name:'Bro. Local Animator (sample)',init:'LA',title:'Oratory coordinator · internal directory only',region:'South Asia',aff:'SDB',pubs:2,evts:6,vis:'private',province:'INK'},
+  {name:'Sr. Local FMA Contact (sample)',init:'LF',title:'Community referent · not for public search',region:'South Asia',aff:'FMA',pubs:0,evts:4,vis:'private',province:'INM'},
 ];
 const COLLECTIONS=[
   {id:'C-01',title:'The Legacy of Michele Rua',desc:"Primary sources on Don Bosco\'s first successor.",chip:'Historical Figures',count:47,bg:'linear-gradient(135deg,#1C0A00,#5C2800)'},
@@ -2177,7 +2710,7 @@ const ROLES={
   },
   registered:{name:'Fr. Thomas Antony',label:'🎓 Registered User',av:'T',pages:['dashboard','resources','collections','institutions','networks','events','persons','ai'],canV:false,canA:false,
     stats:[{icon:'📚',bg:'#FEF3C7',val:'12,847',lbl:'Resources Available',tr:'+12%',tc:'trend-up'},{icon:'📂',bg:'#D1FAE5',val:'47',lbl:'Saved Items',tr:'My Library',tc:'trend-up'},{icon:'✦',bg:'var(--sdb-blue-pale)',val:'23',lbl:'AI Queries',tr:'This month',tc:'trend-up'},{icon:'🌐',bg:'#EDE9FE',val:'3',lbl:'Languages Active',tr:'EN, IT, ES',tc:'trend-up'}],
-    qa:[{icon:'✦',t:'AI Search',s:'Semantic query',p:'ai'},{icon:'📚',t:'My Library',s:'Saved resources',p:'resources'},{icon:'👥',t:'Find Authors',s:'Person directory',p:'persons'},{icon:'📅',t:'Events',s:'Upcoming',p:'events'}],
+    qa:[{icon:'✦',t:'Smart search',s:'Ask the assistant',p:'ai'},{icon:'📚',t:'My Library',s:'Saved resources',p:'resources'},{icon:'👥',t:'Find Authors',s:'Person directory',p:'persons'},{icon:'📅',t:'Events',s:'Upcoming',p:'events'}],
     act:[{dot:'dot-blue',tx:'You viewed: <strong>"Preventive System in Digital Age"</strong> — Summarized via AI',tm:'1 hour ago'},{dot:'dot-green',tx:'Saved: <strong>"Youth at Risk Pastoral Guide — Africa 2024"</strong>',tm:'3 hours ago'},{dot:'dot-gold',tx:'Translation requested: <strong>"Missione Salesiana 2025"</strong> → English',tm:'Yesterday'}]
   },
   liaison:{name:'Bro. James Rodrigues',label:'🌐 Provincial Liaison',av:'J',pages:['dashboard','resources','collections','institutions','networks','events','persons','ai','owl'],canV:true,canA:false,
@@ -2235,7 +2768,7 @@ function renderAnalytics(){
   if(tEl){const types=[['Official Publication',4892],['Study',3241],['Good Practice',2187],['Multimedia',1432],['MARC21',1095]];const tm=types[0][1];tEl.innerHTML=types.map(([t,v])=>`<div class="bar-row"><div class="bar-label">${t}</div><div class="bar-track"><div class="bar-fill" style="width:${Math.round(v/tm*100)}%"></div></div><div class="bar-value">${v.toLocaleString()}</div></div>`).join('');}
   // AI usage
   const aiEl=document.getElementById('an-ai');
-  if(aiEl){const ai=[['Semantic Search',1842],['Summarize',1124],['Translate',678],['Recommend',247]];const am2=ai[0][1];aiEl.innerHTML=ai.map(([f,v])=>`<div class="bar-row"><div class="bar-label">${f}</div><div class="bar-track"><div class="bar-fill" style="width:${Math.round(v/am2*100)}%;background:var(--sdb-orange)"></div></div><div class="bar-value">${v}</div></div>`).join('');}
+  if(aiEl){const ai=[['Smart search',1842],['Summarize',1124],['Translate',678],['Recommend',247]];const am2=ai[0][1];aiEl.innerHTML=ai.map(([f,v])=>`<div class="bar-row"><div class="bar-label">${f}</div><div class="bar-track"><div class="bar-fill" style="width:${Math.round(v/am2*100)}%;background:var(--sdb-orange)"></div></div><div class="bar-value">${v}</div></div>`).join('');}
   // Province members table
   const ptEl=document.getElementById('an-province-table');
   if(ptEl){ptEl.innerHTML='<table style="width:100%;border-collapse:collapse;font-size:12px;"><thead><tr style="border-bottom:2px solid var(--sdb-blue-light);"><th style="padding:6px 8px;text-align:left;color:var(--sdb-blue-deep);font-size:11px;">Province</th><th style="padding:6px 8px;text-align:right;color:var(--sdb-blue-deep);font-size:11px;">Members</th><th style="padding:6px 8px;text-align:right;color:var(--sdb-blue-deep);font-size:11px;">Houses</th><th style="padding:6px 8px;text-align:right;color:var(--sdb-blue-deep);font-size:11px;">Schools</th><th style="padding:6px 8px;text-align:right;color:var(--sdb-blue-deep);font-size:11px;">Colleges</th></tr></thead><tbody>'+PROVINCE_DATA.map((p,i)=>`<tr style="border-bottom:1px solid var(--border-subtle);${i%2===0?'background:var(--off-white)':''}"><td style="padding:6px 8px;font-weight:600;color:var(--ink);">${p.code} <span style="font-weight:400;color:var(--mid);">${p.name}</span></td><td style="padding:6px 8px;text-align:right;">${p.members}</td><td style="padding:6px 8px;text-align:right;">${p.houses}</td><td style="padding:6px 8px;text-align:right;">${p.schools}</td><td style="padding:6px 8px;text-align:right;">${p.colleges}</td></tr>`).join('')+'</tbody></table>';}
@@ -2299,18 +2832,225 @@ function startCarousel(){if(!carouselPaused)slideTimer=setInterval(()=>goSlide((
 function toggleCarousel(){carouselPaused=!carouselPaused;const btn=document.getElementById('carousel-pause');if(carouselPaused){clearInterval(slideTimer);if(btn){btn.textContent='▶';btn.setAttribute('aria-label','Resume slideshow');}}else{startCarousel();if(btn){btn.textContent='⏸';btn.setAttribute('aria-label','Pause slideshow');}}}
 startCarousel();
 
+// ════════════ PLATFORM OVERVIEW VIDEO (public hero) ════════════
+const OVERVIEW_VIDEO={
+  youtubeId:'',
+  useSlideTour:true,
+  slideMs:11000,
+  useDemo:true,
+  fileUrl:'media/gsdp-overview.mp4',
+  fileType:'video/mp4',
+  demoUrl:'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm',
+  demoType:'video/webm'
+};
+let overviewSlideIdx=0,overviewSlideTimer=null;
+function overviewSlideCount(){return document.querySelectorAll('#overview-slide-deck .overview-slide').length;}
+function overviewRestartProgressAnimation(){
+  const deck=document.getElementById('overview-slide-deck');
+  const prog=document.getElementById('overview-slide-progress');
+  if(!deck||!prog)return;
+  deck.classList.remove('is-playing');
+  void prog.offsetWidth;
+  deck.style.setProperty('--overview-slide-ms',OVERVIEW_VIDEO.slideMs+'ms');
+  deck.classList.add('is-playing');
+}
+function overviewGoSlide(n){
+  const slides=document.querySelectorAll('#overview-slide-deck .overview-slide');
+  const dots=document.querySelectorAll('#overview-slide-dots .overview-slide-dot');
+  const c=slides.length;
+  if(!c)return;
+  overviewSlideIdx=(n%c+c)%c;
+  slides.forEach((s,i)=>{
+    const on=i===overviewSlideIdx;
+    s.classList.toggle('active',on);
+    s.setAttribute('aria-hidden',on?'false':'true');
+  });
+  dots.forEach((d,i)=>d.classList.toggle('active',i===overviewSlideIdx));
+  overviewRestartProgressAnimation();
+}
+function overviewStartTimer(){
+  overviewStopTimer();
+  overviewSlideTimer=setInterval(()=>overviewGoSlide(overviewSlideIdx+1),OVERVIEW_VIDEO.slideMs);
+}
+function overviewStopTimer(){
+  if(overviewSlideTimer){clearInterval(overviewSlideTimer);overviewSlideTimer=null;}
+}
+function overviewBindSlideDeck(){
+  const deck=document.getElementById('overview-slide-deck');
+  if(!deck||deck.dataset.overviewBound==='1')return;
+  deck.dataset.overviewBound='1';
+  const dotHost=document.getElementById('overview-slide-dots');
+  const n=overviewSlideCount();
+  if(dotHost){
+    dotHost.innerHTML='';
+    for(let i=0;i<n;i++){
+      const b=document.createElement('button');
+      b.type='button';
+      b.className='overview-slide-dot'+(i===0?' active':'');
+      b.setAttribute('aria-label','Go to slide '+(i+1)+' of '+n);
+      b.addEventListener('click',()=>{overviewGoSlide(i);overviewStartTimer();});
+      dotHost.appendChild(b);
+    }
+  }
+  document.getElementById('overview-slide-prev')?.addEventListener('click',()=>{overviewGoSlide(overviewSlideIdx-1);overviewStartTimer();});
+  document.getElementById('overview-slide-next')?.addEventListener('click',()=>{overviewGoSlide(overviewSlideIdx+1);overviewStartTimer();});
+  deck.addEventListener('mouseenter',()=>{overviewStopTimer();deck.classList.remove('is-playing');});
+  deck.addEventListener('mouseleave',()=>{overviewRestartProgressAnimation();overviewStartTimer();});
+}
+function initOverviewPlayer(){
+  const wrap=document.getElementById('overview-video-wrap');
+  const deck=document.getElementById('overview-slide-deck');
+  const vid=document.getElementById('overview-video');
+  const fb=document.getElementById('overview-video-fallback');
+  const hint=document.getElementById('overview-slide-hint');
+  if(!wrap)return;
+  if(OVERVIEW_VIDEO.youtubeId){
+    if(hint)hint.textContent='Video';
+    if(deck)deck.hidden=true;
+    if(vid){vid.hidden=true;vid.style.display='';}
+    let ifr=wrap.querySelector('iframe.overview-yt');
+    if(!ifr){
+      ifr=document.createElement('iframe');
+      ifr.className='overview-yt';
+      ifr.title='GSDP platform overview video';
+      ifr.setAttribute('allowfullscreen','');
+      ifr.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      ifr.referrerPolicy='strict-origin-when-cross-origin';
+      wrap.appendChild(ifr);
+    }
+    ifr.src='https://www.youtube-nocookie.com/embed/'+OVERVIEW_VIDEO.youtubeId+'?rel=0&modestbranding=1';
+    return;
+  }
+  const ifrOld=wrap.querySelector('iframe.overview-yt');
+  if(ifrOld)ifrOld.remove();
+  if(OVERVIEW_VIDEO.useSlideTour){
+    if(hint)hint.textContent='Visual tour';
+    if(deck){deck.hidden=false;}
+    if(vid){vid.hidden=true;}
+    if(fb)fb.hidden=true;
+    overviewBindSlideDeck();
+    overviewGoSlide(0);
+    return;
+  }
+  if(hint)hint.textContent='Video';
+  if(deck)deck.hidden=true;
+  if(!vid)return;
+  vid.hidden=false;
+  vid.style.display='';
+  const url=OVERVIEW_VIDEO.useDemo?OVERVIEW_VIDEO.demoUrl:OVERVIEW_VIDEO.fileUrl;
+  const typ=OVERVIEW_VIDEO.useDemo?OVERVIEW_VIDEO.demoType:OVERVIEW_VIDEO.fileType;
+  vid.innerHTML='<source src="'+url+'" type="'+typ+'">';
+  vid.load();
+  vid.addEventListener('error',function onOverviewVidErr(){
+    vid.removeEventListener('error',onOverviewVidErr);
+    vid.style.display='none';
+    if(fb)fb.hidden=false;
+  });
+}
+let overviewSavedCarouselPaused=false;
+function openOverviewModal(){
+  clearInterval(slideTimer);
+  overviewSavedCarouselPaused=carouselPaused;
+  carouselPaused=true;
+  const m=document.getElementById('overview-modal');
+  if(m){m.classList.add('open');m.setAttribute('aria-hidden','false');}
+  const deck=document.getElementById('overview-slide-deck');
+  if(deck&&!deck.hidden){
+    overviewGoSlide(overviewSlideIdx);
+    overviewStartTimer();
+  }
+  const c=document.querySelector('#overview-modal .modal-close');
+  if(c)c.focus();
+}
+function closeOverviewModal(){
+  overviewStopTimer();
+  const deck=document.getElementById('overview-slide-deck');
+  if(deck){deck.classList.remove('is-playing');overviewGoSlide(0);}
+  const v=document.getElementById('overview-video');
+  if(v)try{v.pause();}catch(e){}
+  const ifr=document.querySelector('#overview-video-wrap iframe.overview-yt');
+  if(ifr){const s=ifr.src;ifr.src='';ifr.src=s;}
+  const m=document.getElementById('overview-modal');
+  if(m){m.classList.remove('open');m.setAttribute('aria-hidden','true');}
+  carouselPaused=overviewSavedCarouselPaused;
+  if(!carouselPaused)startCarousel();
+}
+initOverviewPlayer();
+document.getElementById('overview-modal')?.addEventListener('click',function(e){if(e.target===this)closeOverviewModal();});
+document.addEventListener('keydown',function(e){
+  const om=document.getElementById('overview-modal');
+  if(!om||!om.classList.contains('open'))return;
+  if(e.key==='Escape'){e.preventDefault();closeOverviewModal();return;}
+  const deck=document.getElementById('overview-slide-deck');
+  if(deck&&!deck.hidden&&(e.key==='ArrowLeft'||e.key==='ArrowRight')){
+    e.preventDefault();
+    overviewGoSlide(overviewSlideIdx+(e.key==='ArrowRight'?1:-1));
+    overviewStartTimer();
+  }
+});
+
 // ════════════ PUBLIC UI ════════════
+/** Section ids in document order — scroll-spy picks the last whose top is above the nav offset */
+const PUB_NAV_SECTION_IDS=[
+  'pub-section-home','how-it-works-pub','resources-pub','coll-pub','events-pub',
+  'institutions-pub','council-pub','about-pub','networks-strip'
+];
+let pubNavActiveId=null;
+let pubNavScrollSpyBound=false;
+function setPubNavActive(sectionId){
+  if(pubNavActiveId===sectionId)return;
+  pubNavActiveId=sectionId;
+  document.querySelectorAll('.pub-nav-link[data-pub-section]').forEach(el=>{
+    const on=el.getAttribute('data-pub-section')===sectionId;
+    el.classList.toggle('active',on);
+    if(on)el.setAttribute('aria-current','true');
+    else el.removeAttribute('aria-current');
+  });
+}
+function updatePubNavFromScroll(){
+  const container=document.getElementById('public-home');
+  if(!container)return;
+  const navOffset=96;
+  const y=container.scrollTop+navOffset;
+  let active='pub-section-home';
+  for(const sid of PUB_NAV_SECTION_IDS){
+    const el=document.getElementById(sid);
+    if(!el)continue;
+    if(el.offsetTop<=y)active=sid;
+  }
+  setPubNavActive(active);
+}
+function bindPubNavScrollSpy(){
+  if(pubNavScrollSpyBound)return;
+  const container=document.getElementById('public-home');
+  if(!container)return;
+  pubNavScrollSpyBound=true;
+  let ticking=false;
+  container.addEventListener('scroll',()=>{
+    if(ticking)return;
+    ticking=true;
+    requestAnimationFrame(()=>{ticking=false;updatePubNavFromScroll();});
+  },{passive:true});
+  updatePubNavFromScroll();
+}
 function pubScrollTo(id){
+  setPubNavActive(id);
+  const container=document.getElementById('public-home');
+  if(id==='pub-section-home'){
+    if(container)container.scrollTo({top:0,behavior:'smooth'});
+    else document.getElementById('pub-section-home')?.scrollIntoView({behavior:'smooth'});
+    return;
+  }
   const el=document.getElementById(id);
   if(!el)return;
-  const container=document.getElementById('public-home');
   if(container){
-    const top=el.offsetTop - 80; // account for sticky nav height
+    const top=el.offsetTop - 80;
     container.scrollTo({top:top,behavior:'smooth'});
   } else {
     el.scrollIntoView({behavior:'smooth'});
   }
 }
+bindPubNavScrollSpy();
 function pubFill(q){document.getElementById('pub-search-inp').value=q;showToast('🔍 Searching: "'+q+'"');}
 function pubSearchLive(v){}
 function pubDoSearch(){const q=document.getElementById('pub-search-inp').value.trim();if(q)showToast('🔍 Searching: "'+q+'"');}
@@ -2326,15 +3066,9 @@ function bubbleSend(){
 
 // ════════════ AUTH ════════════
 function doLogin(){
-  clearInterval(slideTimer);
-  const h=document.getElementById('public-home');h.classList.add('fade-out');
-  document.getElementById('ai-bubble').style.display='none';
-  setTimeout(()=>{
-    h.style.display='none';
-    const a=document.getElementById('app');a.style.display='block';
-    applyRole('admin');showPage('dashboard',document.querySelector('[data-page=dashboard]'));
-    setTimeout(()=>a.classList.add('fade-in'),20);
-  },400);
+  // Redirect to the dedicated login page (dashboard.html).
+  // That page contains its own login UI, and after signing in it shows the dashboard.
+  window.location.href = 'dashboard.html';
 }
 function doLogout(){
   document.getElementById('app').classList.remove('fade-in');
@@ -2372,6 +3106,7 @@ function applyRole(role){
     <div class="pending-item"><span class="pending-icon">📋</span><div class="pending-info"><div class="pending-title">Oratory Best Practices — Brazil</div><div class="pending-meta">Metadata: 94% complete</div></div><span class="pending-status status-review">In Review</span></div>
     <div class="pending-item"><span class="pending-icon">🎬</span><div class="pending-info"><div class="pending-title">FMA Documentary 2025</div><div class="pending-meta">AI-tagged · awaiting approval</div></div><span class="pending-status status-review">In Review</span></div>`;}
   else pc.style.display='none';
+  initResourceFilterOptions();loadResourceFiltersFromURL();setResourceFilterBarMobileDefault();
   renderResources();renderCollections();renderInstitutions();renderEvents();renderPersons();renderAI();renderAnalytics();renderGovernance();renderAccessControl();initOWLSteps();
   const days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];const months=['January','February','March','April','May','June','July','August','September','October','November','December'];const now=new Date();const dd=document.getElementById('dash-date');if(dd)dd.textContent='Platform overview · '+days[now.getDay()]+', '+now.getDate()+' '+months[now.getMonth()]+' '+now.getFullYear();
 }
@@ -2400,16 +3135,16 @@ function showPage(id,navEl){
   if(pc)pc.scrollTop=0;
   currentPage=page;
   // Page title
-  const titles={dashboard:'Dashboard',resources:'Resource Library',collections:'Collections',
+  const titles={dashboard:'Overview',resources:'Resource Library',collections:'Collections',
     institutions:'Pastoral Works',networks:'Salesian Networks',events:'Events',
-    persons:'Persons Directory',ai:'AI Assistant',owl:'OWL Ontology Update',
+    persons:'Persons Directory',ai:'Exploration assistant',owl:'OWL Ontology Update',
     analytics:'Analytics & Insights',governance:'Governance & Policy',access:'Access Control'};
   const tEl=document.getElementById('page-title');
   if(tEl)tEl.textContent=titles[page]||page;
   // Context action button
   const btn=document.getElementById('topbar-action-btn');
   if(btn){
-    const btnMap={governance:'⚖️ Governance',analytics:'📈 Analytics',resources:'+ Upload',ai:'✦ Ask AI',networks:'🔗 Networks'};
+    const btnMap={governance:'⚖️ Governance',analytics:'📈 Analytics',resources:'+ Upload',ai:'✦ Assistant',networks:'🔗 Networks'};
     if(btnMap[page]){btn.textContent=btnMap[page];btn.style.display='flex';}
     else btn.style.display='none';
   }
@@ -2419,56 +3154,88 @@ function showPage(id,navEl){
 }
 
 // ════════════ RENDER FUNCTIONS ════════════
-function clearResourceFilters(){['rf-theme','rf-type','rf-province','rf-region','rf-lang','rf-year','rf-access','rf-group'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});const si=document.getElementById('res-search-inp');if(si)si.value='';renderResources();}
+function clearResourceFilters(){['rf-theme','rf-type','rf-macro','rf-region','rf-lang','rf-year-min','rf-year-max','rf-author','rf-publisher','rf-province','rf-access','rf-group'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});const si=document.getElementById('res-search-inp');if(si)si.value='';setResourceFilterBarMobileDefault();renderResources();}
+function getResourceCardKind(r){
+  const t=(r.type||'').toLowerCase();
+  if(t==='study' || t==='official publication') return {icon:'📘',label:'Book'};
+  if(t==='good practice') return {icon:'📋',label:'Guide'};
+  if(t==='multimedia') return {icon:'🎬',label:'Video'};
+  if(t==='marc21') return {icon:'📚',label:'Catalogue'};
+  return {icon:r.icon || '📄',label:r.type || 'Resource'};
+}
 function renderResources(){
+  initResourceFilterOptions();
   const q=(document.getElementById('res-search-inp')||{}).value?.toLowerCase()||'';
   const fTheme=(document.getElementById('rf-theme')||{}).value||'';
   const fType=(document.getElementById('rf-type')||{}).value||'';
+  const fMacro=(document.getElementById('rf-macro')||{}).value||'';
   const fProvince=(document.getElementById('rf-province')||{}).value||'';
   const fRegion=(document.getElementById('rf-region')||{}).value||'';
   const fLang=(document.getElementById('rf-lang')||{}).value||'';
-  const fYear=(document.getElementById('rf-year')||{}).value||'';
+  const fYMin=(document.getElementById('rf-year-min')||{}).value||'';
+  const fYMax=(document.getElementById('rf-year-max')||{}).value||'';
+  const fAuthor=(document.getElementById('rf-author')||{}).value||'';
+  const fPublisher=(document.getElementById('rf-publisher')||{}).value||'';
   const fAccess=(document.getElementById('rf-access')||{}).value||'';
   const fGroup=(document.getElementById('rf-group')||{}).value||'';
   const filtered=RESOURCES.filter(r=>{
-    if(q&&!r.title.toLowerCase().includes(q)&&!r.author.toLowerCase().includes(q)&&!r.tags.some(t=>t.toLowerCase().includes(q))&&!(r.province&&r.province.toLowerCase().includes(q))&&!(r.desc&&r.desc.toLowerCase().includes(q)))return false;
+    const y=parseInt(r.year,10);
+    if(fYMin&&(!isNaN(y)&&y<parseInt(fYMin,10)))return false;
+    if(fYMax&&(!isNaN(y)&&y>parseInt(fYMax,10)))return false;
+    if(q&&!r.title.toLowerCase().includes(q)&&!r.author.toLowerCase().includes(q)&&!r.tags.some(t=>t.toLowerCase().includes(q))&&!(r.province&&r.province.toLowerCase().includes(q))&&!(r.desc&&r.desc.toLowerCase().includes(q))&&!resourcePublisher(r).toLowerCase().includes(q))return false;
     if(fTheme&&r.area!==fTheme)return false;
     if(fType&&r.type!==fType)return false;
+    if(fMacro&&resourceMacroRegion(r)!==fMacro)return false;
     if(fProvince&&r.province!==fProvince)return false;
     if(fRegion&&r.region!==fRegion)return false;
     if(fLang&&!r.lang.includes(fLang))return false;
-    if(fYear&&r.year!==fYear)return false;
+    if(fAuthor&&resourceShortAuthor(r)!==fAuthor)return false;
+    if(fPublisher&&resourcePublisher(r)!==fPublisher)return false;
     if(fAccess==='open'&&r.access!=='open')return false;
     if(fGroup&&r.group!==fGroup)return false;
     return true;
   });
   const grid=document.getElementById('resource-grid');
   if(!grid)return;
+  syncResourceFiltersToURL();
   if(!filtered.length){
     grid.innerHTML='<div class="empty-state"><div class="empty-icon">📚</div><div class="empty-title">No resources found</div><div class="empty-msg">Try adjusting your filters or search terms to discover the Salesian knowledge corpus.</div><button class="empty-cta" onclick="clearResourceFilters()">Clear filters</button></div>';
     return;
   }
-  grid.innerHTML=filtered.map(r=>`
+  grid.innerHTML=filtered.map(r=>{
+    const macro=resourceMacroRegion(r);
+    const pub=resourcePublisher(r);
+    const terms=resourceKeyTerms(r).slice(0,5);
+    return `
     <div class="resource-card" onclick="openModal('${r.id}')">
-      <div class="resource-card-top">
-        <div style="display:flex;align-items:center;gap:5px;margin-bottom:7px;flex-wrap:wrap;">
-          <span class="resource-type-badge ${r.badge}">${r.icon} ${r.type}</span>
-          ${r.province?`<span style="font-size:10px;font-weight:700;color:#fff;background:var(--sdb-blue-mid);padding:2px 6px;border-radius:4px;">${r.province}</span>`:''}
-          ${r.access==='open'?'<span style="font-size:10px;font-weight:700;color:#065F46;background:#D1FAE5;padding:2px 6px;border-radius:4px;">Open Access</span>':''}
+      <div class="resource-card-inner">
+        <div class="resource-card-thumb" aria-hidden="true">${r.icon||'📄'}</div>
+        <div class="resource-card-main">
+          <div class="resource-card-top">
+            <div style="display:flex;align-items:center;gap:5px;margin-bottom:7px;flex-wrap:wrap;">
+              <span class="resource-type-badge ${r.badge}">${getResourceCardKind(r).icon} ${getResourceCardKind(r).label}</span>
+              ${r.province?`<span style="font-size:10px;font-weight:700;color:#fff;background:var(--sdb-blue-mid);padding:2px 6px;border-radius:4px;">${r.province}</span>`:''}
+              ${r.access==='open'?'<span style="font-size:10px;font-weight:700;color:#065F46;background:#D1FAE5;padding:2px 6px;border-radius:4px;">Open Access</span>':''}
+            </div>
+            <div class="resource-title"><span class="resource-field-label">Title:</span> ${r.title}</div>
+            <div class="resource-author"><span class="resource-field-label">Author:</span> ${r.author}</div>
+            <div class="resource-meta"><span class="resource-field-label">Year:</span> ${r.year}</div>
+            <div class="resource-meta"><span class="resource-field-label">Category:</span> ${r.area}</div>
+            <div class="resource-meta"><span class="resource-field-label">Publisher:</span> ${pub}</div>
+            <div class="resource-meta"><span class="resource-field-label">Macro-region:</span> ${macro}</div>
+            <div class="resource-meta"><span class="resource-field-label">Key terms:</span> ${terms.join(' · ')}</div>
+          </div>
+          <div class="resource-card-bottom">
+            ${r.tags.slice(0,3).map(t=>`<span class="res-tag">${t}</span>`).join('')}
+            <div class="res-actions">
+              <button class="res-action-btn btn-view" onclick="event.stopPropagation();openModal('${r.id}')">View</button>
+              <button class="res-action-btn btn-ai" onclick="event.stopPropagation();openAIRes('${r.id}')">✦ Ask</button>
+            </div>
+          </div>
         </div>
-        <div class="resource-title">${r.title}</div>
-        <div class="resource-author">${r.author}</div>
-        <div class="resource-meta">${r.year} · ${r.region} · ${r.lang.split(',')[0]}</div>
-        ${r.desc?`<div style="font-size:12px;color:var(--mid);margin-top:5px;line-height:1.5;">${r.desc.substring(0,110)}…</div>`:''}
       </div>
-      <div class="resource-card-bottom">
-        ${r.tags.slice(0,3).map(t=>`<span class="res-tag">${t}</span>`).join('')}
-        <div class="res-actions">
-          <button class="res-action-btn btn-view" onclick="event.stopPropagation();openModal('${r.id}')">View</button>
-          <button class="res-action-btn btn-ai" onclick="event.stopPropagation();openAIRes('${r.id}')">✦ AI</button>
-        </div>
-      </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
 function renderCollections(){
@@ -2538,7 +3305,28 @@ function renderEvents(){
 }
 
 function renderPersons(){
-  document.getElementById('persons-grid').innerHTML=PERSONS.map(p=>`
+  const q=(document.getElementById('per-search-inp')||{}).value?.toLowerCase()||'';
+  const fr=(document.getElementById('pf-region')||{}).value||'';
+  const fp=(document.getElementById('pf-province')||{}).value||'';
+  const fa=(document.getElementById('pf-aff')||{}).value||'';
+  const fv=(document.getElementById('pf-vis')||{}).value||'';
+  const list=PERSONS.filter(p=>{
+    if(fr&&p.region!==fr)return false;
+    if(fp&&p.province!==fp)return false;
+    if(fa&&p.aff!==fa)return false;
+    if(fv==='public'&&p.vis!=='public')return false;
+    if(fv==='private'&&p.vis!=='private')return false;
+    const hay=(p.name+' '+(p.title||'')+' '+(p.region||'')+' '+(p.aff||'')+' '+(p.province||'')).toLowerCase();
+    if(q&&!hay.includes(q))return false;
+    return true;
+  });
+  const grid=document.getElementById('persons-grid');
+  if(!grid)return;
+  if(!list.length){
+    grid.innerHTML='<div class="empty-state"><div class="empty-icon">👥</div><div class="empty-title">No people match</div><div class="empty-msg">Try visibility (public vs internal), region, or search.</div></div>';
+    return;
+  }
+  grid.innerHTML=list.map(p=>`
     <div class="person-card" onclick="showToast('Opening: ${p.name}')">
       <div class="person-avatar">${p.init}</div>
       <div class="person-name">${p.name}</div>
@@ -2552,7 +3340,7 @@ function renderPersons(){
 }
 
 function renderAI(){
-  document.getElementById('chat-messages').innerHTML=`<div class="chat-msg"><div class="chat-avatar ai">✦</div><div class="chat-bubble ai">Hello! I\'m the GSDP AI Assistant. I can search resources semantically, summarize documents, translate across EN · IT · ES · FR · PT, and answer questions about Salesian works worldwide.<br><br>How can I help you today?</div></div>`;
+  document.getElementById('chat-messages').innerHTML=`<div class="chat-msg"><div class="chat-avatar ai">✦</div><div class="chat-bubble ai">Hello! I help you <strong>explore</strong> the catalogue: smart search (by meaning), summaries, and translation across EN · IT · ES · FR · PT. The library stays authoritative — I suggest and connect you to real documents.<br><br>What are you looking for?</div></div>`;
   document.getElementById('suggested-queries').innerHTML=['Drug addiction resources in South Asia','Summarize Youth Ministry Report 2025','Translate to Spanish: Formation guidelines','Show similar to Preventive System'].map(q=>`<div onclick="triggerQ('${q}')" style="padding:7px 10px;background:var(--off-white);border-radius:var(--radius);font-size:12px;color:var(--slate);cursor:pointer;border:1px solid var(--border);transition:border-color .15s;" onmouseover="this.style.borderColor='var(--sdb-blue)'" onmouseout="this.style.borderColor='var(--border)'">${q}</div>`).join('');
 }
 
@@ -2584,7 +3372,7 @@ function renderGovernance(){
 
 function renderAccessControl(){
   if(!ROLES[currentRole].canA)return;
-  const mods=[{id:'dashboard',l:'Dashboard'},{id:'resources',l:'Resources'},{id:'collections',l:'Collections'},{id:'institutions',l:'Pastoral Works'},{id:'events',l:'Events'},{id:'persons',l:'Persons'},{id:'ai',l:'AI Assistant'},{id:'owl',l:'OWL Update'},{id:'analytics',l:'Analytics'},{id:'governance',l:'Governance'}];
+  const mods=[{id:'dashboard',l:'Overview'},{id:'resources',l:'Resources'},{id:'collections',l:'Collections'},{id:'institutions',l:'Pastoral Works'},{id:'events',l:'Events'},{id:'persons',l:'Persons'},{id:'ai',l:'Assistant'},{id:'owl',l:'OWL Update'},{id:'analytics',l:'Analytics'},{id:'governance',l:'Governance'}];
   const rows=['public','registered','liaison','editor','admin'].map(k=>{
     const r=ROLES[k];
     return `<div style="display:flex;align-items:flex-start;gap:14px;padding:7px 0;border-bottom:1px solid var(--border-soft);">
@@ -2598,18 +3386,23 @@ function renderAccessControl(){
 // ════════════ MODAL ════════════
 function openModal(id){
   const r=RESOURCES.find(x=>x.id===id);if(!r)return;
+  const macro=resourceMacroRegion(r);
+  const pub=resourcePublisher(r);
+  const kterms=resourceKeyTerms(r).join(' · ');
   document.getElementById('modal-content').innerHTML=`
     <span class="resource-type-badge ${r.badge}" style="margin-bottom:10px">${r.icon} ${r.type}</span>
     <div class="modal-title">${r.title}</div>
     <div class="modal-sub">${r.author} · ${r.year} · ${r.region}</div>
     <div style="display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap">${r.tags.map(t=>`<span class="res-tag">${t}</span>`).join('')}<span class="res-tag">🌐 ${r.lang}</span></div>
+    <div style="font-size:12px;color:var(--slate);margin-bottom:12px;line-height:1.65"><strong>Publisher:</strong> ${pub}<br><strong>Macro-region:</strong> ${macro}<br><strong>Key terms:</strong> ${kterms}</div>
     <div style="background:var(--sdb-blue-pale);border-radius:var(--radius);padding:12px;margin-bottom:14px">
       <div style="font-size:11px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px">Taxonomy Classification</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px;"><div><strong>Area:</strong> ${r.area}</div><div><strong>Language:</strong> ${r.lang}</div><div><strong>Region:</strong> ${r.region}</div><div><strong>ID:</strong> ${r.id}</div></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px;"><div><strong>Area:</strong> ${r.area}</div><div><strong>Language:</strong> ${r.lang}</div><div><strong>Sub-region:</strong> ${r.region}</div><div><strong>ID:</strong> ${r.id}</div></div>
     </div>
+    <div style="font-size:12px;color:var(--mid);margin-bottom:14px;padding:10px;background:var(--warm-cream);border-radius:var(--radius);border:1px dashed var(--border);">📑 <strong>Structured works:</strong> when the source has parts, open chapters or articles from the reader — no restrictive viewer (prototype: full PDF + outline).</div>
     <div style="display:flex;gap:10px;flex-wrap:wrap">
       <button class="topbar-btn btn-orange" onclick="showToast('⬇ Downloading PDF…');closeModal('res-modal')">⬇ Download PDF</button>
-      <button class="topbar-btn btn-outline-app" onclick="openAIRes('${r.id}');closeModal('res-modal')">✦ Ask AI</button>
+      <button class="topbar-btn btn-outline-app" onclick="openAIRes('${r.id}');closeModal('res-modal')">✦ Ask assistant</button>
       <button class="topbar-btn btn-outline-app" onclick="showToast('🔖 Saved');closeModal('res-modal')">🔖 Save</button>
     </div>`;
   document.getElementById('res-modal').classList.add('open');
@@ -2624,7 +3417,7 @@ const AIR={
   default:(q)=>`I found <strong>12 resources</strong> matching "<em>${q}</em>" in the GSDP corpus.<br><br>Top results:<br>• Youth Ministry Annual Report — South Asia 2025<br>• Drug Addiction Prevention — Pastoral Guide<br>• Social Work Commission Field Report 2024<br><br>Would you like me to summarize or translate any of these?`,
   summarize:()=>`<strong>Summary generated:</strong><br><br>This document presents the Youth Ministry framework for South Asia, focusing on: <em>evangelization</em>, <em>youth accompaniment</em>, and <em>institutional collaboration</em>. Key findings include a 23% increase in youth center participation and 14 new oratory projects in 2025.<br><br>📄 Full document: 47 pages · English · South Asia`,
   translate:()=>`<strong>Translation complete (EN → ES):</strong><br><br>"Las directrices del Sistema Preventivo de Don Bosco enfatizan el papel central del educador salesiano como acompañante de los jóvenes…"<br><br>🌐 Powered by Azure OpenAI · 5 languages`,
-  recommend:()=>`<strong>Recommended resources</strong> (semantic similarity):<br><br>1. 🔗 <em>Youth at Risk — Pastoral Approaches 2024</em> (94%)<br>2. 🔗 <em>Social Work Best Practices — Africa 2024</em> (89%)<br>3. 🔗 <em>Prevention Programs — Latin America 2023</em> (87%)<br><br>Powered by vector embeddings · Databricks ML`,
+  recommend:()=>`<strong>Recommended resources</strong> (by topic similarity):<br><br>1. 🔗 <em>Youth at Risk — Pastoral Approaches 2024</em> (94%)<br>2. 🔗 <em>Social Work Best Practices — Africa 2024</em> (89%)<br>3. 🔗 <em>Prevention Programs — Latin America 2023</em> (87%)<br><br>Indexed from curated embeddings · Databricks ML`,
 };
 function sendChat(){
   const inp=document.getElementById('chat-input');const msg=inp.value.trim();if(!msg)return;
@@ -2656,7 +3449,7 @@ function globalSearch(q){
   if(ih.length)secs.push({l:'🏛 Pastoral Works',items:ih.map(i=>({ic:'🏫',t:i.name,m:i.type+' · '+i.region+' · '+i.country,b:i.status,p:'institutions'}))});
   const eh=EVENTS.filter(e=>(e.title+e.location+e.org+e.region).toLowerCase().includes(ql)).slice(0,3);
   if(eh.length)secs.push({l:'📅 Events',items:eh.map(e=>({ic:'📌',t:e.title,m:e.location+' · '+e.mon,b:e.typeName,p:'events'}))});
-  const ph=PERSONS.filter(p=>(p.name+p.title+p.region+p.aff).toLowerCase().includes(ql)).slice(0,3);
+  const ph=PERSONS.filter(p=>p.vis!=='private'&&(p.name+p.title+p.region+p.aff).toLowerCase().includes(ql)).slice(0,3);
   if(ph.length)secs.push({l:'👥 Persons',items:ph.map(p=>({ic:'👤',t:p.name,m:p.title+' · '+p.region,b:p.aff,p:'persons'}))});
   const ch=COLLECTIONS.filter(c=>(c.title+c.desc+c.chip).toLowerCase().includes(ql)).slice(0,3);
   if(ch.length)secs.push({l:'🗂 Collections',items:ch.map(c=>({ic:'🗂',t:c.title,m:c.chip+' · '+c.count+' resources',b:c.chip,p:'collections'}))});
@@ -2748,8 +3541,39 @@ function resetOWL(){
   const run=document.getElementById('owl-run-btn');if(run){run.disabled=false;run.textContent='🦉 Run OWL Update';}
 }
 
+// ════════════ PLATFORM PULSE (homepage — freshness + activity line) ════════════
+function initPlatformPulse(){
+  const detailEl=document.getElementById('pp-sync-detail');
+  const labelEl=document.getElementById('pp-updated-label');
+  const actLine=document.getElementById('pp-activity-line');
+  if(!detailEl)return;
+  const now=new Date();
+  const lastSync=new Date(now);
+  lastSync.setDate(lastSync.getDate()-1);
+  lastSync.setHours(6,30,0,0);
+  const startToday=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  const startSync=new Date(lastSync.getFullYear(),lastSync.getMonth(),lastSync.getDate());
+  const diffDays=Math.round((startToday-startSync)/86400000);
+  if(labelEl){
+    if(diffDays===1)labelEl.textContent='Updated yesterday';
+    else if(diffDays===0)labelEl.textContent='Updated today';
+    else if(diffDays>1)labelEl.textContent='Updated '+diffDays+' days ago';
+    else labelEl.textContent='Sync scheduled';
+  }
+  const dStr=lastSync.toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric',year:'numeric'});
+  const tStr=lastSync.toLocaleTimeString(undefined,{hour:'2-digit',minute:'2-digit'});
+  detailEl.textContent='Full catalogue & institution index · '+dStr+' · '+tStr+' (local)';
+  if(actLine){
+    const wkStart=new Date(now);wkStart.setDate(wkStart.getDate()-now.getDay());
+    const wkStr=wkStart.toLocaleDateString(undefined,{month:'short',day:'numeric'});
+    actLine.innerHTML='Week of '+wkStr+': <strong>3,891</strong> assistant queries · <strong>47</strong> province uploads · ANS feed refreshed hourly';
+  }
+}
+initPlatformPulse();
+
 // ════════════ TOAST ════════════
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(window._tt);window._tt=setTimeout(()=>t.classList.remove('show'),3000);}
+window.addEventListener('resize',function(){setResourceFilterBarMobileDefault();});
 </script>
 </body>
 </html>
